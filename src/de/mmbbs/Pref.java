@@ -2,6 +2,7 @@ package de.mmbbs;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
+// Kommentar
 
 public class Pref extends PreferenceActivity {
 
