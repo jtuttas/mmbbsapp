@@ -1,0 +1,119 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/75/trunk/mmbbsapp/src/de/mmbbs
+END
+DBManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/68/trunk/mmbbsapp/src/de/mmbbs/DBManager.java
+END
+WebViewClientMmbbs.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/78/trunk/mmbbsapp/src/de/mmbbs/WebViewClientMmbbs.java
+END
+MeineKlasse.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/57/trunk/mmbbsapp/src/de/mmbbs/MeineKlasse.java
+END
+MyAppReciever.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/60/trunk/mmbbsapp/src/de/mmbbs/MyAppReciever.java
+END
+Sekretariat.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/13/trunk/mmbbsapp/src/de/mmbbs/Sekretariat.java
+END
+Pref.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/2/trunk/mmbbsapp/src/de/mmbbs/Pref.java
+END
+Teacher.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/67/trunk/mmbbsapp/src/de/mmbbs/Teacher.java
+END
+Kontakt.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/68/trunk/mmbbsapp/src/de/mmbbs/Kontakt.java
+END
+Vertretungsplan.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/31/trunk/mmbbsapp/src/de/mmbbs/Vertretungsplan.java
+END
+EmailKlassenlehrer.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/64/trunk/mmbbsapp/src/de/mmbbs/EmailKlassenlehrer.java
+END
+Stundenplan.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/78/trunk/mmbbsapp/src/de/mmbbs/Stundenplan.java
+END
+SearchTeacher.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/68/trunk/mmbbsapp/src/de/mmbbs/SearchTeacher.java
+END
+Organisation.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/70/trunk/mmbbsapp/src/de/mmbbs/Organisation.java
+END
+Main.java
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/78/trunk/mmbbsapp/src/de/mmbbs/Main.java
+END
+DBDownloaderTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/58/trunk/mmbbsapp/src/de/mmbbs/DBDownloaderTask.java
+END
+Loadfinished.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/58/trunk/mmbbsapp/src/de/mmbbs/Loadfinished.java
+END
+Pause.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/64/trunk/mmbbsapp/src/de/mmbbs/Pause.java
+END
+ImageDownloaderTask.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/67/trunk/mmbbsapp/src/de/mmbbs/ImageDownloaderTask.java
+END
+ImageAdapter.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/2/trunk/mmbbsapp/src/de/mmbbs/ImageAdapter.java
+END

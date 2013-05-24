@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+      package="de.mmbbs"
+      android:versionCode="7"
+      android:versionName="1.07" android:installLocation="auto">
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+ <!-- Daniel Lengies: Einbinden der Permissions (notwendige Berechigungen) für GPS und Internet zum Laden der Maps-Daten -->    
+        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+        <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+        <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+        <uses-permission android:name="android.permission.uri"></uses-permission>
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+        
+    <application android:icon="@drawable/icon" android:label="@string/app_name">
+        <activity android:name=".Main"
+                  android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name="Kontakt" android:label="@string/app_name" android:debuggable="true">
+ 			<!-- Daniel Lengies: Einbinden der Maps-Bibliothek in die App -->
+            <!-- <uses-library android:name="com.google.android.maps" />  -->
+        </activity>
+        <activity android:name="MeineKlasse"></activity>
+        <activity android:name="EmailKlassenlehrer"></activity>
+        <activity android:name="Pref"></activity>
+        <activity android:name="Organisation"></activity>
+        <activity android:name="SearchTeacher"></activity>
+        <activity android:name="Stundenplan"></activity>
+        <activity android:name="Vertretungsplan"></activity>
+        <receiver android:process=":remote" android:name="MyAppReciever"></receiver>
+<!-- Daniel Lengies: Initialisieren der Activity "Navigation" -->
+        <activity android:name="Pause"></activity>
+        <activity android:name="com.google.ads.AdActivity" 
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/> 
+
+    </application>
+</manifest>
