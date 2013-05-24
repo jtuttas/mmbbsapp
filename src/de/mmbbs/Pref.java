@@ -2,7 +2,7 @@ package de.mmbbs;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
-// Kommentar
+// Kommentar auf T400 mit Eclipse
 
 public class Pref extends PreferenceActivity {
 
