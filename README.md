@@ -1,4 +1,4 @@
 mmbbsapp
 ========
 
-The App for our vocational school
+The App for our vocational school (gcm)
