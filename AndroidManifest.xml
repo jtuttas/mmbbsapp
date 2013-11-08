@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.mmbbs"
-      android:versionCode="7"
-      android:versionName="1.07" android:installLocation="auto">
+      android:versionCode="9"
+      android:versionName="1.08" android:installLocation="auto">
     <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
  <!-- Daniel Lengies: Einbinden der Permissions (notwendige Berechigungen) für GPS und Internet zum Laden der Maps-Daten -->    
         <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
         <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
         <uses-permission android:name="android.permission.INTERNET"></uses-permission>
         <uses-permission android:name="android.permission.uri"></uses-permission>
-		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"> </uses-permission>
+    	<uses-permission android:name="android.permission.GET_ACCOUNTS" ></uses-permission>
+    	<uses-permission android:name="android.permission.WAKE_LOCK" ></uses-permission>
+    	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" ></uses-permission>
+
+    	<permission android:name="com.example.gcm.permission.C2D_MESSAGE"
+        	android:protectionLevel="signature" />
+    	<uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+		    
+    
         
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".Main"
@@ -17,6 +26,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <!--  <action android:name="com.google.android.c2dm.intent.RECEIVE" />  -->
+                <!-- <category android:name="com.example.gcm" /> -->
             </intent-filter>
         </activity>
         <activity android:name="Kontakt" android:label="@string/app_name" android:debuggable="true">
