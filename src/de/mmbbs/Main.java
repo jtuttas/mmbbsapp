@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -370,6 +372,13 @@ public class Main extends Activity implements Loadfinished {
 		super.onStart();
 		// TODO Auto-generated method stub
         Log.d(Main.TAG,"onStart()");
+        AdView adView = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        .addTestDevice("TEST_DEVICE_ID")
+        .build();
+        adView.loadAd(adRequest);
+    
         if (UPDATE_STATE!=UPDATE_FINISHED) {
         	Log.d(Main.TAG, "Aus Pref Version="+DBManager.VERSION);
         	dbtask = new DBDownloaderTask(this,this);

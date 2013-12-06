@@ -1,5 +1,8 @@
 package de.mmbbs;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +23,12 @@ public class MeineKlasse extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.meineklasse);
-		
+		AdView adView = (AdView)this.findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+        .addTestDevice("TEST_DEVICE_ID")
+        .build();
+        adView.loadAd(adRequest);
 	}
 	/**
 	 * Öffnet den Stundenplan.
