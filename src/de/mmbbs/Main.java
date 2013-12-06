@@ -1,6 +1,10 @@
 package de.mmbbs;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -143,6 +147,26 @@ public class Main extends Activity implements Loadfinished {
 
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
+    	Log.d(Main.TAG, "Trage Registration ID ein!");
+		try {
+		    // Create a URL for the desired page
+		    URL url = new URL(DB_URL+"gcm.php?KLASSE=testklasse&GCMid="+regid);
+
+		    // Read all the text returned by the server
+		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+		    String str;
+		    String s="";
+		    while ((str = in.readLine()) != null) {
+		        // str is one line of text; readLine() strips the newline character(s)
+		    	s=s+str+"\r\n";
+		    }
+		    in.close();
+		    Log.d(Main.TAG,"Empfangen:"+s);
+		} catch (MalformedURLException e) {
+			Log.d(Main.TAG, "Malformed URL Exception bei Lade DBInfo");
+		} catch (IOException e) {
+			Log.d(Main.TAG, "IO-Exception bei Lade DBInfo:");
+		}
       }
 
     /**
