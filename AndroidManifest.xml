@@ -3,10 +3,10 @@
       package="de.mmbbs"
       android:versionCode="9"
       android:versionName="1.08" android:installLocation="auto">
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17"/>
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="18"/>
  <!-- Daniel Lengies: Einbinden der Permissions (notwendige Berechigungen) für GPS und Internet zum Laden der Maps-Daten -->    
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-        <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+        <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission> -->
+        <!-- <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission> -->
         <uses-permission android:name="android.permission.INTERNET"></uses-permission>
         <uses-permission android:name="android.permission.uri"></uses-permission>
 		<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"> </uses-permission>

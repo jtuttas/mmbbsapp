@@ -60,6 +60,7 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 sendNotification("Received: " + extras.toString());
                 Log.i(Main.TAG, "Received: " + extras.toString());
+                Log.i(Main.TAG," message:"+extras.getString("message"));
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -89,7 +90,7 @@ public class GcmIntentService extends IntentService {
         
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         */
-        Toast.makeText(this, "GCM:"+msg, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(this.getBaseContext(), "GCM:"+msg, Toast.LENGTH_SHORT).show();
     }
 }
 
