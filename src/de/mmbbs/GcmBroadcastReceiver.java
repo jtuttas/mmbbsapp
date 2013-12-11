@@ -10,8 +10,10 @@ import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 public class GcmBroadcastReceiver extends BroadcastReceiver {
@@ -31,7 +33,10 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
          // in your BroadcastReceiver.
          String messageType = gcm.getMessageType(intent);
 
-         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
+         SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(context);
+ 		 Boolean gcmCheck = prefs.getBoolean("PushMessage", false);
+         
+         if (!extras.isEmpty() && gcmCheck) {  // has effect of unparcelling Bundle
              /*
               * Filter messages based on message type. Since it is likely that GCM
               * will be extended in the future with new message types, just ignore
@@ -50,7 +55,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                      MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                  // Post notification of received message.
                  notification(context,extras.getString("message"));
-                 Log.i(Main.TAG, "Received: " + extras.toString());
+                 //Log.i(Main.TAG, "Received: " + extras.toString());
                  Log.i(Main.TAG," message:"+extras.getString("message"));
              }
          }
