@@ -6,10 +6,7 @@
     	<EditTextPreference 
     	android:inputType="textEmailAddress"
     	    	android:dialogTitle="Email" android:key="email" android:dialogMessage="eduplaza EMail Adresse (z.B. Fisi11A.Mustermann@mmbbs.eduplaza.de)" android:defaultValue="mmbbs.eduplaza.de" android:title="EMail Adresse"></EditTextPreference>
-    	<!-- 
-    	<EditTextPreference 
-    	android:inputType="textPassword"
-    	android:dialogTitle="Kennwort" android:key="kennwort" android:dialogMessage="eduplaza Kennwort" android:title="Kennwort"></EditTextPreference>
-    	 -->
+    	<CheckBoxPreference android:key="PushMessage" android:summaryOn="you receive Push Messages" android:summaryOff="you receive no messages" android:title="PushMessage" android:selectable="true"/>
     </PreferenceCategory>
 </PreferenceScreen>
+
