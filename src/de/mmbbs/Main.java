@@ -43,7 +43,8 @@ import android.widget.Toast;
 
 public class Main extends Activity implements Loadfinished {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    
+    AdView adView;
+    private String klasse;
 	// Pausen 9:30 , 11:20, 13:10 , 15:00
 	public static final int[] PAUSE_MIN = {30,20,10,0};
 	public static final int[] PAUSE_STD = {9,11,13,15};
@@ -66,7 +67,7 @@ public class Main extends Activity implements Loadfinished {
 	
 	// GCM
 	GoogleCloudMessaging gcm;
-	String regid;
+	public static String regid;
 	public static final String PROPERTY_REG_ID = "registration_id";  // für shared Preferences
 	private static final String PROPERTY_APP_VERSION = "appVersion";
 	Context context;
@@ -77,7 +78,22 @@ public class Main extends Activity implements Loadfinished {
 
 	}
 	
-    /** Called when the activity is first created. */
+
+	@Override
+    public void onPause() {
+      adView.pause();
+      super.onPause();
+    }
+
+	
+
+    @Override
+    public void onDestroy() {
+      adView.destroy();
+      super.onDestroy();
+    }
+   
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +102,9 @@ public class Main extends Activity implements Loadfinished {
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
     	dbm = new DBManager(this,pref.getInt("dbvers", 10));
     	context = this.getApplicationContext();
-    	
+		adView = (AdView)this.findViewById(R.id.adView);
+    	klasse = pref.getString("klasse", null);
+		
     	if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(this.getApplicationContext());
@@ -119,8 +137,11 @@ public class Main extends Activity implements Loadfinished {
                     Log.d(TAG,"registration id="+regid);
                     // You should send the registration ID to your server over HTTP, so it
                     // can use GCM/HTTP or CCS to send messages to your app.
-                    sendRegistrationIdToBackend();
-
+                    if (klasse !=null) {
+                    	sendRegistrationIdToBackend();
+                    }
+                    //pref.edit().putString("regid", regid);
+                    //Log.d(Main.TAG,"Reg ID in SHare Pref. eingetrage");
                     // For this demo: we don't need to send it because the device will send
                     // upstream messages to a server that echo back the message using the
                     // 'from' address in the message.
@@ -147,10 +168,10 @@ public class Main extends Activity implements Loadfinished {
 
     private void sendRegistrationIdToBackend() {
         // Your implementation here.
-    	Log.d(Main.TAG, "Trage Registration ID ein!");
+    	Log.d(Main.TAG, "Trage Registration ID ein für "+klasse);
 		try {
 		    // Create a URL for the desired page
-		    URL url = new URL(DB_URL+"gcm.php?KLASSE=testklasse&GCMid="+regid);
+		    URL url = new URL(DB_URL+"gcm.php?KLASSE="+klasse+"&GCMid="+regid);
 
 		    // Read all the text returned by the server
 		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -220,6 +241,7 @@ public class Main extends Activity implements Loadfinished {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+	      adView.resume();
 		checkPlayServices();
 	}
 

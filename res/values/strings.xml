@@ -16,7 +16,7 @@
     <string name="bt_stundenplan">Stundenplan</string>
     <string name="bt_vertretungsplan">Vertretungsplan</string>
     <string name="bt_kalender">Kalender</string>
-    <string name="bt_email_schule">EMail an Schule</string><string name="bt_emailKlassenlehrer">EMail an Klassenlehrer</string>
+    <string name="bt_email_schule">EMail an Schule</string><string name="bt_emailKlassenlehrer">Klassenlehrer</string>
     <string name="bt_emailKlasse">EMail an Klasse</string><string name="bt_Mitglieder">Mitglieder</string>
     <string name="tv_klassenbezeichnung">Klassenbezeichnung (z.B. FISI11A)</string>
     <string name="tv_emailadresse">Eduplaza EMail Adresse (z.B. Fisi11a.Mustermann@mmbbs.eduplaza.de)</string>
@@ -28,5 +28,6 @@
     <string name="about_txt">MMBBS App V1.1 \n (c) 2011-2014\n developed by\nDr. Jörg Tuttas\nand members of the WPK\nSoftwareentwicklung\nfür\nmobile Endgeräte</string>
     <string name="btn_ok">OK</string>
     <string name="about_add">Liebe Schülerinnen und Schüler, sicherlich fragen Sie sich, warum hier Werbung erscheint? \n\nNun, die Einnahmen aus der Werbung werden im kommenden Jahr der IT-Fete gespendet. Also bitte hin und wieder mal auf die Werbung klicken, dass ist wie eine kleine Spende für die IT-Fete!</string>
+    <string name="ads_text">Heute schon auf die Werbung geklickt?</string>
     
 </resources>

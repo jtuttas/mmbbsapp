@@ -5,21 +5,31 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ImageView.ScaleType;
 
 /**
  * Klasse zu Stundenplan / Vertretungsplan.
  * @author Fritz, Lammers, Schwanda
  *
  */
-public class Stundenplan extends Activity {
+public class Stundenplan extends Activity   {
 	/* Hier wird die aktuell ausgewaehlte Woche abgespeichert. */
 	GregorianCalendar gc;
 	int week;
@@ -209,5 +219,27 @@ public class Stundenplan extends Activity {
     protected void setVertretungsplan(boolean vertretungsplan) {
     	this.vertretungsplan=vertretungsplan;
     }
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    	if (keyCode == KeyEvent.KEYCODE_BACK) {
+    		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    		alertDialog.setTitle("Werbung");
+    		alertDialog.setMessage("Heute schon auf die Werbung geklickt?");
+    		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int which) {
+    			alertDialog.cancel();
+    			finish();
+    		}
+    		});
+    		alertDialog.setIcon(R.drawable.joerg);
+    		alertDialog.show();
+               
+    		return true;
+    	}
+    	return super.onKeyDown(keyCode, event);
+    }
+
+	
 
 }

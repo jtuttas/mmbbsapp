@@ -27,14 +27,18 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 	private ImageView iv;
 	private TextView tv;
 	private String anrede;
+	private String lehrerkuerzel;
 	//public static SearchTeacher instance;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
+		Intent intent = getIntent();
+		lehrerkuerzel = intent.getStringExtra("klassenlehrer");
+		
 		//instance = this;
-		Log.d(Main.TAG, "Search Teacher initialisiert");
+		Log.d(Main.TAG, "Search Teacher initialisiert bei "+lehrerkuerzel);
 
 		
 		setContentView(R.layout.lehrersuche);
@@ -56,8 +60,16 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 		tv = (TextView)findViewById(R.id.textViewTeacher);
 		tv.setText(t.getVName()+" "+t.getName());
 		spinner.setVerticalFadingEdgeEnabled(true);
-		
 		spinner.setOnItemSelectedListener(this);
+		if (lehrerkuerzel != null) {
+			for (int i=0 ; i < shortNames.length;i++) {
+				if (shortNames[i]==lehrerkuerzel) {
+					spinner.setSelection(i);
+					Log.d(Main.TAG,"Setze Spinner auf "+i);
+				}
+			}
+			
+		}
 	}
 
 	@Override

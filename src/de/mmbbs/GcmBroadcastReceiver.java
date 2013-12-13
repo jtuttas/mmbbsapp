@@ -24,7 +24,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
           //      GcmIntentService.class.getName());
         // Start the service, keeping the device awake while it is launching.
         
-        
+        Log.d(Main.TAG,"GCM BroadcastReceiver ---> onReceive()");
         //context.startService((intent.setComponent(comp)));
         //setResultCode(Activity.RESULT_OK);
     	 Bundle extras = intent.getExtras();

@@ -231,7 +231,7 @@ public class DBManager extends SQLiteOpenHelper {
 	 * @author Tuttas
 	 */
 	
-	public String getLehrerMail(String klasse) {
+	public String getLehrer(String klasse) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery("SELECT ID_LEHRER FROM klassen WHERE KLASSE='" + klasse + "' LIMIT 1" , null);
 		if (c.getCount()==0) {
@@ -245,6 +245,8 @@ public class DBManager extends SQLiteOpenHelper {
 		}
 		
 		Log.d(Main.TAG, "Klassenlehrer ist :"+s[0]);
+		
+		/*
 		c = db.rawQuery("SELECT EMAIL FROM lehrer WHERE SHORT='" + s[0] + "' LIMIT 1" , null);
 		if (c.getCount()==0) {
 			c.close();
@@ -257,6 +259,7 @@ public class DBManager extends SQLiteOpenHelper {
 		}
 		Log.d(Main.TAG, "Email Klassenlehrer ist :"+s[0]);
 		c.close();
+		*/
 		return s[0];
 		
 	}

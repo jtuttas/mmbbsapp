@@ -18,12 +18,22 @@ import android.widget.Toast;
  *
  */
 public class MeineKlasse extends Activity {
+	
+	AdView adView;
+	private String klasse;
+	private String klassenlehrer;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		klasse = prefs.getString("klasse", null);
+		if (klasse != null) {
+			klassenlehrer = Main.dbm.getLehrer(klasse);
+		}
 		setContentView(R.layout.meineklasse);
-		AdView adView = (AdView)this.findViewById(R.id.adView);
+		adView = (AdView)this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
         .addTestDevice("TEST_DEVICE_ID")
@@ -37,8 +47,10 @@ public class MeineKlasse extends Activity {
 	 */
     public void klick_stundenplan(View v) {
     	startActivity(new Intent(this,Stundenplan.class));
+
     }
     
+	
 	/**
 	 * Öffnet den Stundenplan.
 	 * @author Fritz, Lammers, Schwanda
@@ -47,15 +59,50 @@ public class MeineKlasse extends Activity {
     public void klick_vertretungsplan(View v) {
     	startActivity(new Intent(this,Vertretungsplan.class));
     }
-    
-    /**
+    @Override
+    public void onPause() {
+      adView.pause();
+      super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+      super.onResume();
+      adView.resume();
+    }
+
+    @Override
+    public void onDestroy() {
+      adView.destroy();
+      super.onDestroy();
+      
+      }
+	/**
      * E-Mail an Klassenlehrer
      * @author Herden, Peguschin
      * @param v
      */
     public void klick_emailKlassenlehrer(View v) {
-    	EmailKlassenlehrer objEmailKlassenlehrer = new EmailKlassenlehrer();
-    	objEmailKlassenlehrer.main(this);
+    	//EmailKlassenlehrer objEmailKlassenlehrer = new EmailKlassenlehrer();
+    	//objEmailKlassenlehrer.main(this);
+    	if(klasse == null) {
+			
+			//Fehlermeldung
+			Toast.makeText(this, "Du musst eine Klasse hinterlegen", Toast.LENGTH_LONG).show();
+			
+		} 
+    	else if(klassenlehrer == null) {
+			
+			//Fehlermeldung
+			Toast.makeText(this, "Die hinterlegte Klasse konnte nicht zugeordnet werden", Toast.LENGTH_SHORT).show();
+			
+    	}
+    	else {
+    		Intent i = new Intent(this,SearchTeacher.class);
+    	
+    		i.putExtra("klassenlehrer",klassenlehrer );
+    		startActivity(i);
+    	}
     }
     public void klick_emailKlasse(View v) {
     	String klasse;
