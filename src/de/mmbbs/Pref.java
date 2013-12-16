@@ -42,7 +42,7 @@ public class Pref extends PreferenceActivity  {
 		        	Editor e = prefs.edit();
 		        	e.putString("klasse", klasse);
 		        	e.commit();
-		        	registerInBackground();
+		        	if (Main.regid != null) registerInBackground();
 		        }
 		    }
 		};

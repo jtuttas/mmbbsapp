@@ -63,7 +63,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 		spinner.setOnItemSelectedListener(this);
 		if (lehrerkuerzel != null) {
 			for (int i=0 ; i < shortNames.length;i++) {
-				Log.d(Main.TAG,"Teste ("+shortNames[i]+") mit ("+lehrerkuerzel+")");
+				//Log.d(Main.TAG,"Teste ("+shortNames[i]+") mit ("+lehrerkuerzel+")");
 				if (shortNames[i].compareTo(lehrerkuerzel)==0) {
 					spinner.setSelection(i);
 					Log.d(Main.TAG,"Setze Spinner auf "+i);

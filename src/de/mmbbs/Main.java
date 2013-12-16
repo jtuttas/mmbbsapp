@@ -302,6 +302,12 @@ public class Main extends Activity implements Loadfinished {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.item_sync:
+			DBManager.VERSION=-1;
+			UPDATE_STATE=NEW_VERSION;  
+			dbtask = new DBDownloaderTask(this,this);
+        	dbtask.execute(Main.DB_URL+"index.php");
+			break;
 		case R.id.item_einstellungen:
 			startActivity(new Intent(this,Pref.class));
 			break;
@@ -351,6 +357,7 @@ public class Main extends Activity implements Loadfinished {
 
 	public void loadFinished(String s) {
 		// TODO Auto-generated method stub
+		Log.d(TAG,"loadFinished() UPDATE_STATE="+UPDATE_STATE);
 		switch (UPDATE_STATE) {
 			case NEW_VERSION:
 				if (s!=null) {
@@ -360,7 +367,11 @@ public class Main extends Activity implements Loadfinished {
 						Log.d(Main.TAG, "Versionen unterscheide sich");
 						DBManager.VERSION=vers;
 						//Toast.makeText(this, "Neue Datenbank verfügbar", Toast.LENGTH_LONG).show();
-						dialog = ProgressDialog.show(this, "", "Updating Databases. Please wait...");  
+						dialog= new ProgressDialog(this);
+						dialog.setTitle("Loading...");
+						dialog.setMessage("Updating Databases..");
+						dialog.show();  
+						Log.d(TAG,"Dialog anzeigen"+dialog);
 						UPDATE_STATE=UPDATE_TEACHER_DB;
 						dbtask = new DBDownloaderTask(this,this);
 						dbtask.execute(Main.DB_URL+"index.php?cmd=lehrer");
@@ -403,12 +414,15 @@ public class Main extends Activity implements Loadfinished {
 				//Log.d(Main.TAG, "DB Klassenlehrer[0]="+DBManager.ADD_KLASSENLEHRER[0]);
 				pref = PreferenceManager.getDefaultSharedPreferences(this);
 				
-				dialog.dismiss();
+				
 				UPDATE_STATE=UPDATE_FINISHED;
 				Editor editor = pref.edit();
 				editor.putInt("dbvers", DBManager.VERSION);
 				editor.commit();
 				dbm=new DBManager(this,DBManager.VERSION);
+				dialog.cancel();
+				Log.d(Main.TAG, "Dialog schließen "+dialog);
+
 				break;
 		}
 	}
@@ -437,6 +451,7 @@ public class Main extends Activity implements Loadfinished {
             setAlarm(this,pause);
         }
         
+        Log.d(Main.TAG,"onStart() beendet");
 	}
 
 	public static  void setAlarm(Context context,Date pause) {
