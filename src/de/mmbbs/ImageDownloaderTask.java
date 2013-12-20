@@ -27,14 +27,17 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     public ImageDownloaderTask(ImageView imageView,Context context) {
     	this.context=context;
         imageViewReference = new WeakReference<ImageView>(imageView);
-        dialog = ProgressDialog.show(context, "", "Loading Image. Please wait...");
+        dialog= new ProgressDialog(context);
+		dialog.setTitle("Loading...");
+		dialog.setMessage("Loading Image. Please wait...");
+		dialog.show();
         Log.d(Main.TAG, "Image Downloader initialisiert dialog="+dialog);
         alive=true;
         
     }
     
     public void back() {
-    	if (dialog!=null) dialog.dismiss();
+    	if (dialog!=null) dialog.cancel();
     	this.cancel(true);
     	Log.d (Main.TAG,"Laden abgebrochen!");
     }

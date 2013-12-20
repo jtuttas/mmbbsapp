@@ -308,6 +308,9 @@ public class Main extends Activity implements Loadfinished {
 			dbtask = new DBDownloaderTask(this,this);
         	dbtask.execute(Main.DB_URL+"index.php");
 			break;
+		case R.id.item_umsatz:
+			startActivity(new Intent(this,UmsatzActivity.class));
+			break;
 		case R.id.item_einstellungen:
 			startActivity(new Intent(this,Pref.class));
 			break;

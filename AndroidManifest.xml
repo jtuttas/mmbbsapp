@@ -52,6 +52,7 @@
         <activity android:name="Organisation"></activity>
         <activity android:name="SearchTeacher"></activity>
         <activity android:name="Stundenplan"></activity>
+        <activity android:name="UmsatzActivity"></activity>
         <activity android:name="Vertretungsplan"></activity>
         <receiver android:process=":remote" android:name="MyAppReciever"></receiver>
 <!-- Daniel Lengies: Initialisieren der Activity "Navigation" -->
