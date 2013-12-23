@@ -288,7 +288,8 @@ public class UmsatzActivity extends Activity {
 	    incomeRenderer.setLineWidth(2);
 	    incomeRenderer.setDisplayChartValues(true);
 	    incomeRenderer.setChartValuesTextSize((float)20.0);
-	    incomeRenderer.setChartValuesTextAlign(Align.RIGHT);
+	    incomeRenderer.setChartValuesTextAlign(Align.CENTER);
+	    
 	    
 
 	    // Creating a XYMultipleSeriesRenderer to customize the whole chart
@@ -301,10 +302,12 @@ public class UmsatzActivity extends Activity {
 	    multiRenderer.setChartValuesTextSize((float)12.0);
 	    multiRenderer.setLabelsTextSize((float)20.0);
 	    multiRenderer.setLabelsColor(Color.WHITE);
-	    multiRenderer.setXLabelsAngle(90);
-	    //multiRenderer.setXLabelsPadding(420);
+	    //multiRenderer.setXLabelsAngle(90);
 	    
+	    //multiRenderer.setXLabelsPadding(250);
+	    multiRenderer.setYLabelsPadding(-30);
 	    
+	    multiRenderer.setBarSpacing(0.1);
 	    
 	    multiRenderer.setYAxisMax(max*1.5);
 
