@@ -1,14 +1,17 @@
 package de.mmbbs;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -123,11 +126,11 @@ public class Stundenplan extends Activity   {
 	private final void changeDate() {
 		final SimpleDateFormat dateFormatter = new SimpleDateFormat ("dd.MM.yyyy");
 
-		gc.set(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.MONDAY);
-		gc.set(GregorianCalendar.WEEK_OF_YEAR, week);
-		gc.set(GregorianCalendar.YEAR, GregorianCalendar.getInstance().get(GregorianCalendar.YEAR));
+		//gc.set(GregorianCalendar.DAY_OF_WEEK, GregorianCalendar.MONDAY);
+		//gc.set(GregorianCalendar.WEEK_OF_YEAR, week);
+		//gc.set(GregorianCalendar.YEAR, GregorianCalendar.getInstance().get(GregorianCalendar.YEAR));
 	    
-		final String dateOutput = dateFormatter.format(gc.getTime());
+		final String dateOutput = gc.get(Calendar.DAY_OF_WEEK)+" "+dateFormatter.format(gc.getTime());
 		
 		final TextView lblDate = (TextView) findViewById(R.id.lblDate);
 		lblDate.setText(dateOutput);
@@ -142,30 +145,19 @@ public class Stundenplan extends Activity   {
 		changeDate();
 		
 		/* Die Wochenzahl muss zweistellig sein. */
-		String wochenzahl=""+week;
-		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
+		
 		
 		String url;
 		
 		if (vertretungsplan) {
 			/* Vertretungsplan-URL */
-			String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
-			//Anhängen der Kalenderwoche
-			vertretungsplanURL += wochenzahl +"/c/";
-			vertretungsplanURL += getKlassenhinterlegung();
-			vertretungsplanURL += ".htm";
-			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
-			url=vertretungsplanURL;
+			
+			url=getVetretungsplanURL();
 		}
 		else {
-			/* Stundenplan-URL */
-			String stundenplanURL="http://stundenplan.mmbbs.de/plan1011/klassen/";
-			//Anhängen der Kalenderwoche
-			stundenplanURL += wochenzahl +"/c/";
-			stundenplanURL += getKlassenhinterlegung();
-			stundenplanURL += ".htm";
-			Log.d(Main.TAG,"rufe URL:"+stundenplanURL);
-			url=stundenplanURL;
+			
+			url=getStundenplanURL();
+			
 		}
 		
 		if (!errorOccured) {
@@ -193,24 +185,66 @@ public class Stundenplan extends Activity   {
 	}
     
 
+	private String getStundenplanURL() {
+		String wochenzahl=""+week;
+		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
+		String stundenplanURL="http://stundenplan.mmbbs.de/plan1011/klassen/";
+		//Anhängen der Kalenderwoche
+		stundenplanURL += wochenzahl +"/c/";
+		stundenplanURL += getKlassenhinterlegung();
+		stundenplanURL += ".htm";
+		Log.d(Main.TAG,"rufe URL:"+stundenplanURL);
+		return stundenplanURL;
+	}
+
+	private String getVetretungsplanURL() {
+		String wochenzahl=""+week;
+		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
+		String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
+		//Anhängen der Kalenderwoche
+		vertretungsplanURL += wochenzahl +"/c/";
+		vertretungsplanURL += getKlassenhinterlegung();
+		vertretungsplanURL += ".htm";
+		Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
+		return vertretungsplanURL;
+	}
+
 	/**
 	 * Zeigt die vorherige Woche im WebView an.
 	 * @param v
 	 */
     public void klick_btnWeekBefore(View v) {
-    	if (week>1) week--;
+    	gc.add(Calendar.WEEK_OF_YEAR, -1);
+    	week = gc.get(Calendar.WEEK_OF_YEAR);
     	openPage();
     }
-    
 
 	/**
 	 * Zeigt die nachfolgende Woche im WebView an.
 	 * @param v
 	 */
     public void klick_btnWeekBehind(View v) {
-    	if (week<=52) week++;
+    	gc.add(Calendar.WEEK_OF_YEAR, 1);
+    	week = gc.get(Calendar.WEEK_OF_YEAR);
     	openPage();
     }
+
+    public void klick_btnShare(View v) {
+    	String uri;
+    	if (vertretungsplan) {
+    		uri = this.getVetretungsplanURL();
+    	}
+    	else {
+    		uri = this.getStundenplanURL();
+    	}
+    	Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, uri);
+        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Vertretungsplan");
+        startActivity(Intent.createChooser(intent, "Share"));
+        //startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));	
+    }
+
     
     /**
      * Setter des Attributs <i>vertretungsplan</i>

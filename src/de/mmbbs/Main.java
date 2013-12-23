@@ -20,6 +20,7 @@ import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -115,6 +116,25 @@ public class Main extends Activity implements Loadfinished {
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+    	
+    	if (pref.getBoolean("newversion", true)) {
+    		Editor e = pref.edit();
+    		e.putBoolean("newversion", false);
+    		e.commit();
+    		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
+    		alertDialog.setTitle("Neue Funktionen");
+    		String s = getString(R.string.new_version_txt);
+    		alertDialog.setMessage(s);
+    		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+    		public void onClick(DialogInterface dialog, int which) {
+    			alertDialog.cancel();
+    			//finish();
+    		}
+    		});
+    		//alertDialog.setIcon(R.drawable.joerg);
+    		alertDialog.show();
+               
+    	}
     }
     
     /**

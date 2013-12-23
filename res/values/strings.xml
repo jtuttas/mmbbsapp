@@ -29,5 +29,6 @@
     <string name="btn_ok">OK</string>
     <string name="about_add">Liebe Schülerinnen und Schüler, sicherlich fragen Sie sich, warum hier Werbung erscheint? \n\nNun, die Einnahmen aus der Werbung werden im kommenden Jahr der IT-Fete gespendet. Also bitte hin und wieder mal auf die Werbung klicken, dass ist wie eine kleine Spende für die IT-Fete!</string>
     <string name="ads_text">Heute schon auf die Werbung geklickt?</string>
+    <string name="new_version_txt">- Push Benachrichtigung, wenn sich der Vertretungsplan geändert hat (Achtung BETA)\n- Share Link vom Vertretungsplan\n- Umsatzanzeige der letzten 8 Tage\n - manuelles Aktualisieren der Datenbank\n Beschwerden und Rklamation bitte via EMail an tuttas@mmbbs.de</string>
     
 </resources>

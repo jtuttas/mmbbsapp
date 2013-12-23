@@ -75,7 +75,10 @@ public class Teacher {
 	}
 	
 	public void back() {
-		if (task!=null) task.back();
+		if (task!=null) {
+			task.back();
+			task=null;
+		}
 	}
 	
 	public boolean isLoading() {

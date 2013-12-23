@@ -76,11 +76,12 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Log.d(Main.TAG, "Back Key");
+			Log.d(Main.TAG, " ----> Back Key");
 			if (teacher!=null) {
+				
 				if (teacher.isLoading()) {					
 					teacher.back();
-					return true;
+					//return true;
 				}
 			}
 		}

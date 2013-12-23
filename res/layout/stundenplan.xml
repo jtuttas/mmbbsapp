@@ -20,19 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-             android:onClick="klick_btnWeekBefore"
-            android:src="@android:drawable/ic_media_previous" />
-
-        <TextView
-            android:id="@+id/lblDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="12.03.2012"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textSize="35px" />
+            android:onClick="klick_btnWeekBefore"
+            android:src="@drawable/left" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -41,7 +30,16 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:onClick="klick_btnWeekBehind"
-            android:src="@android:drawable/ic_media_next" />
+            android:src="@drawable/right" />
+
+        <ImageButton
+            android:id="@+id/shareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:onClick="klick_btnShare"
+            android:src="@drawable/share" />
 
     </RelativeLayout>
 
@@ -56,6 +54,15 @@
         android:layout_below="@+id/relLayTop"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/lblDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="12.03.2012"
+            android:background="@drawable/gradient_bg_header"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="25px" />
 
         <WebView
             android:id="@+id/webviewPage"

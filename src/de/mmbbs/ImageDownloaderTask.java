@@ -37,7 +37,10 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     }
     
     public void back() {
-    	if (dialog!=null) dialog.cancel();
+    	if (dialog!=null) {
+    		dialog.cancel();
+    		alive=false;
+    	}
     	this.cancel(true);
     	Log.d (Main.TAG,"Laden abgebrochen!");
     }
@@ -91,6 +94,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
             if (entity != null) {
                 InputStream inputStream = null;
                 try {
+                	
                     inputStream = entity.getContent(); 
                     final Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     return bitmap;
