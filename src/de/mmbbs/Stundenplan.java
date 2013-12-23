@@ -39,6 +39,7 @@ public class Stundenplan extends Activity   {
 	boolean errorOccured=false;
 	/* Standardwert fuer den Vertretungsplan ist false */
 	private boolean vertretungsplan=false;
+	static final String[] weekdays = new String[] {"Sa.","So.","Mo.","Di.","Mi","Do.","Fr.","Sa."}; 
 	
 	
 	/**
@@ -130,7 +131,7 @@ public class Stundenplan extends Activity   {
 		//gc.set(GregorianCalendar.WEEK_OF_YEAR, week);
 		//gc.set(GregorianCalendar.YEAR, GregorianCalendar.getInstance().get(GregorianCalendar.YEAR));
 	    
-		final String dateOutput = gc.get(Calendar.DAY_OF_WEEK)+" "+dateFormatter.format(gc.getTime());
+		final String dateOutput = weekdays[gc.get(Calendar.DAY_OF_WEEK)]+" "+dateFormatter.format(gc.getTime());
 		
 		final TextView lblDate = (TextView) findViewById(R.id.lblDate);
 		lblDate.setText(dateOutput);
