@@ -87,8 +87,8 @@ public class Stundenplan extends Activity   {
 			/* Sucht zu dem Klassennamen den zugehoerigen Link. */
 			
 			if (Main.dbm==null) {
-				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-				Main.dbm=new DBManager(this,pref.getInt("dbvers", 10));
+				
+				Main.dbm=new DBManager(this);
 			}
 			DBManager dbm = Main.dbm;
 			

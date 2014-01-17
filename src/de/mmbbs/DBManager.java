@@ -5,17 +5,20 @@
 import java.util.Vector;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
 public class DBManager extends SQLiteOpenHelper {
 
-	public static String DBNAME = "lehrer";
-	public static int VERSION = 10;
+	public static final String DBNAME = "lehrer";
+	private static int VERSION = 0;
 	public static String CREATE = "CREATE TABLE lehrer(ID INTEGER PRIMARY KEY NOT NULL, SHORT TEXT, NNAME TEXT, VNAME TEXT, GENDER TEXT, EMAIL TEXT);";
 	public static String CREATE_KLASSEN = "CREATE TABLE klassen(ID INTEGER PRIMARY KEY NOT NULL, KLASSE TEXT, ID_LEHRER TEXT, STUNDENPLAN TEXT, VERTRETUNGSPLAN TEXT);";
 	//public static String CREATE_KLASSENLEHRER = "CREATE TABLE klassenlehrer(ID INTEGER PRIMARY KEY NOT NULL, KLASSE_ID INTEGER, LEHRER_ID INTEGER);";
@@ -28,17 +31,25 @@ public class DBManager extends SQLiteOpenHelper {
 	public static String[] ADD_KLASSEN = {
 	};
 	
-	//forest testwerte eingetragen
-	//public static  String[] ADD_KLASSENLEHRER = {
-		
-	//};
 	
-	public DBManager(Context context, int VERSION) {
-		super(context,DBNAME,null,VERSION);
+	public DBManager(Context context) {		
+		super(context,DBNAME,null,DBManager.getVersion(context));
 		this.context=context;
-		this.VERSION=VERSION;
 		Log.d(Main.TAG, "DBM-Manager initialisiert Version="+VERSION);
 		// TODO Auto-generated constructor stub
+	}
+	
+	public static void setVersion(int v,Context c) {
+		VERSION=v;
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
+		Editor e = pref.edit();
+		e.putInt("dbvers", v);
+		e.commit();
+	}
+	
+	public static int getVersion(Context c) {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(c);
+		return pref.getInt("dbvers", 1);
 	}
 
 	@Override
@@ -64,10 +75,10 @@ public class DBManager extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2) {
+	public void onUpgrade(SQLiteDatabase db, int oldversion, int newversion) {
 		// TODO Auto-generated method stub
 		
-		Log.d(Main.TAG, "DBM-Manager update Database");
+		Log.d(Main.TAG, "DBM-Manager update Database from "+oldversion+" to "+newversion);
 		try {
 		db.execSQL("DROP TABLE 'lehrer'");
 		}

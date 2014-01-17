@@ -45,8 +45,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 		spinner = (Spinner) findViewById(R.id.spinnerLehrer);
 		
 		if (Main.dbm==null) {
-			SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-			Main.dbm=new DBManager(this,pref.getInt("dbvers", 10));
+			Main.dbm=new DBManager(this);
 		}
 		shortNames = Main.dbm.getShortNames();
 		// simple_spinner_item

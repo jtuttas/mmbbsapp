@@ -58,6 +58,8 @@ public class Main extends Activity implements Loadfinished {
 	public static final int UPDATE_FINISHED=4;
 	public static int UPDATE_STATE=NEW_VERSION;
 	
+	private int dbVers;
+	
 	public static final String TAG = "mmbbsapp";
 	public static String IMAGE_URL = "http://www.seminar-mediendidaktik.de/mmbbsapp/";
 	public static String DB_URL = "http://midlet.dyndns.org/mmbbsapp/";
@@ -101,7 +103,8 @@ public class Main extends Activity implements Loadfinished {
 		Log.d(Main.TAG, "onCreate");
         setContentView(R.layout.main);
     	pref = PreferenceManager.getDefaultSharedPreferences(this);
-    	dbm = new DBManager(this,pref.getInt("dbvers", 10));
+    	dbm = new DBManager(this);
+    	
     	context = this.getApplicationContext();
 		adView = (AdView)this.findViewById(R.id.adView);
     	klasse = pref.getString("klasse", null);
@@ -117,9 +120,10 @@ public class Main extends Activity implements Loadfinished {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
     	
-    	if (pref.getBoolean("newversion", true)) {
+    	String v = getString(R.string.version);
+    	if (pref.getString("newversion", "0.0").compareTo(v)!=0) {
     		Editor e = pref.edit();
-    		e.putBoolean("newversion", false);
+    		e.putString("newversion", v);
     		e.commit();
     		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     		alertDialog.setTitle("Neue Funktionen");
@@ -323,7 +327,8 @@ public class Main extends Activity implements Loadfinished {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.item_sync:
-			DBManager.VERSION=-1;
+			DBManager.setVersion(1, this);
+			this.deleteDatabase(DBManager.DBNAME);
 			UPDATE_STATE=NEW_VERSION;  
 			dbtask = new DBDownloaderTask(this,this);
         	dbtask.execute(Main.DB_URL+"index.php");
@@ -385,10 +390,10 @@ public class Main extends Activity implements Loadfinished {
 			case NEW_VERSION:
 				if (s!=null) {
 					s=s.substring(0, s.indexOf("\r"));
-					int vers = Integer.parseInt(s);
-					if (vers!=DBManager.VERSION) {
+					dbVers = Integer.parseInt(s);
+					if (dbVers!=DBManager.getVersion(this)) {
 						Log.d(Main.TAG, "Versionen unterscheide sich");
-						DBManager.VERSION=vers;
+						//DBManager.VERSION=vers;
 						//Toast.makeText(this, "Neue Datenbank verfügbar", Toast.LENGTH_LONG).show();
 						dialog= new ProgressDialog(this);
 						dialog.setTitle("Loading...");
@@ -439,10 +444,9 @@ public class Main extends Activity implements Loadfinished {
 				
 				
 				UPDATE_STATE=UPDATE_FINISHED;
-				Editor editor = pref.edit();
-				editor.putInt("dbvers", DBManager.VERSION);
-				editor.commit();
-				dbm=new DBManager(this,DBManager.VERSION);
+				DBManager.setVersion(dbVers,this);
+				dbm=new DBManager(this);
+				
 				dialog.cancel();
 				Log.d(Main.TAG, "Dialog schließen "+dialog);
 
@@ -463,7 +467,7 @@ public class Main extends Activity implements Loadfinished {
         adView.loadAd(adRequest);
     
         if (UPDATE_STATE!=UPDATE_FINISHED) {
-        	Log.d(Main.TAG, "Aus Pref Version="+DBManager.VERSION);
+        	Log.d(Main.TAG, "Aus Pref Version="+DBManager.getVersion(this));
         	dbtask = new DBDownloaderTask(this,this);
         	dbtask.execute(Main.DB_URL+"index.php");
         }

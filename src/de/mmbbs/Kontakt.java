@@ -46,8 +46,7 @@ public class Kontakt extends Activity {
 	        break;
 		case R.id.buttonlehrersuche:
 			if (Main.dbm==null) {
-				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-				Main.dbm=new DBManager(this,pref.getInt("dbvers", 10));
+				Main.dbm=new DBManager(this);
 			}
 			if (Main.dbm.getShortNames()!=null) {
 				startActivity(new Intent(this,SearchTeacher.class));
