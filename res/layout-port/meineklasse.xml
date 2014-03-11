@@ -5,7 +5,7 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent" 
 		 android:background="@drawable/gradient_bg_header"
-		android:orientation="vertical">
+		android:orientation="vertical" xmlns:app="http://schemas.android.com/apk/res-auto">
 		
      <ImageView android:id="@+id/imageView1" 
     android:src="@drawable/mmbbshead" 
@@ -30,16 +30,6 @@
 		android:text="@string/bt_Mitglieder">
     </Button>
      -->
-     <com.google.android.gms.ads.AdView
-         xmlns:ads="http://schemas.android.com/apk/res-auto"
-     android:id="@+id/adView"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_alignParentBottom="true"
-     android:layout_alignParentLeft="true"
-     ads:adSize="BANNER"
-     ads:adUnitId="a151836bf31e665"
-     android:gravity="bottom" />
  
 
       <Button
@@ -53,14 +43,25 @@
           android:onClick="klick_stundenplan"
           android:text="@string/bt_stundenplan" />
 
+      <com.google.android.gms.ads.AdView
+          xmlns:ads="http://schemas.android.com/apk/res-auto"
+          android:id="@+id/adView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/button_studenplan"
+          android:gravity="bottom"
+          app:adSize="BANNER"
+          app:adUnitId="a151836bf31e665" >
+      </com.google.android.gms.ads.AdView>
+
       <Button
           android:id="@+id/button_vertretungsplan"
           style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
-          android:layout_below="@+id/button_studenplan"
+          android:layout_below="@+id/adView"
           android:onClick="klick_vertretungsplan"
           android:text="@string/bt_vertretungsplan" />
 
@@ -69,10 +70,8 @@
           style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
           android:layout_below="@+id/button_vertretungsplan"
-          android:layout_marginTop="24dp"
           android:onClick="klick_emailKlassenlehrer"
           android:text="@string/bt_emailKlassenlehrer" />
 
@@ -81,7 +80,6 @@
           style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
           android:layout_alignParentRight="true"
           android:layout_below="@+id/button_emailKlassenlehrer"
           android:onClick="klick_emailKlasse"

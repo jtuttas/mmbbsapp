@@ -5,18 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_bg_header"
-    >
-
- <com.google.android.gms.ads.AdView
-     xmlns:ads="http://schemas.android.com/apk/res-auto"
-     android:id="@+id/adView"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_alignParentBottom="true"
-     android:layout_alignParentLeft="true"
-     ads:adSize="BANNER"
-     ads:adUnitId="a151836bf31e665"
-     android:gravity="bottom" />
+    xmlns:app="http://schemas.android.com/apk/res-auto">
  
 
  <Button
@@ -32,19 +21,28 @@
      android:id="@+id/buttonMeineKlasse"
      style="@style/buttonstyle"
      android:layout_alignParentRight="true"
-     android:layout_below="@+id/buttonKontakt"
+     android:layout_centerVertical="true"
      android:onClick="klick_meineklasse"
      android:text="@string/bt_meineKlasse" />
 
-
+ <com.google.android.gms.ads.AdView
+     xmlns:ads="http://schemas.android.com/apk/res-auto"
+     android:id="@+id/adView"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:layout_alignParentLeft="true"
+     android:layout_below="@+id/buttonKontakt"
+     android:gravity="bottom"
+     app:adSize="BANNER"
+     app:adUnitId="a151836bf31e665" >
+ </com.google.android.gms.ads.AdView>
 
  <TextView
      android:id="@+id/textView1"
      android:layout_width="match_parent"
      android:layout_height="wrap_content"
-     android:layout_above="@+id/adView"
+     android:layout_alignParentBottom="true"
      android:layout_alignParentLeft="true"
-     android:layout_marginBottom="15dp"
      android:clickable="true"
      android:gravity="center"
      android:onClick="klick_aboutAdd"

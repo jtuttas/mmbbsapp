@@ -58,9 +58,9 @@
             android:id="@+id/lblDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/gradient_bg_header"
             android:gravity="center"
             android:text="12.03.2012"
-            android:background="@drawable/gradient_bg_header"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textSize="25px" />
 

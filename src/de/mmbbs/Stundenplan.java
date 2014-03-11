@@ -260,14 +260,14 @@ public class Stundenplan extends Activity   {
     	if (keyCode == KeyEvent.KEYCODE_BACK) {
     		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     		alertDialog.setTitle("Werbung");
-    		alertDialog.setMessage("Heute schon auf die Werbung geklickt?");
+    		alertDialog.setMessage("Unterstützen Sie die IT-Fete uund klicken Sie auf die Werbung!");
     		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
     		public void onClick(DialogInterface dialog, int which) {
     			alertDialog.cancel();
     			finish();
     		}
     		});
-    		alertDialog.setIcon(R.drawable.joerg);
+    		alertDialog.setIcon(R.drawable.uncletuttas);
     		alertDialog.show();
                
     		return true;
