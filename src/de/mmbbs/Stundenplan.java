@@ -20,6 +20,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -40,7 +42,7 @@ public class Stundenplan extends Activity   {
 	/* Standardwert fuer den Vertretungsplan ist false */
 	private boolean vertretungsplan=false;
 	static final String[] weekdays = new String[] {"Sa.","So.","Mo.","Di.","Mi","Do.","Fr.","Sa."}; 
-	
+	Stundenplan instance;
 	
 	/**
 	 * Erstellt ein neues Objekt "Stundenplan".
@@ -62,6 +64,7 @@ public class Stundenplan extends Activity   {
 
 		/* Aktuelle Seite aufrufen */
 		openPage();
+		instance=this;
 	}
 	
 	/**
@@ -258,6 +261,43 @@ public class Stundenplan extends Activity   {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	if (keyCode == KeyEvent.KEYCODE_BACK) {
+    		
+    		
+    		AlertDialog.Builder aboutView = new AlertDialog.Builder(this);
+	        aboutView.setTitle("Werbung");
+
+	           //aboutView.setMessage(R.string.about_text);
+	        ScrollView sv = new ScrollView(this);
+	             
+	        LinearLayout credits = new LinearLayout(this);
+	        credits.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+	        credits.setOrientation(LinearLayout.VERTICAL);
+	        credits.setBackgroundColor(0x000000);
+            ImageView img = new ImageView(this);
+            img.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 150));
+            img.setScaleType(ScaleType.CENTER_INSIDE);
+            img.setImageResource(R.drawable.uncletuttas);
+            img.setBackgroundColor(0x000000);
+            credits.addView(img);
+           
+            TextView tv = new TextView(this);
+            tv.setText("Unterstützen Sie die IT-Fete und klicken Sie auf die Werbung!");
+            tv.setGravity(Gravity.CENTER);
+            credits.addView(tv);
+            sv.addView(credits);
+            aboutView.setView(sv);
+            aboutView.setPositiveButton(R.string.btn_ok, null);
+            aboutView.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+            	                public void onClick(DialogInterface dialog,int id) {
+            	                    // go to a new activity of the app
+            	                	instance.finish();
+            	                }
+            	              });
+
+           //aboutView.setIcon(R.drawable.mine);
+            aboutView.show();
+               		
+            /*
     		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     		alertDialog.setTitle("Werbung");
     		alertDialog.setMessage("Unterstützen Sie die IT-Fete uund klicken Sie auf die Werbung!");
@@ -269,7 +309,7 @@ public class Stundenplan extends Activity   {
     		});
     		alertDialog.setIcon(R.drawable.uncletuttas);
     		alertDialog.show();
-               
+            */   
     		return true;
     	}
     	return super.onKeyDown(keyCode, event);
