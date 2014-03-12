@@ -121,9 +121,9 @@ public class Main extends Activity implements Loadfinished {
         }
     	
     	String v = getString(R.string.version);
-    	if (pref.getString("newversion", "0.0").compareTo(v)!=0) {
+    	if (pref.getString("newversion2", "0.0").compareTo(v)!=0) {
     		Editor e = pref.edit();
-    		e.putString("newversion", v);
+    		e.putString("newversion2", v);
     		e.commit();
     		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
     		alertDialog.setTitle("Neue Funktionen");
