@@ -152,6 +152,10 @@ public class UmsatzActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch (NullPointerException nux) {
+			Toast.makeText(this, "Keine Netzwerkverbindung oder Server ist unten",Toast.LENGTH_SHORT).show();
+			this.finish();
+		}
 
 	}
 	

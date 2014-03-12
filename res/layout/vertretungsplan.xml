@@ -37,9 +37,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_toLeftOf="@+id/imageButton2"
             android:onClick="klick_btnShare"
             android:src="@drawable/share" />
+
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/shareButton"
+            android:layout_toRightOf="@+id/imageButton1" />
 
     </RelativeLayout>
 

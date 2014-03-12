@@ -1,9 +1,11 @@
 package de.mmbbs;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,9 +24,15 @@ import android.view.ViewGroup.LayoutParams;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageView.ScaleType;
@@ -43,6 +51,7 @@ public class Stundenplan extends Activity   {
 	private boolean vertretungsplan=false;
 	static final String[] weekdays = new String[] {"Sa.","So.","Mo.","Di.","Mi","Do.","Fr.","Sa."}; 
 	Stundenplan instance;
+	boolean tabelle=true;
 	
 	/**
 	 * Erstellt ein neues Objekt "Stundenplan".
@@ -50,7 +59,12 @@ public class Stundenplan extends Activity   {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stundenplan);
+		if (vertretungsplan) {
+			setContentView(R.layout.vertretungsplan);
+		}
+		else {
+			setContentView(R.layout.stundenplan);
+		}
 		
 		/* Kalenderwoche abrufen */
 		gc = new GregorianCalendar();
@@ -65,7 +79,38 @@ public class Stundenplan extends Activity   {
 		/* Aktuelle Seite aufrufen */
 		openPage();
 		instance=this;
-	}
+		if (vertretungsplan) {
+			Spinner spinner = (Spinner) findViewById(R.id.spinner1);
+			List<String> list = new ArrayList<String>();
+			list.add("Tabelle");
+			list.add("Liste");
+			ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, list);
+			dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			spinner.setAdapter(dataAdapter);
+			spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+	
+				@Override
+				public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+					if (parent.getItemIdAtPosition(pos)==0) {
+						tabelle=true;
+					}
+					else {
+						tabelle=false;
+					}
+					openPage();
+				  }
+	
+				@Override
+				public void onNothingSelected(AdapterView<?> arg0) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+		}
+   }
+	
 	
 	/**
 	 * Gibt die in der Datenbank gespeicherte Klassenhinterlegung zu der jeweiligen Klasse aus.
@@ -204,13 +249,27 @@ public class Stundenplan extends Activity   {
 	private String getVetretungsplanURL() {
 		String wochenzahl=""+week;
 		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
-		String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
-		//Anhängen der Kalenderwoche
-		vertretungsplanURL += wochenzahl +"/c/";
-		vertretungsplanURL += getKlassenhinterlegung();
-		vertretungsplanURL += ".htm";
-		Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
-		return vertretungsplanURL;
+		if (tabelle) {
+			String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
+			//Anhängen der Kalenderwoche
+			vertretungsplanURL += wochenzahl +"/c/";
+			vertretungsplanURL += getKlassenhinterlegung();
+			vertretungsplanURL += ".htm";
+			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
+			return vertretungsplanURL;
+		}
+		else {
+			String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
+			//Anhängen der Kalenderwoche
+			vertretungsplanURL += wochenzahl +"/w/";
+			String h = getKlassenhinterlegung();
+			h=h.replace("c", "w");
+			vertretungsplanURL +=h; 
+			vertretungsplanURL += ".htm";
+			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
+			return vertretungsplanURL;
+			
+		}
 	}
 
 	/**
@@ -274,7 +333,7 @@ public class Stundenplan extends Activity   {
 	        credits.setOrientation(LinearLayout.VERTICAL);
 	        credits.setBackgroundColor(0x000000);
             ImageView img = new ImageView(this);
-            img.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, 150));
+            img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
             img.setScaleType(ScaleType.CENTER_INSIDE);
             img.setImageResource(R.drawable.uncletuttas);
             img.setBackgroundColor(0x000000);
