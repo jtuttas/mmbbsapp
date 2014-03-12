@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
       package="de.mmbbs"
-      android:versionCode="10"
-      android:versionName="1.08" android:installLocation="auto">
+      android:versionCode="11"
+      android:versionName="1.11" android:installLocation="auto">
     <uses-sdk android:minSdkVersion="10" android:targetSdkVersion="18"/>
  <!-- Daniel Lengies: Einbinden der Permissions (notwendige Berechigungen) für GPS und Internet zum Laden der Maps-Daten -->    
         <!-- <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission> -->
