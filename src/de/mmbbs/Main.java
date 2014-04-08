@@ -62,7 +62,7 @@ public class Main extends Activity implements Loadfinished {
 	
 	public static final String TAG = "mmbbsapp";
 	public static String IMAGE_URL = "http://www.seminar-mediendidaktik.de/mmbbsapp/";
-	public static String DB_URL = "http://midlet.dyndns.org/mmbbsapp/";
+	public static String DB_URL = "http://service.joerg-tuttas.de/mmbbsapp/";
 	private DBDownloaderTask dbtask;
 	private ProgressDialog dialog;
 	public static DBManager dbm;
