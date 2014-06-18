@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
+import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -321,40 +322,54 @@ public class Stundenplan extends Activity   {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	if (keyCode == KeyEvent.KEYCODE_BACK) {
     		
+    		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+    		Calendar c = Calendar.getInstance(); 
+    		int dayOfYear = c.get(Calendar.DAY_OF_YEAR);
+    		if (pref.getInt("werbung", -1) != dayOfYear ) {
+    			
+    			Editor e = pref.edit();
+        		e.putInt("werbung", dayOfYear);
+        		e.commit();
+        		
+        		AlertDialog.Builder aboutView = new AlertDialog.Builder(this);
+    	        aboutView.setTitle("Werbung");
+
+    	           //aboutView.setMessage(R.string.about_text);
+    	        ScrollView sv = new ScrollView(this);
+    	             
+    	        LinearLayout credits = new LinearLayout(this);
+    	        credits.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+    	        credits.setOrientation(LinearLayout.VERTICAL);
+    	        credits.setBackgroundColor(0x000000);
+                ImageView img = new ImageView(this);
+                img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                img.setScaleType(ScaleType.CENTER_INSIDE);
+                img.setImageResource(R.drawable.uncletuttas);
+                img.setBackgroundColor(0x000000);
+                credits.addView(img);
+               
+                TextView tv = new TextView(this);
+                tv.setText("Unterstützen Sie die IT-Fete und klicken Sie auf die Werbung!");
+                tv.setGravity(Gravity.CENTER);
+                credits.addView(tv);
+                sv.addView(credits);
+                aboutView.setView(sv);
+                aboutView.setPositiveButton(R.string.btn_ok, null);
+                aboutView.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                	                public void onClick(DialogInterface dialog,int id) {
+                	                    // go to a new activity of the app
+                	                	instance.finish();
+                	                }
+                	              });
+
+               //aboutView.setIcon(R.drawable.mine);
+                aboutView.show();
+    			
+    		}
+    		else {
+    			instance.finish();
+    		}
     		
-    		AlertDialog.Builder aboutView = new AlertDialog.Builder(this);
-	        aboutView.setTitle("Werbung");
-
-	           //aboutView.setMessage(R.string.about_text);
-	        ScrollView sv = new ScrollView(this);
-	             
-	        LinearLayout credits = new LinearLayout(this);
-	        credits.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
-	        credits.setOrientation(LinearLayout.VERTICAL);
-	        credits.setBackgroundColor(0x000000);
-            ImageView img = new ImageView(this);
-            img.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-            img.setScaleType(ScaleType.CENTER_INSIDE);
-            img.setImageResource(R.drawable.uncletuttas);
-            img.setBackgroundColor(0x000000);
-            credits.addView(img);
-           
-            TextView tv = new TextView(this);
-            tv.setText("Unterstützen Sie die IT-Fete und klicken Sie auf die Werbung!");
-            tv.setGravity(Gravity.CENTER);
-            credits.addView(tv);
-            sv.addView(credits);
-            aboutView.setView(sv);
-            aboutView.setPositiveButton(R.string.btn_ok, null);
-            aboutView.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
-            	                public void onClick(DialogInterface dialog,int id) {
-            	                    // go to a new activity of the app
-            	                	instance.finish();
-            	                }
-            	              });
-
-           //aboutView.setIcon(R.drawable.mine);
-            aboutView.show();
                		
             /*
     		final AlertDialog alertDialog = new AlertDialog.Builder(this).create();
