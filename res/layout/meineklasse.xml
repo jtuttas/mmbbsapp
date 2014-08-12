@@ -48,36 +48,24 @@
           android:onClick="klick_vertretungsplan"
           android:text="@string/bt_vertretungsplan" />
 
-      <com.google.android.gms.ads.AdView
-          xmlns:ads="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/adView"
+      <Button
+          android:id="@+id/button_emailKlassenlehrer"
+          style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_above="@+id/button_emailKlassenlehrer"
-          android:layout_alignParentLeft="true"
-          android:gravity="bottom"
-          app:adSize="BANNER"
-          app:adUnitId="a151836bf31e665" >
-      </com.google.android.gms.ads.AdView>
+          android:layout_alignParentRight="true"
+          android:layout_centerVertical="true"
+          android:onClick="klick_emailKlassenlehrer"
+          android:text="@string/bt_emailKlassenlehrer" />
 
       <Button
           android:id="@+id/button_emailKlasse"
           style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_alignParentBottom="true"
-          android:layout_alignParentRight="true"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/button_emailKlassenlehrer"
           android:onClick="klick_emailKlasse"
           android:text="@string/bt_emailKlasse" />
-
-      <Button
-          android:id="@+id/button_emailKlassenlehrer"
-          style="@style/buttonstyle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_above="@+id/button_emailKlasse"
-          android:layout_alignParentRight="true"
-          android:onClick="klick_emailKlassenlehrer"
-          android:text="@string/bt_emailKlassenlehrer" />
 
 </RelativeLayout>
