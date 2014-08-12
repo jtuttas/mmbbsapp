@@ -38,7 +38,7 @@ public class DBDownloaderTask extends AsyncTask<String, Integer, String> {
 	@Override
 	protected String doInBackground(String... urls) {
 		// TODO Auto-generated method stub
-		Log.d(Main.TAG, "Lade DBInfo:"+urls[0]);
+		Log.d(TabActivity.TAG, "Lade DBInfo:"+urls[0]);
 		try {
 		    // Create a URL for the desired page
 		    URL url = new URL(urls[0]);
@@ -54,10 +54,10 @@ public class DBDownloaderTask extends AsyncTask<String, Integer, String> {
 		    in.close();
 		    return s;
 		} catch (MalformedURLException e) {
-			Log.d(Main.TAG, "Malformed URL Exception bei Lade DBInfo:"+urls[0]);
+			Log.d(TabActivity.TAG, "Malformed URL Exception bei Lade DBInfo:"+urls[0]);
 			return null;
 		} catch (IOException e) {
-			Log.d(Main.TAG, "IO-Exception bei Lade DBInfo:"+urls[0]);
+			Log.d(TabActivity.TAG, "IO-Exception bei Lade DBInfo:"+urls[0]);
 			return null;
 		}
 		

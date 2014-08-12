@@ -24,7 +24,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
           //      GcmIntentService.class.getName());
         // Start the service, keeping the device awake while it is launching.
         
-        Log.d(Main.TAG,"GCM BroadcastReceiver ---> onReceive()");
+        Log.d(TabActivity.TAG,"GCM BroadcastReceiver ---> onReceive()");
         //context.startService((intent.setComponent(comp)));
         //setResultCode(Activity.RESULT_OK);
     	 Bundle extras = intent.getExtras();
@@ -56,7 +56,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
                  // Post notification of received message.
                  notification(context,extras.getString("message"));
                  //Log.i(Main.TAG, "Received: " + extras.toString());
-                 Log.i(Main.TAG," message:"+extras.getString("message"));
+                 Log.i(TabActivity.TAG," message:"+extras.getString("message"));
              }
          }
      }
@@ -75,7 +75,7 @@ public class GcmBroadcastReceiver extends BroadcastReceiver {
        
         CharSequence contentText = name;
 
-            Intent notificationIntent = new Intent(context, Main.class);
+            Intent notificationIntent = new Intent(context, TabActivity.class);
             notificationIntent.setFlags(  Intent.FLAG_ACTIVITY_SINGLE_TOP);
             
             PendingIntent contentIntent = PendingIntent.getActivity(context, 0,

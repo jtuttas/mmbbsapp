@@ -90,6 +90,6 @@ public class Teacher {
 	
 	public void getImage(ImageView imageView, Context context) {
 		task = new ImageDownloaderTask(imageView,context);
-        task.execute(Main.IMAGE_URL+getShortName().toLowerCase()+".jpg");  
+        task.execute(TabActivity.IMAGE_URL+getShortName().toLowerCase()+".jpg");  
 	}	
 }

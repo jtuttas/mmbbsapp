@@ -35,14 +35,14 @@ public class Pref extends PreferenceActivity  {
 		    public void onSharedPreferenceChanged(SharedPreferences prefs,
 		            String key) {
 		        if (key.equals("klasse")) {
-		        	Log.d(Main.TAG,"SharePrefrences Klasse changed");
+		        	Log.d(TabActivity.TAG,"SharePrefrences Klasse changed");
 		        	String klasse = prefs.getString("klasse", null);
 		        	klasse=klasse.toUpperCase();
 		        	klasse=klasse.trim();
 		        	Editor e = prefs.edit();
 		        	e.putString("klasse", klasse);
 		        	e.commit();
-		        	if (Main.regid != null) registerInBackground();
+		        	if (TabActivity.regid != null) registerInBackground();
 		        }
 		    }
 		};
@@ -57,11 +57,11 @@ public class Pref extends PreferenceActivity  {
             protected String doInBackground(Void... params) {
                 
                  String klasse = prefs.getString("klasse", "");
-                Log.d(Main.TAG,"registration id="+Main.regid);
-            	Log.d(Main.TAG, "Trage Registration ID ein für ("+klasse+")");
+                Log.d(TabActivity.TAG,"registration id="+TabActivity.regid);
+            	Log.d(TabActivity.TAG, "Trage Registration ID ein für ("+klasse+")");
         		try {
         		    // Create a URL for the desired page
-        		    URL url = new URL(Main.DB_URL+"gcm.php?KLASSE="+klasse+"&GCMid="+Main.regid);
+        		    URL url = new URL(TabActivity.DB_URL+"gcm.php?KLASSE="+klasse+"&GCMid="+TabActivity.regid);
 
         		    // Read all the text returned by the server
         		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -72,11 +72,11 @@ public class Pref extends PreferenceActivity  {
         		    	s=s+str+"\r\n";
         		    }
         		    in.close();
-        		    Log.d(Main.TAG,"Empfangen:"+s);
+        		    Log.d(TabActivity.TAG,"Empfangen:"+s);
         		} catch (MalformedURLException e) {
-        			Log.d(Main.TAG, "Malformed URL Exception bei Lade DBInfo");
+        			Log.d(TabActivity.TAG, "Malformed URL Exception bei Lade DBInfo");
         		} catch (IOException e) {
-        			Log.d(Main.TAG, "IO-Exception bei Lade DBInfo:");
+        			Log.d(TabActivity.TAG, "IO-Exception bei Lade DBInfo:");
         		}
                 return "ok";
             }
@@ -84,7 +84,7 @@ public class Pref extends PreferenceActivity  {
             @Override
             protected void onPostExecute(String msg) {
                 //mDisplay.append(msg + "\n");
-            	Log.d(Main.TAG,msg);
+            	Log.d(TabActivity.TAG,msg);
             }
         }.execute(null, null, null);
     }

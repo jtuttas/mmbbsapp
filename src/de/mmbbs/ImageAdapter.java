@@ -17,7 +17,6 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.op,
             R.drawable.zm,
             R.drawable.ws,
-            R.drawable.dos,
             R.drawable.bo
     };
 

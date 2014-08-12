@@ -39,7 +39,7 @@ public class WebViewClientMmbbs extends WebViewClient {
 	public void onReceivedError(WebView view, int errorCode,
 			String description, String failingUrl) {
 		// TODO Auto-generated method stub
-			Log.d(Main.TAG, "WebView On Received Error: errorCode="+errorCode);
+			Log.d(TabActivity.TAG, "WebView On Received Error: errorCode="+errorCode);
 //		super.onReceivedError(view, errorCode, description, failingUrl);
 			String html1 = "<html><body bgcolor=\"#FF0000\"><br><br><div><h1 align=\"center\">Bei der Anfrage ist ein Fehler aufgetreten!</h1><hr>";
 			String mime = "text/html";
@@ -61,7 +61,7 @@ public class WebViewClientMmbbs extends WebViewClient {
              progressDialog = null;
          }
          String title=view.getTitle();
-         Log.d (Main.TAG,"Page finished Title="+title);
+         Log.d (TabActivity.TAG,"Page finished Title="+title);
          if (title!=null && title.contains("Error")) {
         	String html1 = "<html><body bgcolor=\"#FF8C7A\"><br><br><div><h1 align=\"center\">Es liegen keine Daten vor!</h1>";
         	String mime = "text/html";

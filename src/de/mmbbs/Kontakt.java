@@ -45,10 +45,10 @@ public class Kontakt extends Activity {
 	        startActivity(new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri)));	        
 	        break;
 		case R.id.buttonlehrersuche:
-			if (Main.dbm==null) {
-				Main.dbm=new DBManager(this);
+			if (TabActivity.dbm==null) {
+				TabActivity.dbm=new DBManager(this);
 			}
-			if (Main.dbm.getShortNames()!=null) {
+			if (TabActivity.dbm.getShortNames()!=null) {
 				startActivity(new Intent(this,SearchTeacher.class));
 			}
 			else {

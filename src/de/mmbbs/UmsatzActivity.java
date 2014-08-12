@@ -47,7 +47,7 @@ public class UmsatzActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		Log.d(Main.TAG, "onCreate");
+		Log.d(TabActivity.TAG, "onCreate");
         setContentView(R.layout.umsatz);
 		dialog= new ProgressDialog(this);
 		dialog.setTitle("Loading...");
@@ -73,7 +73,7 @@ public class UmsatzActivity extends Activity {
 			protected void onPostExecute(String result) {
 				// TODO Auto-generated method stub
 				super.onPostExecute(result);
-				Log.d(Main.TAG,"XML="+xmlRevenue);
+				Log.d(TabActivity.TAG,"XML="+xmlRevenue);
 				parseXML(xmlRevenue);
 				openBarChart();
 				dialog.cancel();
@@ -84,7 +84,7 @@ public class UmsatzActivity extends Activity {
 				// TODO Auto-generated method stub
 				try {
         		    // Create a URL for the desired page
-        		    URL url = new URL(Main.DB_URL+"revenue/");
+        		    URL url = new URL(TabActivity.DB_URL+"revenue/");
 
         		    // Read all the text returned by the server
         		    BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -98,10 +98,10 @@ public class UmsatzActivity extends Activity {
         		    in.close();
         		    return s;
         		} catch (MalformedURLException e) {
-        			Log.d(Main.TAG, "Malformed URL Exception bei Lade Revenue");
+        			Log.d(TabActivity.TAG, "Malformed URL Exception bei Lade Revenue");
         			return null;
         		} catch (IOException e) {
-        			Log.d(Main.TAG, "IO-Exception bei Lade Revenue");
+        			Log.d(TabActivity.TAG, "IO-Exception bei Lade Revenue");
         			return null;
         		}
 			}
@@ -121,22 +121,22 @@ public class UmsatzActivity extends Activity {
 			int index=-1;
 			while (eventType != XmlPullParser.END_DOCUMENT) {
 				if(eventType == XmlPullParser.START_DOCUMENT) {
-					Log.i(Main.TAG,"Start document");
+					Log.i(TabActivity.TAG,"Start document");
 				} else if(eventType == XmlPullParser.START_TAG) {
-					Log.i(Main.TAG,"Start tag "+xpp.getName());
+					Log.i(TabActivity.TAG,"Start tag "+xpp.getName());
 					if (xpp.getName().compareTo("revenue")==0) {
-						Log.i(Main.TAG," Attribut="+xpp.getAttributeValue(0));
+						Log.i(TabActivity.TAG," Attribut="+xpp.getAttributeValue(0));
 						index++;
 						//Toast.makeText(this, "Attribut="+xpp.getAttributeValue(0), Toast.LENGTH_LONG).show();
 						mDate[index]=xpp.getAttributeValue(0);
 					}
 					
 				} else if(eventType == XmlPullParser.END_TAG) {
-					Log.i(Main.TAG,"End tag "+xpp.getName());
+					Log.i(TabActivity.TAG,"End tag "+xpp.getName());
 				} else if(eventType == XmlPullParser.TEXT) {
-					Log.i(Main.TAG,"Text "+xpp.getText());
+					Log.i(TabActivity.TAG,"Text "+xpp.getText());
 					if (xpp.getText().compareTo("\n")!=0) {
-						Log.i(Main.TAG," Value="+xpp.getText());
+						Log.i(TabActivity.TAG," Value="+xpp.getText());
 						//Toast.makeText(this, "Text=("+xpp.getText()+")", Toast.LENGTH_LONG).show();
 						mValues[index]=Double.parseDouble(xpp.getText());
 					}

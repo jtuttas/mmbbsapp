@@ -10,7 +10,7 @@ public class MyAppReciever extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.d(Main.TAG,"**Alarm Manager hat angeschalten");
+		Log.d(TabActivity.TAG,"**Alarm Manager hat angeschalten");
 		Intent i=new Intent(context, Pause.class);
 	    
 	    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

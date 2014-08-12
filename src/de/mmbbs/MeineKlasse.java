@@ -31,7 +31,7 @@ public class MeineKlasse extends Activity {
 		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
 		klasse = prefs.getString("klasse", null);
 		if (klasse != null) {
-			klassenlehrer = Main.dbm.getLehrer(klasse);
+			klassenlehrer = TabActivity.dbm.getLehrer(klasse);
 		}
 		setContentView(R.layout.meineklasse);
 		adView = (AdView)this.findViewById(R.id.adView);

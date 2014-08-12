@@ -142,11 +142,11 @@ public class Stundenplan extends Activity   {
 		else {
 			/* Sucht zu dem Klassennamen den zugehoerigen Link. */
 			
-			if (Main.dbm==null) {
+			if (TabActivity.dbm==null) {
 				
-				Main.dbm=new DBManager(this);
+				TabActivity.dbm=new DBManager(this);
 			}
-			DBManager dbm = Main.dbm;
+			DBManager dbm = TabActivity.dbm;
 			
 			if (vertretungsplan) {
 				/* SQL-Output Vertretungsplan ausgeben. */
@@ -264,7 +264,7 @@ public class Stundenplan extends Activity   {
 			stundenplanURL += ".htm";
 		}
 		//Anhängen der Kalenderwoche
-		Log.d(Main.TAG,"rufe URL:"+stundenplanURL);
+		Log.d(TabActivity.TAG,"rufe URL:"+stundenplanURL);
 		return stundenplanURL;
 	}
 
@@ -290,7 +290,7 @@ public class Stundenplan extends Activity   {
 				vertretungsplanURL += getKlassenhinterlegung();
 				vertretungsplanURL += ".htm";				
 			}
-			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
+			Log.d(TabActivity.TAG,"rufe URL:"+vertretungsplanURL);
 			return vertretungsplanURL;
 		}
 		else {
@@ -314,7 +314,7 @@ public class Stundenplan extends Activity   {
 			}
 
 			
-			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
+			Log.d(TabActivity.TAG,"rufe URL:"+vertretungsplanURL);
 			return vertretungsplanURL;
 			
 		}

@@ -35,7 +35,7 @@ public class DBManager extends SQLiteOpenHelper {
 	public DBManager(Context context) {		
 		super(context,DBNAME,null,DBManager.getVersion(context));
 		this.context=context;
-		Log.d(Main.TAG, "DBM-Manager initialisiert Version="+VERSION);
+		Log.d(TabActivity.TAG, "DBM-Manager initialisiert Version="+VERSION);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -55,7 +55,7 @@ public class DBManager extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		Log.d(Main.TAG, "DBM-Manager create Database");
+		Log.d(TabActivity.TAG, "DBM-Manager create Database");
 		db.execSQL(CREATE);
 		for (int i=0;i<ADD.length;i++) {
 			db.execSQL(ADD[i]);
@@ -78,7 +78,7 @@ public class DBManager extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldversion, int newversion) {
 		// TODO Auto-generated method stub
 		
-		Log.d(Main.TAG, "DBM-Manager update Database from "+oldversion+" to "+newversion);
+		Log.d(TabActivity.TAG, "DBM-Manager update Database from "+oldversion+" to "+newversion);
 		try {
 		db.execSQL("DROP TABLE 'lehrer'");
 		}
@@ -118,7 +118,7 @@ public class DBManager extends SQLiteOpenHelper {
 			String vname = c.getString(3);
 			String shortName = c.getString(1);
 			String gender = c.getString(4);
-			Log.d(Main.TAG, "Gender aus DB:("+c.getString(4)+")");
+			Log.d(TabActivity.TAG, "Gender aus DB:("+c.getString(4)+")");
 			teacher = new Teacher(context,name,vname,shortName,gender);
 		}
 		c.close();
@@ -131,14 +131,14 @@ public class DBManager extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery("SELECT * FROM lehrer ORDER BY SHORT ASC" , null);
-		Log.d(Main.TAG, "Datenbank Lehrer erntält "+c.getCount()+" einträge");
+		Log.d(TabActivity.TAG, "Datenbank Lehrer erntält "+c.getCount()+" einträge");
 		if (c.getCount()==0) {
 			c.close();
 			db.close();
 			return null;
 		}
 		String[] s = new String[c.getCount()];		
-		Log.d(Main.TAG, "Cursor size="+c.getCount());
+		Log.d(TabActivity.TAG, "Cursor size="+c.getCount());
 		int i=0;
 		while (c.moveToNext()) {
 			s[i++]=c.getString(1);
@@ -153,18 +153,18 @@ public class DBManager extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery("SELECT VERTRETUNGSPLAN FROM klassen WHERE KLASSE='"+klasse+"' ORDER BY KLASSE ASC LIMIT 1" , null);
 		String[] s = new String[c.getCount()];		
-		Log.d(Main.TAG, "Cursor size="+c.getCount());
+		Log.d(TabActivity.TAG, "Cursor size="+c.getCount());
 		int i=0;
 		while (c.moveToNext()) {
 			s[i++]=c.getString(0);
 		}
 		c.close();
 		if (s.length>0) {
-			Log.d(Main.TAG," getVertretungsplanLink von "+klasse+" return:"+s[0]);
+			Log.d(TabActivity.TAG," getVertretungsplanLink von "+klasse+" return:"+s[0]);
 			return s[0];
 		}
 		else {
-			Log.d(Main.TAG," getVertretungsplanLink von "+klasse+" return: nix");
+			Log.d(TabActivity.TAG," getVertretungsplanLink von "+klasse+" return: nix");
 			return "";
 		}
 	}
@@ -174,7 +174,7 @@ public class DBManager extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery("SELECT STUNDENPLAN FROM klassen WHERE KLASSE='"+klasse+"' ORDER BY KLASSE ASC LIMIT 1" , null);
 		String[] s = new String[c.getCount()];		
-		Log.d(Main.TAG, "Cursor size="+c.getCount());
+		Log.d(TabActivity.TAG, "Cursor size="+c.getCount());
 		int i=0;
 		while (c.moveToNext()) {
 			s[i++]=c.getString(0);
@@ -255,7 +255,7 @@ public class DBManager extends SQLiteOpenHelper {
 			s[i++]=c.getString(0);
 		}
 		
-		Log.d(Main.TAG, "Klassenlehrer ist :"+s[0]);
+		Log.d(TabActivity.TAG, "Klassenlehrer ist :"+s[0]);
 		
 		/*
 		c = db.rawQuery("SELECT EMAIL FROM lehrer WHERE SHORT='" + s[0] + "' LIMIT 1" , null);

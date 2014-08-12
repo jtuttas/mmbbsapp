@@ -38,20 +38,20 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 		lehrerkuerzel = intent.getStringExtra("klassenlehrer");
 		
 		//instance = this;
-		Log.d(Main.TAG, "Search Teacher initialisiert bei "+lehrerkuerzel);
+		Log.d(TabActivity.TAG, "Search Teacher initialisiert bei "+lehrerkuerzel);
 
 		
 		setContentView(R.layout.lehrersuche);
 		spinner = (Spinner) findViewById(R.id.spinnerLehrer);
 		
-		if (Main.dbm==null) {
-			Main.dbm=new DBManager(this);
+		if (TabActivity.dbm==null) {
+			TabActivity.dbm=new DBManager(this);
 		}
-		shortNames = Main.dbm.getShortNames();
+		shortNames = TabActivity.dbm.getShortNames();
 		// simple_spinner_item
 		ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.select_dialog_item, shortNames);
 		spinner.setAdapter(adapter);
-		Teacher t = Main.dbm.getTeacher(shortNames[0]);
+		Teacher t = TabActivity.dbm.getTeacher(shortNames[0]);
 		
 		iv = (ImageView)findViewById(R.id.imageViewTeacher);
 		
@@ -65,7 +65,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 				//Log.d(Main.TAG,"Teste ("+shortNames[i]+") mit ("+lehrerkuerzel+")");
 				if (shortNames[i].compareTo(lehrerkuerzel)==0) {
 					spinner.setSelection(i);
-					Log.d(Main.TAG,"Setze Spinner auf "+i);
+					Log.d(TabActivity.TAG,"Setze Spinner auf "+i);
 				}
 			}
 			
@@ -75,7 +75,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Log.d(Main.TAG, " ----> Back Key");
+			Log.d(TabActivity.TAG, " ----> Back Key");
 			if (teacher!=null) {
 				
 				if (teacher.isLoading()) {					
@@ -109,7 +109,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int i,
 			long arg3) {
 		// TODO Auto-generated method stub
-		teacher = Main.dbm.getTeacher(shortNames[i]);
+		teacher = TabActivity.dbm.getTeacher(shortNames[i]);
 		if (teacher.getGender().compareTo("male")==0) {
 			tv.setText("Herr "+teacher.getVName()+" "+teacher.getName());
 		}
@@ -117,7 +117,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 			tv.setText("Frau "+teacher.getVName()+" "+teacher.getName());			
 		}
 
-		Log.d(Main.TAG, "Found Teacher:"+teacher.getVName()+" "+teacher.getName());
+		Log.d(TabActivity.TAG, "Found Teacher:"+teacher.getVName()+" "+teacher.getName());
 		teacher.getImage(iv,this);
 	}
 
@@ -130,7 +130,7 @@ public class SearchTeacher extends Activity implements OnItemSelectedListener{
 	
 	public void emailLehrer() {
 		anrede = "Hallo ";
-		Log.d(Main.TAG, "Gender: "+teacher.getGender());
+		Log.d(TabActivity.TAG, "Gender: "+teacher.getGender());
 		if (teacher.getGender().compareTo("male") == 0) {
 			this.anrede="Sehr geehrter Herr ";
 		} else if (teacher.getGender().compareTo("female") == 0) {

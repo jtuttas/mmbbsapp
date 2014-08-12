@@ -16,7 +16,7 @@ public class Organisation extends Activity {
 	ImageView iv;
 	TextView tvn;
 	TextView tvf;
-	int[] orga = new int[]{R.drawable.ms,R.drawable.op,R.drawable.zm,R.drawable.ws,R.drawable.dos,R.drawable.bo};
+	int[] orga = new int[]{R.drawable.ms,R.drawable.op,R.drawable.zm,R.drawable.ws,R.drawable.bo};
 	String[] orga_name = new String[] {
 			"OStD. Joachim Maiﬂ",
 			"StD. Dr. rer. nat. Martin Opitz",
@@ -24,7 +24,8 @@ public class Organisation extends Activity {
 			"StD. Claudia Wessel",
 			"StD. Holger Brod"
 			};
-	String[] orga_funktion = new String[] {"Schulleiter, Gesamtverantwortung, Auﬂenvertretung",
+	String[] orga_funktion = new String[] {
+			"Schulleiter, Gesamtverantwortung, Auﬂenvertretung",
 			"Vertreter des Schulleiters, Stundenplan",
 			"Koordination Medien Teilzeit, Sicherheitsbeauftragte",
 			"Koordination IT-Teilzeit-Bildungsg‰nge, Koordination IT-Kurse und Religionskurse, Internationale Beziehungen",

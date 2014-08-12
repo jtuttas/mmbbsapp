@@ -31,7 +31,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
 		dialog.setTitle("Loading...");
 		dialog.setMessage("Loading Image. Please wait...");
 		dialog.show();
-        Log.d(Main.TAG, "Image Downloader initialisiert dialog="+dialog);
+        Log.d(TabActivity.TAG, "Image Downloader initialisiert dialog="+dialog);
         alive=true;
         
     }
@@ -42,7 +42,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
     		alive=false;
     	}
     	this.cancel(true);
-    	Log.d (Main.TAG,"Laden abgebrochen!");
+    	Log.d (TabActivity.TAG,"Laden abgebrochen!");
     }
 
     public boolean isAlive() {
@@ -69,7 +69,7 @@ class ImageDownloaderTask extends AsyncTask<String, Void, Bitmap> {
             ImageView imageView = imageViewReference.get();
             if (imageView != null) {
             	if (bitmap==null) {
-            		Log.i(Main.TAG, "Kein Bild gefunden, lade aus Ressouces ");
+            		Log.i(TabActivity.TAG, "Kein Bild gefunden, lade aus Ressouces ");
             		imageView.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.anonym));            	}
             	else {
             		imageView.setImageBitmap(bitmap);

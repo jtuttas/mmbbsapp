@@ -36,9 +36,9 @@ public class Pause extends Activity implements Runnable{
 	     mp.start(); 
 	     pref = PreferenceManager.getDefaultSharedPreferences(this);
 	     if (pref.getString("email", "").compareTo("tuttas")==0) {
-	        	Main.egg=true;
-	            Date pause = Main.getNextPause();
-	            Main.setAlarm(this,pause);
+	    	 TabActivity.egg=true;
+	            Date pause = TabActivity.getNextPause();
+	            TabActivity.setAlarm(this,pause);
 	     }
 	     else {
 	    	 Toast.makeText(this, "Easter egg deactivated", Toast.LENGTH_LONG).show();	    	 
