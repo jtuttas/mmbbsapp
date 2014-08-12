@@ -22,14 +22,12 @@ public class Organisation extends Activity {
 			"StD. Dr. rer. nat. Martin Opitz",
 			"StD. Uta Zimmler",
 			"StD. Claudia Wessel",
-			"OStR. Uwe Dörge-Summann",			
 			"StD. Holger Brod"
 			};
 	String[] orga_funktion = new String[] {"Schulleiter, Gesamtverantwortung, Außenvertretung",
 			"Vertreter des Schulleiters, Stundenplan",
 			"Koordination Medien Teilzeit, Sicherheitsbeauftragte",
 			"Koordination IT-Teilzeit-Bildungsgänge, Koordination IT-Kurse und Religionskurse, Internationale Beziehungen",
-			"Koordination IT-Vollzeit-Bildungsgänge",
 			"Koordination Medien Vollzeit, Statistik, Vertretungsplanung, Qualitätsmanagement, Befragungssysteme"
 	};
 	Context context;

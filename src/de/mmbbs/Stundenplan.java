@@ -26,6 +26,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
@@ -113,6 +114,12 @@ public class Stundenplan extends Activity   {
    }
 	
 	
+	
+	
+	
+
+
+
 	/**
 	 * Gibt die in der Datenbank gespeicherte Klassenhinterlegung zu der jeweiligen Klasse aus.
 	 * @return
@@ -236,37 +243,77 @@ public class Stundenplan extends Activity   {
     
 
 	private String getStundenplanURL() {
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		String klasse = prefs.getString("klasse", "");
+		
+		
 		String wochenzahl=""+week;
 		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
-		String stundenplanURL="http://stundenplan.mmbbs.de/plan1011/klassen/";
+		
+		String stundenplanURL;
+		if (klasse.length()==2) {
+			stundenplanURL="http://stundenplan.mmbbs.de/plan1011/lehrkraft/plan/";
+			stundenplanURL += wochenzahl +"/t/";
+			stundenplanURL += getKlassenhinterlegung().replace("c", "t");
+			stundenplanURL += ".htm";
+		}
+		else {
+			stundenplanURL="http://stundenplan.mmbbs.de/plan1011/klassen/";			
+			stundenplanURL += wochenzahl +"/c/";
+			stundenplanURL += getKlassenhinterlegung();
+			stundenplanURL += ".htm";
+		}
 		//Anhängen der Kalenderwoche
-		stundenplanURL += wochenzahl +"/c/";
-		stundenplanURL += getKlassenhinterlegung();
-		stundenplanURL += ".htm";
 		Log.d(Main.TAG,"rufe URL:"+stundenplanURL);
 		return stundenplanURL;
 	}
 
 	private String getVetretungsplanURL() {
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		String klasse = prefs.getString("klasse", "");
+		
 		String wochenzahl=""+week;
 		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
 		if (tabelle) {
-			String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
-			//Anhängen der Kalenderwoche
-			vertretungsplanURL += wochenzahl +"/c/";
-			vertretungsplanURL += getKlassenhinterlegung();
-			vertretungsplanURL += ".htm";
+			String vertretungsplanURL;
+			if (klasse.length()==2) {
+				vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_leh/";
+				//Anhängen der Kalenderwoche
+				vertretungsplanURL += wochenzahl +"/t/";
+				vertretungsplanURL += getKlassenhinterlegung().replace("c", "t");
+				vertretungsplanURL += ".htm";								
+			}
+			else {
+				vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
+				//Anhängen der Kalenderwoche
+				vertretungsplanURL += wochenzahl +"/c/";
+				vertretungsplanURL += getKlassenhinterlegung();
+				vertretungsplanURL += ".htm";				
+			}
 			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
 			return vertretungsplanURL;
 		}
 		else {
-			String vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
-			//Anhängen der Kalenderwoche
-			vertretungsplanURL += wochenzahl +"/w/";
-			String h = getKlassenhinterlegung();
-			h=h.replace("c", "w");
-			vertretungsplanURL +=h; 
-			vertretungsplanURL += ".htm";
+			String vertretungsplanURL;
+			if (klasse.length()==2) {
+				// stundenplan.mmbbs.de/plan1011/ver_leh/31/v/v00001.htm
+				vertretungsplanURL="http://stundenplan.mmbbs.de/plan1011/ver_leh/";
+				vertretungsplanURL += wochenzahl +"/v/";
+				String h = getKlassenhinterlegung();
+				h=h.replace("c", "v");
+				vertretungsplanURL +=h; 
+				vertretungsplanURL += ".htm";
+			}
+			else {
+				vertretungsplanURL="http://stundenplan.mmbbs.de/plan1011/ver_kla/";
+				vertretungsplanURL += wochenzahl +"/w/";
+				String h = getKlassenhinterlegung();
+				h=h.replace("c", "w");
+				vertretungsplanURL +=h; 
+				vertretungsplanURL += ".htm";
+			}
+
+			
 			Log.d(Main.TAG,"rufe URL:"+vertretungsplanURL);
 			return vertretungsplanURL;
 			

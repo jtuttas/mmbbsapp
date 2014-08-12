@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -40,6 +41,21 @@ public class MeineKlasse extends Activity {
         .build();
         adView.loadAd(adRequest);
 	}
+	
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		String klasse = prefs.getString("klasse", "");
+				
+		if (klasse.length()==2) {
+			((Button) findViewById(R.id.button_emailKlasse)).setVisibility(View.INVISIBLE);
+			((Button) findViewById(R.id.button_emailKlassenlehrer)).setVisibility(View.INVISIBLE);
+		}
+	}
+
 	/**
 	 * Öffnet den Stundenplan.
 	 * @author Fritz, Lammers, Schwanda
