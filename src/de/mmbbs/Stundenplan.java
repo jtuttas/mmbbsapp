@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.google.android.gms.ads.*;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -47,6 +49,9 @@ import android.widget.ImageView.ScaleType;
 public class Stundenplan extends Activity   {
 	/* Hier wird die aktuell ausgewaehlte Woche abgespeichert. */
 	GregorianCalendar gc;
+	
+	  private InterstitialAd interstitial;
+	
 	int week;
 	boolean errorOccured=false;
 	/* Standardwert fuer den Vertretungsplan ist false */
@@ -111,12 +116,39 @@ public class Stundenplan extends Activity   {
 				
 			});
 		}
+		
+		  // Create the interstitial.
+	    interstitial = new InterstitialAd(this);
+	    interstitial.setAdUnitId("ca-app-pub-5414170988828485/3752490655");
+	 // Set the AdListener.
+	    interstitial.setAdListener(new AdListener() {
+	      @Override
+	      public void onAdLoaded() {
+	        Log.d(TabActivity.TAG, "onAdLoaded");
+	        displayInterstitial();
+	      }
+
+	      @Override
+	      public void onAdFailedToLoad(int errorCode) {
+	        Log.d(TabActivity.TAG, "Failed to load Ads");
+	      }
+	    });
+	    // Create ad request.
+	    AdRequest adRequest = new AdRequest.Builder()
+        .addTestDevice("ca-app-pub-5414170988828485/3752490655")
+        .build();
+
+	    // Begin loading your interstitial.
+	    interstitial.loadAd(adRequest);
    }
 	
-	
-	
-	
-	
+	 // Invoke displayInterstitial() when you are ready to display an interstitial.
+	  public void displayInterstitial() {
+		Log.d(TabActivity.TAG," Display Integrials");
+	    if (interstitial.isLoaded()) {
+	      interstitial.show();
+	    }
+	  }
 
 
 

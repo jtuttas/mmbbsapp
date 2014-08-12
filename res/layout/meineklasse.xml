@@ -49,16 +49,6 @@
           android:text="@string/bt_vertretungsplan" />
 
       <Button
-          android:id="@+id/button_emailKlassenlehrer"
-          style="@style/buttonstyle"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignParentRight="true"
-          android:layout_centerVertical="true"
-          android:onClick="klick_emailKlassenlehrer"
-          android:text="@string/bt_emailKlassenlehrer" />
-
-      <Button
           android:id="@+id/button_emailKlasse"
           style="@style/buttonstyle"
           android:layout_width="match_parent"
@@ -67,5 +57,15 @@
           android:layout_below="@+id/button_emailKlassenlehrer"
           android:onClick="klick_emailKlasse"
           android:text="@string/bt_emailKlasse" />
+
+      <Button
+          android:id="@+id/button_emailKlassenlehrer"
+          style="@style/buttonstyle"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/button_vertretungsplan"
+          android:onClick="klick_emailKlassenlehrer"
+          android:text="@string/bt_emailKlassenlehrer" />
 
 </RelativeLayout>

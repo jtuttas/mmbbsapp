@@ -20,7 +20,7 @@ import android.widget.Toast;
  */
 public class MeineKlasse extends Activity {
 	
-	AdView adView;
+	//AdView adView;
 	private String klasse;
 	private String klassenlehrer;
 	
@@ -34,12 +34,14 @@ public class MeineKlasse extends Activity {
 			klassenlehrer = TabActivity.dbm.getLehrer(klasse);
 		}
 		setContentView(R.layout.meineklasse);
+		/*
 		adView = (AdView)this.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
         .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
         .addTestDevice("TEST_DEVICE_ID")
         .build();
         adView.loadAd(adRequest);
+        */
 	}
 	
 	
@@ -77,19 +79,19 @@ public class MeineKlasse extends Activity {
     }
     @Override
     public void onPause() {
-      adView.pause();
+      //adView.pause();
       super.onPause();
     }
 
     @Override
     public void onResume() {
       super.onResume();
-      adView.resume();
+      //adView.resume();
     }
 
     @Override
     public void onDestroy() {
-      adView.destroy();
+      //adView.destroy();
       super.onDestroy();
       
       }

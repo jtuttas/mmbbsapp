@@ -43,25 +43,13 @@
           android:onClick="klick_stundenplan"
           android:text="@string/bt_stundenplan" />
 
-      <com.google.android.gms.ads.AdView
-          xmlns:ads="http://schemas.android.com/apk/res-auto"
-          android:id="@+id/adView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_alignParentLeft="true"
-          android:layout_below="@+id/button_studenplan"
-          android:gravity="bottom"
-          app:adSize="BANNER"
-          app:adUnitId="a151836bf31e665" >
-      </com.google.android.gms.ads.AdView>
-
       <Button
           android:id="@+id/button_vertretungsplan"
           style="@style/buttonstyle"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_alignParentRight="true"
-          android:layout_below="@+id/adView"
+          android:layout_below="@+id/button_studenplan"
           android:onClick="klick_vertretungsplan"
           android:text="@string/bt_vertretungsplan" />
 
