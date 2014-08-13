@@ -47,7 +47,7 @@ import android.widget.TabHost.TabSpec;
 
 public class TabActivity extends android.app.TabActivity implements Loadfinished  {
 	private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    AdView adView;
+
     private String klasse;
 	// Pausen 9:30 , 11:20, 13:10 , 15:00
 	public static final int[] PAUSE_MIN = {30,20,10,0};
@@ -90,7 +90,6 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
     	dbm = new DBManager(this);
     	
     	context = this.getApplicationContext();
-		adView = (AdView)this.findViewById(R.id.adView);
     	klasse = pref.getString("klasse", null);
 		
     	if (checkPlayServices()) {
@@ -150,18 +149,12 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
 		super.onStart();
 		// TODO Auto-generated method stub
         Log.d(TabActivity.TAG,"onStart()");
-        AdView adView = (AdView)this.findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-        .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-        .addTestDevice("TEST_DEVICE_ID")
-        .build();
-        //adView.loadAd(adRequest);
     
-        if (UPDATE_STATE!=UPDATE_FINISHED) {
+        //if (UPDATE_STATE!=UPDATE_FINISHED) {
         	Log.d(TabActivity.TAG, "Aus Pref Version="+DBManager.getVersion(this));
         	dbtask = new DBDownloaderTask(this,this);
         	dbtask.execute(TabActivity.DB_URL+"index.php");
-        }
+        //}
         if (pref.getString("email", "").compareTo("tuttas")==0 && !egg) {
         	egg=true;
         	Toast.makeText(this, "Easter Egg aktiv", Toast.LENGTH_LONG).show();
@@ -397,9 +390,10 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
     
     public void loadFinished(String s) {
 		// TODO Auto-generated method stub
-		Log.d(TAG,"loadFinished() UPDATE_STATE="+UPDATE_STATE);
+		Log.d(TAG,"loadFinished() UPDATE_STATE="+UPDATE_STATE+" s="+s);
 		switch (UPDATE_STATE) {
 			case NEW_VERSION:
+			case UPDATE_FINISHED:
 				if (s!=null) {
 					s=s.substring(0, s.indexOf("\r"));
 					dbVers = Integer.parseInt(s);

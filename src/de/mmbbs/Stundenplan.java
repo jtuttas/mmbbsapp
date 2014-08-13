@@ -59,6 +59,8 @@ public class Stundenplan extends Activity   {
 	static final String[] weekdays = new String[] {"Sa.","So.","Mo.","Di.","Mi","Do.","Fr.","Sa."}; 
 	Stundenplan instance;
 	boolean tabelle=true;
+
+	private boolean displayWerbungFirst;
 	
 	/**
 	 * Erstellt ein neues Objekt "Stundenplan".
@@ -117,6 +119,15 @@ public class Stundenplan extends Activity   {
 			});
 		}
 		
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+		Calendar c = Calendar.getInstance(); 
+		int dayOfYear = c.get(Calendar.DAY_OF_YEAR);
+		if (pref.getInt("werbung", -1) != dayOfYear ) {
+			displayWerbungFirst=true;
+		}
+		else {
+			displayWerbungFirst=false;
+		}
 		  // Create the interstitial.
 	    interstitial = new InterstitialAd(this);
 	    interstitial.setAdUnitId("ca-app-pub-5414170988828485/3752490655");
@@ -125,7 +136,10 @@ public class Stundenplan extends Activity   {
 	      @Override
 	      public void onAdLoaded() {
 	        Log.d(TabActivity.TAG, "onAdLoaded");
-	        
+	        if (displayWerbungFirst) {
+	        	displayInterstitial();
+	        }
+    		
 	      }
 
 	      @Override
