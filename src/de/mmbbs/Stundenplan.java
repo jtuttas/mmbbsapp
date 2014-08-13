@@ -125,7 +125,7 @@ public class Stundenplan extends Activity   {
 	      @Override
 	      public void onAdLoaded() {
 	        Log.d(TabActivity.TAG, "onAdLoaded");
-	        displayInterstitial();
+	        
 	      }
 
 	      @Override
@@ -133,7 +133,9 @@ public class Stundenplan extends Activity   {
 	        Log.d(TabActivity.TAG, "Failed to load Ads");
 	      }
 	    });
+	    
 	    // Create ad request.
+	    
 	    AdRequest adRequest = new AdRequest.Builder()
         .addTestDevice("ca-app-pub-5414170988828485/3752490655")
         .build();
@@ -208,6 +210,57 @@ public class Stundenplan extends Activity   {
 		}
 	}
 	
+	private final String getLehrerhinterlegung() {
+		/* Sucht den in den Einstellungen hinterlegten Klassennamen. */
+		String lehrer;
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		lehrer = prefs.getString("klasse", "");
+		/* wandelt alle Kleinbuchstaben in Grossbuchstaben um. */
+		lehrer=lehrer.toUpperCase();
+		
+		/* Prüfen ob ein Klassenname hinterlegt ist. */
+		if(lehrer.length()==0) {
+			/* Klasse nicht hinterlegt */
+			Toast.makeText(this, "Bitte hinterlege in den Einstellungen zuerst deinen Klassennamen.", Toast.LENGTH_LONG).show();
+			errorOccured=true;
+			return "";
+		}
+		else {
+			/* Sucht zu dem Klassennamen den zugehoerigen Link. */
+			
+			if (TabActivity.dbm==null) {
+				
+				TabActivity.dbm=new DBManager(this);
+			}
+			DBManager dbm = TabActivity.dbm;
+			
+			if (vertretungsplan) {
+				/* SQL-Output Vertretungsplan ausgeben. */
+				final String sqlErgebnis=dbm.getLehrerVertretungsplanLink(lehrer);
+				
+				if (sqlErgebnis.length()==0) {
+					/* Zu dem Klassennamen wurden keine brauchbaren Informationen gefunden. */
+					Toast.makeText(this, "Leider sind zu der Klasse \""+lehrer+"\" keine Informationen zu dem Vertretungsplan hinterlegt.", Toast.LENGTH_LONG).show();
+					errorOccured=true;
+				}
+				
+				return sqlErgebnis;
+				
+			}
+			else {
+				/* SQL-Output Stundenplan ausgeben. */
+				final String sqlErgebnis=dbm.getLehrerStundenplanLink(lehrer);
+				
+				if (sqlErgebnis.length()==0) {
+					/* Zu dem Klassennamen wurden keine brauchbaren Informationen gefunden. */
+					Toast.makeText(this, "Leider sind zu der Klasse \""+lehrer+"\" keine Informationen zu dem Stundenplan hinterlegt.", Toast.LENGTH_LONG).show();
+					errorOccured=true;
+				}
+				
+				return sqlErgebnis;
+			}
+		}
+	}
 	/**
 	 * Ändert das Datum auf die in <i>week</i> hinterlegte Kalenderwoche und setzt das Datum des
 	 * Montags in der Woche als Titel.
@@ -283,10 +336,10 @@ public class Stundenplan extends Activity   {
 		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
 		
 		String stundenplanURL;
-		if (klasse.length()==2) {
+		if (klasse.length()<=3) {
 			stundenplanURL="http://stundenplan.mmbbs.de/plan1011/lehrkraft/plan/";
 			stundenplanURL += wochenzahl +"/t/";
-			stundenplanURL += getKlassenhinterlegung().replace("c", "t");
+			stundenplanURL += getLehrerhinterlegung();
 			stundenplanURL += ".htm";
 		}
 		else {
@@ -308,11 +361,11 @@ public class Stundenplan extends Activity   {
 		if (wochenzahl.length()==1) wochenzahl="0"+wochenzahl;
 		if (tabelle) {
 			String vertretungsplanURL;
-			if (klasse.length()==2) {
+			if (klasse.length()<=3) {
 				vertretungsplanURL ="http://stundenplan.mmbbs.de/plan1011/ver_leh/";
 				//Anhängen der Kalenderwoche
 				vertretungsplanURL += wochenzahl +"/t/";
-				vertretungsplanURL += getKlassenhinterlegung().replace("c", "t");
+				vertretungsplanURL += getLehrerhinterlegung();
 				vertretungsplanURL += ".htm";								
 			}
 			else {
@@ -327,12 +380,12 @@ public class Stundenplan extends Activity   {
 		}
 		else {
 			String vertretungsplanURL;
-			if (klasse.length()==2) {
+			if (klasse.length()<=3) {
 				// stundenplan.mmbbs.de/plan1011/ver_leh/31/v/v00001.htm
 				vertretungsplanURL="http://stundenplan.mmbbs.de/plan1011/ver_leh/";
 				vertretungsplanURL += wochenzahl +"/v/";
-				String h = getKlassenhinterlegung();
-				h=h.replace("c", "v");
+				String h = getLehrerhinterlegung();
+				h=h.replace("t", "v");
 				vertretungsplanURL +=h; 
 				vertretungsplanURL += ".htm";
 			}
@@ -437,6 +490,7 @@ public class Stundenplan extends Activity   {
                 aboutView.setPositiveButton("Yes",new DialogInterface.OnClickListener() {
                 	                public void onClick(DialogInterface dialog,int id) {
                 	                    // go to a new activity of the app
+                	                	displayInterstitial();
                 	                	instance.finish();
                 	                }
                 	              });
@@ -446,6 +500,7 @@ public class Stundenplan extends Activity   {
     			
     		}
     		else {
+            	displayInterstitial();
     			instance.finish();
     		}
     		

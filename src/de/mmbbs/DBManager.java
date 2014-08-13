@@ -19,7 +19,7 @@ public class DBManager extends SQLiteOpenHelper {
 
 	public static final String DBNAME = "lehrer";
 	private static int VERSION = 0;
-	public static String CREATE = "CREATE TABLE lehrer(ID INTEGER PRIMARY KEY NOT NULL, SHORT TEXT, NNAME TEXT, VNAME TEXT, GENDER TEXT, EMAIL TEXT);";
+	public static String CREATE = "CREATE TABLE lehrer(ID INTEGER PRIMARY KEY NOT NULL, SHORT TEXT, NNAME TEXT, VNAME TEXT, GENDER TEXT, EMAIL TEXT,STUNDENPLAN TEXT, VERTRETUNGSPLAN TEXT);";
 	public static String CREATE_KLASSEN = "CREATE TABLE klassen(ID INTEGER PRIMARY KEY NOT NULL, KLASSE TEXT, ID_LEHRER TEXT, STUNDENPLAN TEXT, VERTRETUNGSPLAN TEXT);";
 	//public static String CREATE_KLASSENLEHRER = "CREATE TABLE klassenlehrer(ID INTEGER PRIMARY KEY NOT NULL, KLASSE_ID INTEGER, LEHRER_ID INTEGER);";
 	Context context;
@@ -36,6 +36,7 @@ public class DBManager extends SQLiteOpenHelper {
 		super(context,DBNAME,null,DBManager.getVersion(context));
 		this.context=context;
 		Log.d(TabActivity.TAG, "DBM-Manager initialisiert Version="+VERSION);
+		this.getReadableDatabase();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -168,6 +169,26 @@ public class DBManager extends SQLiteOpenHelper {
 			return "";
 		}
 	}
+	public String getLehrerVertretungsplanLink(final String lehrer) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery("SELECT VERTRETUNGSPLAN FROM lehrer WHERE SHORT='"+lehrer+"'" , null);
+		String[] s = new String[c.getCount()];		
+		Log.d(TabActivity.TAG, "Cursor size="+c.getCount());
+		int i=0;
+		while (c.moveToNext()) {
+			s[i++]=c.getString(0);
+		}
+		c.close();
+		if (s.length>0) {
+			Log.d(TabActivity.TAG," getVertretungsplanLink von "+lehrer+" return:"+s[0]);
+			return s[0];
+		}
+		else {
+			Log.d(TabActivity.TAG," getVertretungsplanLink von "+lehrer+" return: nix");
+			return "";
+		}
+	}
 	
 	public String getStundenplanLink(final String klasse) {
 		// TODO Auto-generated method stub
@@ -185,7 +206,22 @@ public class DBManager extends SQLiteOpenHelper {
 		}
 		else return "";
 	}
-	
+	public String getLehrerStundenplanLink(final String lehrer) {
+		// TODO Auto-generated method stub
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor c = db.rawQuery("SELECT STUNDENPLAN FROM lehrer WHERE SHORT='"+lehrer+"'" , null);
+		String[] s = new String[c.getCount()];		
+		Log.d(TabActivity.TAG, "Cursor size="+c.getCount());
+		int i=0;
+		while (c.moveToNext()) {
+			s[i++]=c.getString(0);
+		}
+		c.close();
+		if (s.length>0) {
+			return s[0];
+		}
+		else return "";
+	}
 	/**
 	 * herausfinden der Klassen ID
 	 * @param String klasse
