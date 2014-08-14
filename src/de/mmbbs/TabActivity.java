@@ -142,6 +142,12 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
         // Adding all TabSpec to TabHost
         tabHost.addTab(mklasse);
         tabHost.addTab(mschule); 
+        
+      //if (UPDATE_STATE!=UPDATE_FINISHED) {
+    	Log.d(TabActivity.TAG, "Aus Pref Version="+DBManager.getVersion(this));
+    	dbtask = new DBDownloaderTask(this,this);
+    	dbtask.execute(TabActivity.DB_URL+"index.php");
+    //}
     }
 	
 	@Override
@@ -150,11 +156,7 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
 		// TODO Auto-generated method stub
         Log.d(TabActivity.TAG,"onStart()");
     
-        //if (UPDATE_STATE!=UPDATE_FINISHED) {
-        	Log.d(TabActivity.TAG, "Aus Pref Version="+DBManager.getVersion(this));
-        	dbtask = new DBDownloaderTask(this,this);
-        	dbtask.execute(TabActivity.DB_URL+"index.php");
-        //}
+        
         if (pref.getString("email", "").compareTo("tuttas")==0 && !egg) {
         	egg=true;
         	Toast.makeText(this, "Easter Egg aktiv", Toast.LENGTH_LONG).show();
