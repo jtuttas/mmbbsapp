@@ -36,4 +36,304 @@
         <item>Tabelle</item>
         <item>Liste</item>
     </string-array>
+    <string name="app_name">TicTacToeTournament</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="Hallo">Hallo</string>
+    <string name="send">send</string>
+    <string name="login">Log in</string>
+    <string name="username">user name</string>
+    <string name="Password">Password</string>
+    <string name="RetypePassword">retype Password</string>
+    <string name="email">EMail</string>
+    <string name="email_adress">EMail Address</string>
+    <string name="resend">Resend</string>
+    <string name="register">Register</string>
+    <string name="location">Pick Country</string>
+    <string name="retry">Retry</string>
+    <string name="error">Error</string>
+    <string-array  name="country_arrays">
+        
+        
+        <item>Afghanistan</item>
+<item>Ägypten</item>
+<item>Aland</item>
+<item>Albanien</item>
+<item>Algerien</item>
+<item>Amerikanisch-Samoa</item>
+<item>Amerikanische Jungferninseln</item>
+<item>Andorra</item>
+<item>Angola</item>
+<item>Anguilla</item>
+<item>Antarktis</item>
+<item>Antigua und Barbuda</item>
+<item>Äquatorialguinea</item>
+<item>Argentinien</item>
+<item>Armenien</item>
+<item>Aruba</item>
+<item>Ascension</item>
+<item>Aserbaidschan</item>
+<item>Äthiopien</item>
+<item>Australien</item>
+<item>Bahamas</item>
+<item>Bahrain</item>
+<item>Bangladesch</item>
+<item>Barbados</item>
+<item>Belgien</item>
+<item>Belize</item>
+<item>Benin</item>
+<item>Bermuda</item>
+<item>Bhutan</item>
+<item>Bolivien</item>
+<item>Bosnien und Herzegowina</item>
+<item>Botswana</item>
+<item>Bouvetinsel</item>
+<item>Brasilien</item>
+<item>Brunei</item>
+<item>Bulgarien</item>
+<item>Burkina Faso</item>
+<item>Burundi</item>
+<item>Chile</item>
+<item>China</item>
+<item>Cookinseln</item>
+<item>Costa Rica</item>
+<item>Dänemark</item>
+<item>Deutschland</item>
+<item>Diego Garcia</item>
+<item>Dominica</item>
+<item>Dominikanische Republik</item>
+<item>Dschibuti</item>
+<item>Ecuador</item>
+<item>El Salvador</item>
+<item>Eritrea</item>
+<item>Estland</item>
+<item>Europäische Union</item>
+<item>Falklandinseln</item>
+<item>Färöer</item>
+<item>Fidschi</item>
+<item>Finnland</item>
+<item>Frankreich</item>
+<item>Französisch-Guayana</item>
+<item>Französisch-Polynesien</item>
+<item>Gabun</item>
+<item>Gambia</item>
+<item>Georgien</item>
+<item>Ghana</item>
+<item>Gibraltar</item>
+<item>Grenada</item>
+<item>Griechenland</item>
+<item>Grönland</item>
+<item>Großbritannien</item>
+<item>Guadeloupe</item>
+<item>Guam</item>
+<item>Guatemala</item>
+<item>Guernsey</item>
+<item>Guinea</item>
+<item>Guinea-Bissau</item>
+<item>Guyana</item>
+<item>Haiti</item>
+<item>Heard und McDonaldinseln</item>
+<item>Honduras</item>
+<item>Hongkong</item>
+<item>Indien</item>
+<item>Indonesien</item>
+<item>Irak</item>
+<item>Iran</item>
+<item>Irland</item>
+<item>Island</item>
+<item>Israel</item>
+<item>Italien</item>
+<item>Jamaika</item>
+<item>Japan</item>
+<item>Jemen</item>
+<item>Jersey</item>
+<item>Jordanien</item>
+<item>Kaimaninseln</item>
+<item>Kambodscha</item>
+<item>Kamerun</item>
+<item>Kanada</item>
+<item>Kanarische Inseln</item>
+<item>Kap Verde</item>
+<item>Kasachstan</item>
+<item>Katar</item>
+<item>Kenia</item>
+<item>Kirgisistan</item>
+<item>Kiribati</item>
+<item>Kokosinseln</item>
+<item>Kolumbien</item>
+<item>Komoren</item>
+<item>Kongo</item>
+<item>Kroatien</item>
+<item>Kuba</item>
+<item>Kuwait</item>
+<item>Laos</item>
+<item>Lesotho</item>
+<item>Lettland</item>
+<item>Libanon</item>
+<item>Liberia</item>
+<item>Libyen</item>
+<item>Liechtenstein</item>
+<item>Litauen</item>
+<item>Luxemburg</item>
+<item>Macao</item>
+<item>Madagaskar</item>
+<item>Malawi</item>
+<item>Malaysia</item>
+<item>Malediven</item>
+<item>Mali</item>
+<item>Malta</item>
+<item>Marokko</item>
+<item>Marshallinseln</item>
+<item>Martinique</item>
+<item>Mauretanien</item>
+<item>Mauritius</item>
+<item>Mayotte</item>
+<item>Mazedonien</item>
+<item>Mexiko</item>
+<item>Mikronesien</item>
+<item>Moldawien</item>
+<item>Monaco</item>
+<item>Mongolei</item>
+<item>Montserrat</item>
+<item>Mosambik</item>
+<item>Myanmar</item>
+<item>Namibia</item>
+<item>Nauru</item>
+<item>Nepal</item>
+<item>Neukaledonien</item>
+<item>Neuseeland</item>
+<item>Neutrale Zone</item>
+<item>Nicaragua</item>
+<item>Niederlande</item>
+<item>Niederländische Antillen</item>
+<item>Niger</item>
+<item>Nigeria</item>
+<item>Niue</item>
+<item>Nordkorea</item>
+<item>Nördliche Marianen</item>
+<item>Norfolkinsel</item>
+<item>Norwegen</item>
+<item>Oman</item>
+<item>Österreich</item>
+<item>Pakistan</item>
+<item>Palästina</item>
+<item>Palau</item>
+<item>Panama</item>
+<item>Papua-Neuguinea</item>
+<item>Paraguay</item>
+<item>Peru</item>
+<item>Philippinen</item>
+<item>Pitcairninseln</item>
+<item>Polen</item>
+<item>Portugal</item>
+<item>Puerto Rico</item>
+<item>Réunion</item>
+<item>Ruanda</item>
+<item>Rumänien</item>
+<item>Russische Föderation</item>
+<item>Salomonen</item>
+<item>Sambia</item>
+<item>Samoa</item>
+<item>San Marino</item>
+<item>São Tomé und Príncipe</item>
+<item>Saudi-Arabien</item>
+<item>Schweden</item>
+<item>Schweiz</item>
+<item>Senegal</item>
+<item>Serbien und Montenegro</item>
+<item>Seychellen</item>
+<item>Sierra Leone</item>
+<item>Simbabwe</item>
+<item>Singapur</item>
+<item>Slowakei</item>
+<item>Slowenien</item>
+<item>Somalia</item>
+<item>Spanien</item>
+<item>Sri Lanka</item>
+<item>St. Helena</item>
+<item>St. Kitts und Nevis</item>
+<item>St. Lucia</item>
+<item>St. Pierre und Miquelon</item>
+<item>St. Vincent/Grenadinen (GB)</item>
+<item>Südafrika, Republik</item>
+<item>Sudan</item>
+<item>Südkorea</item>
+<item>Suriname</item>
+<item>Svalbard und Jan Mayen</item>
+<item>Swasiland</item>
+<item>Syrien</item>
+<item>Tadschikistan</item>
+<item>Taiwan</item>
+<item>Tansania</item>
+<item>Thailand</item>
+<item>Timor-Leste</item>
+<item>Togo</item>
+<item>Tokelau</item>
+<item>Tonga</item>
+<item>Trinidad und Tobago</item>
+<item>Tristan da Cunha</item>
+<item>Tschad</item>
+<item>Tschechische Republik</item>
+<item>Tunesien</item>
+<item>Türkei</item>
+<item>Turkmenistan</item>
+<item>Turks- und Caicosinseln</item>
+<item>Tuvalu</item>
+<item>Uganda</item>
+<item>Ukraine</item>
+<item>Ungarn</item>
+<item>Uruguay</item>
+<item>Usbekistan</item>
+<item>Vanuatu</item>
+<item>Vatikanstadt</item>
+<item>Venezuela</item>
+<item>Vereinigte Arabische Emirate</item>
+<item>Vereinigte Staaten von Amerika</item>
+<item>Vietnam</item>
+<item>Wallis und Futuna</item>
+<item>Weihnachtsinsel</item>
+<item>Weißrussland</item>
+<item>Westsahara</item>
+<item>Zentralafrikanische Republik</item>
+<item>Zypern</item>
+
+    </string-array>
+        <string name="failed_connect">Failed to connect to the GameServer</string>
+        <string name="reload">reload</string>
+        <string name="connecting">Connecting....</string>
+        <string name="connect_to_gameserver">Try to connect to Gameserver!</string>
+        <string name="menu_login">Login</string>
+        <string name="error_empty_username">Please select a user name!</string>
+        <string name="error_empty_password">Please type in a password!</string>
+        <string name="error_diff_password">The passwords differ!</string>
+        <string name="error_empty_email">Please type in a valid email address!</string>
+      <string name="menu_resend">Resend Login</string>
+      <string name="menu_register">Register</string>
+      <string name="resend_login">Resend Login</string>
+      <string name="chat">Chat</string>
+      <string name="request_player">"Request from"</string>
+      <string name="request">"Request"</string>
+      <string name="cancel">"Cancel"</string>
+      <string name="ok">"OK"</string>
+      <string name="reject">"reject"</string>
+      <string name="add_friend">add to friends</string>
+      <string name="filter">Filter</string>
+      <string name="play_with">Play with...</string>
+      <string name="remove_friend">remove from friends</string>
+      <string name="friends_only">friends only</string>
+      <string name="online_users">Online Users</string>
+      <string name="not_a_free_player">Not a free player!</string>
+      <string name="users">Users</string>
+                  <string name="highscore">Highscores</string>
+      <string name="player_disconnected">Lost connection to your partner! You have won!"</string>
+      <string name="player_timedout">Your partner is timed out, you have won !</string>
+      <string name="player_closed">Your partner closed the game, you have won !</string>
+      <string name="has_won"> has WON!</string>
+      <string name="penalty">DRAWN !</string>
+      <string name="name">Name</string>
+      <string name="score">Score</string>
+      <string name="games">Games</string>
+      <string name="won">won</string>
+      <string name="lost">lost</string>
+      <string name="rank">Rank</string>
 </resources>

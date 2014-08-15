@@ -142,7 +142,7 @@
             android:layout_height="fill_parent"
             android:layout_weight="1" >
 
-        <de.tuttas.tictactoetournament.game.Leinwand
+        <de.tuttas.mmbbs.tictactoetournament.game.Leinwand
             android:id="@+id/gui"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
