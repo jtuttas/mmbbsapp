@@ -471,6 +471,7 @@ public class Stundenplan extends Activity   {
     		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
     		Calendar c = Calendar.getInstance(); 
     		int dayOfYear = c.get(Calendar.DAY_OF_YEAR);
+    		/*
     		if (pref.getInt("werbung", -1) != dayOfYear ) {
     			
     			Editor e = pref.edit();
@@ -514,9 +515,10 @@ public class Stundenplan extends Activity   {
     			
     		}
     		else {
+    		*/
             	displayInterstitial();
     			instance.finish();
-    		}
+    		//}
     		
                		
             /*
