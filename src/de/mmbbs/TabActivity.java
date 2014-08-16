@@ -138,10 +138,17 @@ public class TabActivity extends android.app.TabActivity implements Loadfinished
         Intent schuleIntent = new Intent(this, Kontakt.class);
         mschule.setContent(schuleIntent);
          
+        // Tab for Spiele
+        TabSpec mspiele = tabHost.newTabSpec("Spiele");
+        // setting Title and Icon for the Tab
+        mspiele.setIndicator("Spiele",null);
+        Intent spieleIntent = new Intent(this, Spiele.class);
+        mspiele.setContent(spieleIntent);
         
         // Adding all TabSpec to TabHost
         tabHost.addTab(mklasse);
         tabHost.addTab(mschule); 
+        tabHost.addTab(mspiele); 
         
       //if (UPDATE_STATE!=UPDATE_FINISHED) {
     	Log.d(TabActivity.TAG, "Aus Pref Version="+DBManager.getVersion(this));

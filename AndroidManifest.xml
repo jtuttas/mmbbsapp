@@ -20,7 +20,9 @@
 		    
     
         
-    <application android:icon="@drawable/icon" android:label="@string/app_name">
+    <application android:icon="@drawable/icon" android:label="@string/app_name"
+        android:name="de.mmbbs.gameserver.GameServer"
+        >
         <receiver
             android:name=".GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -57,6 +59,59 @@
         <receiver android:process=":remote" android:name="MyAppReciever"></receiver>
 <!-- Daniel Lengies: Initialisieren der Activity "Navigation" -->
         <activity android:name="Pause"></activity>
+         <activity android:name="Spiele"></activity>
+         <activity
+            android:name="de.mmbbs.tictactoetournament.Main"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="de.mmbbs.tictactoetournament.ChatActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="de.mmbbs.tictactoetournament.UserListActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="de.mmbbs.tictactoetournament.HighscoreActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="de.mmbbs.tictactoetournament.TabActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Myactionbar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+        <activity
+            android:name="de.mmbbs.tictactoetournament.game.Game"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Myactionbar"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"
+             >
+        </activity>
+         
 		<activity android:name="com.google.android.gms.ads.AdActivity"
              android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     </application>
