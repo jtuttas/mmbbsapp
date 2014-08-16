@@ -12,6 +12,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.mmbbs.io.socket.IOAcknowledge;
+import de.mmbbs.io.socket.IOCallback;
+import de.mmbbs.io.socket.SocketIO;
+import de.mmbbs.io.socket.SocketIOException;
 import de.mmbbs.tictactoetournament.Main;
 
 import android.app.Activity;
@@ -21,10 +25,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import io.socket.IOAcknowledge;
-import io.socket.IOCallback;
-import io.socket.SocketIO;
-import io.socket.SocketIOException;
 
 public class GameServer extends Application implements IOCallback{
 

@@ -17,8 +17,6 @@ public class Spiele extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
-		klasse = prefs.getString("klasse", null);
 		setContentView(R.layout.spiele);
 		/*
 		adView = (AdView)this.findViewById(R.id.adView);
@@ -31,9 +29,10 @@ public class Spiele extends Activity {
 	}
 	
 	public void klick_ttt(View v) {
+		SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+		klasse = prefs.getString("klasse", null);
 		if (klasse==null) {
 			Toast.makeText(this, "Du musst eine Klasse hinterlegen", Toast.LENGTH_LONG).show();
-
 		}
 		else {
 			startActivity(new Intent(this,Main.class));

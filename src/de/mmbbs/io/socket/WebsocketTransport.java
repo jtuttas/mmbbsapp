@@ -1,4 +1,4 @@
-package io.socket;
+package de.mmbbs.io.socket;
 
 import java.io.IOException;
 import java.net.URI;

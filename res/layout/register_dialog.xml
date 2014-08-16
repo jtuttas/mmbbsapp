@@ -113,7 +113,7 @@
 	         android:layout_marginTop="10dp"
 		    >
 	     <TextView
-	         android:id="@+id/textView_score"
+	         android:id="@+id/textView_retypepassword2"
 	         android:layout_width="wrap_content"
 	         android:layout_height="wrap_content"
 	         android:text="@string/RetypePassword"
@@ -141,7 +141,7 @@
 	         android:layout_marginTop="10dp"
 		    >
 	     <TextView
-	         android:id="@+id/textView_score"
+	         android:id="@+id/textView_score2"
 	         android:layout_width="wrap_content"
 	         android:layout_height="wrap_content"
 	         android:text="@string/email"
@@ -161,31 +161,6 @@
 
 	         <requestFocus />
 	     </EditText>
-
-		</TableRow>
-		<TableRow 
-	     android:layout_width="wrap_content"
-	     android:layout_height="wrap_content"
-	         android:layout_marginTop="10dp"
-		    >
-	     <TextView
-	         android:id="@+id/textView_score"
-	         android:layout_width="wrap_content"
-	         android:layout_height="wrap_content"
-	         android:text="@string/location"
-	 		 android:textSize="24dp"
-	         android:layout_marginLeft="15dp"
-	         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-	      <Spinner
-        android:id="@+id/spinner_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:entries="@array/country_arrays"
-        android:textSize="24dp"
-	 		 android:layout_marginLeft="15dp"
-	 		 android:layout_marginRight="10dp"
-         />
 
 		</TableRow>
     </TableLayout>

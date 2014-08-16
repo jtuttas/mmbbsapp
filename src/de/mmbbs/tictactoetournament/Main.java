@@ -1,9 +1,5 @@
 package de.mmbbs.tictactoetournament;
 
-import io.socket.IOAcknowledge;
-import io.socket.IOCallback;
-import io.socket.SocketIO;
-import io.socket.SocketIOException;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -21,6 +17,10 @@ import de.mmbbs.gameserver.GameServer;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameUserListener;
 import de.mmbbs.gameserver.User;
+import de.mmbbs.io.socket.IOAcknowledge;
+import de.mmbbs.io.socket.IOCallback;
+import de.mmbbs.io.socket.SocketIO;
+import de.mmbbs.io.socket.SocketIOException;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -58,7 +58,7 @@ import android.widget.ImageView.ScaleType;
 public class Main extends Activity implements GameServerListener,GameUserListener, LoginDialogListener{
 	
 	public static final String TAG=Main.GAME;
-	public static final String GAME="ttt";
+	public static final String GAME="tttmmbbs";
 	private GameServer gs;
 	private SharedPreferences pref;
 	private Handler handler;
@@ -78,7 +78,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	    String user = pref.getString("user", null);
 	    String pw = pref.getString("password", null);
 	    gs = (GameServer) getApplication();
-		setContentView(R.layout.connecting);
+		setContentView(R.layout.connecting_game);
 		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
 		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
 		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
@@ -393,7 +393,9 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 				ld.dismiss();
 				break;
 			case R.id.button_dialog_positive:
-				String location = ((Spinner)l.findViewById(R.id.spinner_location)).getSelectedItem().toString();
+				SharedPreferences prefs =  PreferenceManager.getDefaultSharedPreferences(this);
+				String location = prefs.getString("klasse", null);
+				//String location = ((Spinner)l.findViewById(R.id.spinner_location)).getSelectedItem().toString();
 				String username = ((EditText)l.findViewById(R.id.editText_login)).getText().toString();
 				String pw = ((EditText)l.findViewById(R.id.editText_password)).getText().toString();
 				String repw = ((EditText)l.findViewById(R.id.editText_repassword)).getText().toString();

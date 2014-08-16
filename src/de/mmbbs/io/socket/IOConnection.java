@@ -6,9 +6,8 @@
  * 
  * See LICENSE file for more information
  */
-package io.socket;
+package de.mmbbs.io.socket;
 
-import io.socket.IOMessage.TypeMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,6 +36,8 @@ import javax.net.ssl.SSLContext;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import de.mmbbs.io.socket.IOMessage.TypeMessage;
 
 /**
  * The Class IOConnection.

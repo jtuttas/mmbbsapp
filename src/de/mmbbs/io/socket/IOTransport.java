@@ -6,7 +6,7 @@
  * 
  * See LICENSE file for more information
  */
-package io.socket;
+package de.mmbbs.io.socket;
 
 import java.io.IOException;
 
