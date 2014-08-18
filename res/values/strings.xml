@@ -36,7 +36,7 @@
         <item>Tabelle</item>
         <item>Liste</item>
     </string-array>
-    <string name="app_name">TicTacToeTournament</string>
+ 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="Hallo">Hallo</string>
@@ -49,7 +49,7 @@
     <string name="email_adress">EMail Address</string>
     <string name="resend">Resend</string>
     <string name="register">Register</string>
-    <string name="location">Pick Country</string>
+    <string name="location">Klasse</string>
     <string name="retry">Retry</string>
     <string name="error">Error</string>
     <string-array  name="country_arrays">
