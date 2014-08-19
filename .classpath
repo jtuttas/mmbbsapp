@@ -5,7 +5,7 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry exported="true" kind="lib" path="C:/Users/jtutt_000/git/mmbbsapp/lib/achartengine-1.1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Tuttas/git/mmbbsapp/lib/achartengine-1.1.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/google-play-services_lib"/>
 	<classpathentry exported="true" kind="lib" path="lib/json-org.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/WebSocket.jar"/>

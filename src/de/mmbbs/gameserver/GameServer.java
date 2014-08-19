@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
+
+
+import de.mmbbs.R;
 import de.mmbbs.io.socket.IOAcknowledge;
 import de.mmbbs.io.socket.IOCallback;
 import de.mmbbs.io.socket.SocketIO;
@@ -49,11 +55,37 @@ public class GameServer extends Application implements IOCallback{
 	private JSONObject missedUserUpdate;
 	private String from_player,to_player;
 	private boolean pendingRequest=false;
+	/**
+	   * Enum used to identify the tracker that needs to be used for tracking.
+	   *
+	   * A single tracker is usually enough for most purposes. In case you do need multiple trackers,
+	   * storing them all in Application object helps ensure that they are created only once per
+	   * application instance.
+	   */
+	  public enum TrackerName {
+	    APP_TRACKER, // Tracker used only in this app.
+	    GLOBAL_TRACKER, // Tracker used by all the apps from a company. eg: roll-up tracking.
+	   }
+
+	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 	
-	public GameServer() {
+	  
+	  public GameServer() {
 		super();
 		instance=this;
 	}
+	  
+	  public synchronized Tracker getTracker(TrackerName trackerId) {
+		    if (!mTrackers.containsKey(trackerId)) {
+
+		      GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
+		      Tracker t = (trackerId == TrackerName.APP_TRACKER) ? analytics.newTracker("UA-53969267-1")
+		          : analytics.newTracker(R.xml.global_tracker);
+		      mTrackers.put(trackerId, t);
+
+		    }
+		    return mTrackers.get(trackerId);
+		  }
 	
 	public void setPendingrequest(String from,String to) {
 		if (from==null) {

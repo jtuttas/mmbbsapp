@@ -8,6 +8,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.google.android.gms.ads.*;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameServer.TrackerName;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -467,7 +472,15 @@ public class Stundenplan extends Activity   {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
     	if (keyCode == KeyEvent.KEYCODE_BACK) {
-    		
+            // Get tracker.
+            Tracker t = ( (GameServer) this.getApplication()).getTracker(TrackerName.APP_TRACKER);
+
+            // Set screen name.
+            // Where path is a String representing the screen name.
+            t.setScreenName("stundenplan");
+
+            // Send a screen view.
+            t.send(new HitBuilders.AppViewBuilder().build());
     		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
     		Calendar c = Calendar.getInstance(); 
     		int dayOfYear = c.get(Calendar.DAY_OF_YEAR);
