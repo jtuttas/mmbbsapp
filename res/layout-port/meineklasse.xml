@@ -41,7 +41,9 @@
           android:layout_alignParentRight="true"
           android:layout_below="@+id/imageView1"
           android:onClick="klick_stundenplan"
-          android:text="@string/bt_stundenplan" />
+          android:text="@string/bt_stundenplan" 
+          android:textSize="24sp"
+          />
 
       <Button
           android:id="@+id/button_vertretungsplan"
@@ -51,7 +53,10 @@
           android:layout_alignParentRight="true"
           android:layout_below="@+id/button_studenplan"
           android:onClick="klick_vertretungsplan"
-          android:text="@string/bt_vertretungsplan" />
+          android:text="@string/bt_vertretungsplan" 
+                    android:textSize="24sp"
+          
+          />
 
       <Button
           android:id="@+id/button_emailKlassenlehrer"
@@ -61,7 +66,10 @@
           android:layout_alignParentRight="true"
           android:layout_below="@+id/button_vertretungsplan"
           android:onClick="klick_emailKlassenlehrer"
-          android:text="@string/bt_emailKlassenlehrer" />
+          android:text="@string/bt_emailKlassenlehrer" 
+                    android:textSize="24sp"
+          
+          />
 
       <Button
           android:id="@+id/button_emailKlasse"
@@ -71,6 +79,9 @@
           android:layout_alignParentRight="true"
           android:layout_below="@+id/button_emailKlassenlehrer"
           android:onClick="klick_emailKlasse"
-          android:text="@string/bt_emailKlasse" />
+          android:text="@string/bt_emailKlasse" 
+                    android:textSize="24sp"
+          
+          />
 
 </RelativeLayout>

@@ -3,6 +3,8 @@ package de.mmbbs;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
+import de.mmbbs.tictactoetournament.FontOverride;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -33,6 +35,9 @@ public class MeineKlasse extends Activity {
 		if (klasse != null) {
 			klassenlehrer = TabActivity.dbm.getLehrer(klasse);
 		}
+		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
+		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
+		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
 		setContentView(R.layout.meineklasse);
 		/*
 		adView = (AdView)this.findViewById(R.id.adView);

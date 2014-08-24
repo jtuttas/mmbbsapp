@@ -21,6 +21,9 @@
           android:layout_alignParentRight="true"
           android:layout_below="@+id/imageView1"
           android:onClick="klick_ttt"
-          android:text="TicTacToe@mmbbs" />
+          android:text="TicTacToe@mmbbs"
+                    android:textSize="24sp"
+          
+           />
 
 </RelativeLayout>
