@@ -288,6 +288,8 @@ public class GameServer extends Application implements IOCallback{
 			String json = args[0].toString();
 			try {
 				final JSONObject obj = new JSONObject(json);
+				obj.put("user", StringHelper.convertFromUTF8(obj.optString("user")));
+				obj.put("password", StringHelper.convertFromUTF8(obj.optString("password")));
 				if (handler!=null) handler.post(new Runnable() {	
 					@Override
 					public void run() {

@@ -16,6 +16,7 @@ import de.mmbbs.R;
 import de.mmbbs.gameserver.GameServer;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameUserListener;
+import de.mmbbs.gameserver.StringHelper;
 import de.mmbbs.gameserver.User;
 import de.mmbbs.io.socket.IOAcknowledge;
 import de.mmbbs.io.socket.IOCallback;
@@ -234,8 +235,9 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 			ld.show();			
 		}
 		else {
-			String user = obj.optString("user");
+			String user =  obj.optString("user");
 			String pw = obj.optString("password");
+			Log.d(TAG, "update Register OK user="+user);
 			
 			gs.login(user, pw, Main.GAME);
 		}

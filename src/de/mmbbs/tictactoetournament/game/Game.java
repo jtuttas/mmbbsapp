@@ -5,12 +5,12 @@ import org.json.JSONObject;
 import com.google.android.gms.ads.*;
 
 
+import de.mmbbs.gameserver.GameManagementActivity;
 import de.mmbbs.gameserver.GameStates;
 import de.mmbbs.gameserver.PlayGameListener;
 import de.mmbbs.tictactoetournament.CustomDialogClass;
 import de.mmbbs.tictactoetournament.CustomDialogListener;
 import de.mmbbs.tictactoetournament.CustomDialogType;
-import de.mmbbs.tictactoetournament.GameManagementActivity;
 import de.mmbbs.tictactoetournament.Main;
 
 import android.app.Activity;
@@ -157,6 +157,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	  public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    	if (keyCode == KeyEvent.KEYCODE_BACK) {
 	    		abnormalStop=false;
+	    		gc.setState(GameStates.LOGGED_IN);
 	    	}
 	    	return super.onKeyDown(keyCode, event);
 	 }
@@ -208,6 +209,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 			@Override
 			public void onPositiveButton() {
 				abnormalStop=false;
+				gc.setState(GameStates.LOGGED_IN);
 				displayInterstitial();
 				onBackPressed();	
 			}
