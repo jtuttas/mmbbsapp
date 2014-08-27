@@ -497,6 +497,7 @@ public class GameServer extends Application implements IOCallback{
 		if (socket!=null && socket.isConnected()) {
 			this.user=user;
 			this.game=game;
+			this.pendingRequest=false;
 			JSONObject data = new JSONObject();
 			try {
 				data.put("user", StringHelper.convertToUTF8(user));
@@ -662,6 +663,7 @@ public class GameServer extends Application implements IOCallback{
 		Log.d(Main.TAG,"GameServer request to_player="+to_player+" command="+command);
 		if (command.compareTo("request_acknowledged")==0) {
 			state=GameStates.PLAY;
+			this.pendingRequest=false;
 		}
 		else {
 			state=GameStates.REQUEST_PENDING;
@@ -682,7 +684,7 @@ public class GameServer extends Application implements IOCallback{
 	}
 	
 	public void disconnect() {
-		Log.d(Main.TAG,"GameServer socker="+socket+" state="+state+" pendingRequest="+pendingRequest);
+		Log.d(Main.TAG,"disconnect GameServer socker="+socket+" state="+state+" pendingRequest="+pendingRequest);
 		if (socket!=null && socket.isConnected() && state!=GameStates.DISCONNECTED && !pendingRequest) {
 			
 			JSONObject data = new JSONObject();
@@ -695,7 +697,7 @@ public class GameServer extends Application implements IOCallback{
 			}
 			
 			socket.emit("disconnect", data);
-			state=GameStates.DISCONNECTED;
+			state=GameStates.CONNECTED;
 			gamechathandler=null;
 			gamehighscorehandler=null;
 			gameuserhandler=null;

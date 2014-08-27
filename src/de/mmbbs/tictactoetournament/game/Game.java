@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,6 +40,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	 @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+		 Log.d(Main.TAG,"GAME on create()");
 		super.onCreate(savedInstanceState);
         //setContentView(R.layout.main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
@@ -82,6 +84,10 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	 
 
 
+
+
+
+
 	@Override
 	protected void onResume() {
         Log.d(Main.TAG,"game onResume()");
@@ -95,6 +101,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
         l.setListener(this,ghandler);
         l.init(firstTurn,gegner);
         l.reset(width,height);
+
 	}
 
 
@@ -102,17 +109,30 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	protected void onStart() {
         Log.d(Main.TAG,"game onStart()");
 		// TODO Auto-generated method stub
+        //disconnectOnStop(true);
 		super.onStart();
-		if (gegner==null) this.finish();
+		if (gegner==null) {
+			disconnectOnStop(false);
+			this.finish();
+		}
 
 		
 	}
 
 
 	@Override
+	public void updateLogin(JSONObject obj) {
+		// TODO Auto-generated method stub
+		super.updateLogin(obj);
+	}
+
+
+
+
+	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
-		super.setDisconnectOnStop(false);
+		Log.d(Main.TAG,"GAME onStop()");
 		super.onStop();
 		l.exit();
 		gc.quitPaaring();
@@ -127,7 +147,13 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	}
 
 
-
+	 @Override
+	  public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    	if (keyCode == KeyEvent.KEYCODE_BACK) {
+	    		disconnectOnStop(false);
+	    	}
+	    	return super.onKeyDown(keyCode, event);
+	 }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,7 +181,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	  public void displayInterstitial() {
 		gc.quitPaaring();				
 		//onBackPressed();
-		super.setDisconnectOnStop(false);
 	    if (interstitial.isLoaded()) {
 	      interstitial.show();
 	    }
@@ -176,16 +201,20 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 			@Override
 			public void onPositiveButton() {
+				disconnectOnStop(false);
 				displayInterstitial();
+				onBackPressed();	
 			}
 			
 		});
 		cd.setCancelable(false);
 		cd.show();
+		
 
 	}
 
 
+	
 	@Override
 	public void updateChat(JSONObject obj) {
 		// TODO Auto-generated method stub
@@ -214,11 +243,12 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 			this.showDialog(getResources().getString(de.mmbbs.R.string.player_timedout));			
 			gc.stats(1, 1, 0);
 			gc.addScore(l.getScore());
-			
+			l.setPlayerState(PlayerState.WON,PlayerState.LOST);
 		}
 		else if (obj.optString("command").compareTo("close")==0) {
 			this.showDialog(getResources().getString(de.mmbbs.R.string.player_closed));
 			gc.stats(1, 1, 0);
+			l.setPlayerState(PlayerState.WON,PlayerState.LOST);
 			gc.addScore(l.getScore());
 		}
 		else if (obj.optString("command").compareTo("play")==0 ||

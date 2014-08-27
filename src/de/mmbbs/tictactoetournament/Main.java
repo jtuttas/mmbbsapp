@@ -77,19 +77,30 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	    handler = new Handler();
 	    String user = pref.getString("user", null);
 	    String pw = pref.getString("password", null);
-	    gs = (GameServer) getApplication();
 		setContentView(R.layout.connecting_game);
-		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
+		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
+		dbm = new DBManager(this, "friends.db", null, 1);
+	}
+	
+	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		Log.d(Main.TAG,"**Main on resume()");
+		gs = (GameServer) getApplication();
 		gs.setUserCallbacks(this, handler);
 		gs.connect("http://service.joerg-tuttas.de:8080",this,handler);
 		dialog= new ProgressDialog(this);
 		dialog.setTitle(this.getResources().getString(R.string.connecting));
 		dialog.setMessage(this.getResources().getString(R.string.connect_to_gameserver));
 		dialog.show(); 
-		dbm = new DBManager(this, "friends.db", null, 1);
+		super.onResume();
 	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -133,7 +144,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(Main.TAG,"onActivityResult requestCode="+requestCode);
+        Log.d(Main.TAG,"MAIN onActivityResult requestCode="+requestCode);
 	    switch (requestCode) {
 	    case 100:
 	        setResult(requestCode);

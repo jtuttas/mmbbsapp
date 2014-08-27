@@ -35,9 +35,9 @@ public class MeineKlasse extends Activity {
 		if (klasse != null) {
 			klassenlehrer = TabActivity.dbm.getLehrer(klasse);
 		}
-		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
+		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
 		setContentView(R.layout.meineklasse);
 		/*
 		adView = (AdView)this.findViewById(R.id.adView);

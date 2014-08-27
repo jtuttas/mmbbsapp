@@ -17,9 +17,9 @@ public class TabActivity extends android.app.TabActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.tab_layout_game);
-        FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
+        FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
         TabHost tabHost = getTabHost();
          
         // Tab for Users

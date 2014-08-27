@@ -90,7 +90,7 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
         this.setOnTouchListener(this);
         board = new GameBoard(context);
     	runner = new Runner(this);
-    	score=300;
+    	score=100;
     	timeout=500;
 	}
 	
@@ -143,7 +143,7 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 			if (board.won(me)) {
 				me.setState(PlayerState.WON);
 				oposite.setState(PlayerState.LOST);
-				showDialog(me.getName()+context.getResources().getString(de.mmbbs.R.string.has_won));
+				showDialog(me.getName()+" "+context.getResources().getString(de.mmbbs.R.string.has_won));
 				Game.getGameServer().play("won", board.getBoard());
 				//Game.getGameServer().play("play", board.getBoard());
 				Game.getGameServer().stats(1, 1, 0);
@@ -177,7 +177,7 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 			if (board.won(oposite)) {
 				oposite.setState(PlayerState.WON);
 				me.setState(PlayerState.LOST);
-				showDialog(oposite.getName()+context.getResources().getString(de.mmbbs.R.string.has_won));
+				showDialog(oposite.getName()+" "+context.getResources().getString(de.mmbbs.R.string.has_won));
 				//Game.getGameServer().play("won", board.getBoard());
 				Game.getGameServer().stats(1, 0, 1);
 			}
@@ -346,5 +346,12 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 	public int getScore() {
 		// TODO Auto-generated method stub
 		return score;
+	}
+
+
+	public void setPlayerState(PlayerState meState, PlayerState opositeState) {
+		// TODO Auto-generated method stub
+		me.setState(meState);
+		oposite.setState(opositeState);
 	}
 }

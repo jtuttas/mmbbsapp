@@ -11,6 +11,7 @@ import de.mmbbs.tictactoetournament.game.Game;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -22,7 +23,7 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	protected Handler handler;
 	protected static GameServer	gc;
 	protected CustomDialogClass cdd;
-	private boolean disconnect;
+	private boolean disconnect=true;
 	
 	
 	
@@ -30,9 +31,9 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Glametrix.otf");
-		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Glametrix.otf");
+		FontOverride.setDefaultFont(this, "DEFAULT", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Isserley-Bold.otf");
+		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
 		handler = new Handler();
 		gc = (GameServer) getApplication();
 
@@ -60,9 +61,13 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
+		Log.d(Main.TAG,"onStart() GameManagement Activity");
 		super.onStart();
-		disconnect=true;
+		disconnectOnStop(true);
 	}
+	
+	
+	
 	@Override
 	protected void onStop() {
 		Log.d(Main.TAG,"GameManagementActivity onStop() dsconnectOnStop="+disconnect);
@@ -95,8 +100,19 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	
 	@Override
 	public void updateLogin(JSONObject obj) {
-		// TODO Auto-generated method stub
-		
+		Log.d(Main.TAG, "update Login Game Management Activity");
+					
+		if (obj.optBoolean("success")) {
+			String user = obj.optString("user");
+			String pw = obj.optString("password");
+			 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
+			Editor e = pref.edit();
+			e.putString("user", user);
+			e.putString("password", pw);
+			e.commit();
+			
+		}	
+
 	}
 	@Override
 	public void updateResendLogin(JSONObject obj) {
@@ -163,7 +179,7 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		Intent i = new Intent(this,Game.class);
 		i.putExtra("start",turn);
 		i.putExtra("gegner", gegner);
-		disconnect=false;
+		disconnectOnStop(false);
     	startActivity(i);
     	
 	}
@@ -184,7 +200,6 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		    String pw = pref.getString("password", null);
 			gc.login(user, pw, Main.GAME);
 		}
-
 		
 	}
 	@Override
@@ -213,10 +228,11 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		cdd.show();
 	}
 	public void reconnect() {
+		Log.d(Main.TAG,"**** GameManegementActivity reconnect!");
 		startActivity(new Intent(this, Main.class));
 		this.finish();
 	}
-	public void setDisconnectOnStop(boolean b) {
+	public void disconnectOnStop(boolean b) {
 		disconnect=b;
 	}
 }
