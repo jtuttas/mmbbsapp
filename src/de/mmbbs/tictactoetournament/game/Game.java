@@ -36,6 +36,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	private static Handler ghandler; 
 	private boolean firstTurn;
 	private String gegner;
+	private boolean abnormalStop=true;
 	
 	 @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +102,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
         l.setListener(this,ghandler);
         l.init(firstTurn,gegner);
         l.reset(width,height);
-
+        //gc.setDisconnectOnStop(true);
 	}
 
 
@@ -112,9 +113,11 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
         //disconnectOnStop(true);
 		super.onStart();
 		if (gegner==null) {
-			disconnectOnStop(false);
+			//gc.setDisconnectOnStop(false);
+			abnormalStop=false;
 			this.finish();
 		}
+		
 
 		
 	}
@@ -133,6 +136,9 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"GAME onStop()");
+		if (abnormalStop) {
+			gc.disconnect();
+		}
 		super.onStop();
 		l.exit();
 		gc.quitPaaring();
@@ -150,7 +156,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	 @Override
 	  public boolean onKeyDown(int keyCode, KeyEvent event) {
 	    	if (keyCode == KeyEvent.KEYCODE_BACK) {
-	    		disconnectOnStop(false);
+	    		abnormalStop=false;
 	    	}
 	    	return super.onKeyDown(keyCode, event);
 	 }
@@ -201,7 +207,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 			@Override
 			public void onPositiveButton() {
-				disconnectOnStop(false);
+				abnormalStop=false;
 				displayInterstitial();
 				onBackPressed();	
 			}

@@ -1,6 +1,8 @@
 package de.mmbbs.tictactoetournament;
 
 import de.mmbbs.R;
+import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameStates;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -49,4 +51,16 @@ public class TabActivity extends android.app.TabActivity {
         tabHost.addTab(chat); 
         tabHost.addTab(highscore); 
     }
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		GameServer gs = (GameServer)this.getApplication();
+		if (gs.getState()!=GameStates.PLAY)	gs.disconnect();
+	}
+	
+	
+	
+	
 }

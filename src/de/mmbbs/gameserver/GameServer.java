@@ -68,6 +68,7 @@ public class GameServer extends Application implements IOCallback{
 	   }
 
 	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+	private boolean disconnect=true;
 	
 	  
 	  public GameServer() {
@@ -732,5 +733,6 @@ public class GameServer extends Application implements IOCallback{
 		// TODO Auto-generated method stub
 		return userlist;
 	}
+	
 	
 }

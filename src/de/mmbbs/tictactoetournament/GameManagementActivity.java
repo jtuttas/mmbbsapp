@@ -23,7 +23,6 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	protected Handler handler;
 	protected static GameServer	gc;
 	protected CustomDialogClass cdd;
-	private boolean disconnect=true;
 	
 	
 	
@@ -63,14 +62,14 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"onStart() GameManagement Activity");
 		super.onStart();
-		disconnectOnStop(true);
+	//	gc.disconnectOnStop(true);
 	}
 	
 	
 	
 	@Override
 	protected void onStop() {
-		Log.d(Main.TAG,"GameManagementActivity onStop() dsconnectOnStop="+disconnect);
+		Log.d(Main.TAG,"GameManagementActivity onStop()");
 		// TODO Auto-generated method stub
 		super.onStop();
 		if (cdd!=null && cdd.isShowing()) {
@@ -85,7 +84,7 @@ public class GameManagementActivity extends Activity implements GameServerListen
 			gc.setPendingrequest(null, null);
 		}
 		//Toast.makeText(getApplicationContext(),"onStop()", Toast.LENGTH_LONG).show();			
-		if (disconnect) gc.disconnect();
+		//if (gc.getDisconnectOnStop()) gc.disconnect();
 
 	}
 	
@@ -178,8 +177,8 @@ public class GameManagementActivity extends Activity implements GameServerListen
 	private void startGame(boolean turn,String gegner) {
 		Intent i = new Intent(this,Game.class);
 		i.putExtra("start",turn);
+		
 		i.putExtra("gegner", gegner);
-		disconnectOnStop(false);
     	startActivity(i);
     	
 	}
@@ -231,8 +230,5 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		Log.d(Main.TAG,"**** GameManegementActivity reconnect!");
 		startActivity(new Intent(this, Main.class));
 		this.finish();
-	}
-	public void disconnectOnStop(boolean b) {
-		disconnect=b;
 	}
 }

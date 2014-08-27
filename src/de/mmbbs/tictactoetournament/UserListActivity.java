@@ -137,6 +137,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG," Request Position="+index);
 		requestPlayer(adapter.getItem((int) index));
+		
 	}
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {

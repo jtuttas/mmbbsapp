@@ -148,7 +148,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	    switch (requestCode) {
 	    case 100:
 	        setResult(requestCode);
-	        gs.disconnect();
+	        //gs.disconnect();
 	        Log.d(Main.TAG,"onActivityResult requestCode="+requestCode);
 	        this.finish();
 	        break;
