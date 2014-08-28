@@ -68,15 +68,38 @@ public class GameServer extends Application implements IOCallback{
 	   }
 
 	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
-	private boolean disconnect=true;
+	//private boolean disconnect=true;
 	
 	  
 	  public GameServer() {
 		super();
+		Log.d(Main.TAG, "-------------- Game Server Konstruktor");
 		instance=this;
 	}
 	  
-	  public synchronized Tracker getTracker(TrackerName trackerId) {
+	  
+	  
+	  @Override
+	public void onCreate() {
+		// TODO Auto-generated method stub
+		  Log.d(Main.TAG, "-------------- Game Server onCreate");
+		  
+		super.onCreate();
+	}
+
+
+
+	@Override
+	public void onTerminate() {
+		// TODO Auto-generated method stub
+		super.onTerminate();
+		Log.d(Main.TAG, "-------------- Game Server on Terminat");
+
+	}
+
+
+
+	public synchronized Tracker getTracker(TrackerName trackerId) {
 		    if (!mTrackers.containsKey(trackerId)) {
 
 		      GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
@@ -112,13 +135,13 @@ public class GameServer extends Application implements IOCallback{
 		this.handler=h;
 		this.url=url;
 		this.listener=listener;
-		socket = new SocketIO();
 		try {
-			socket.connect(url, this);
-		} catch (MalformedURLException e) {
+			socket = new SocketIO(url,this);
+		} catch (MalformedURLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
+		
 	}
 	
 	public void add(User object) {
@@ -705,7 +728,13 @@ public class GameServer extends Application implements IOCallback{
 			gamehighscorehandler=null;
 			gameuserhandler=null;
 			handler=null;
-			//if (socket!=null) socket.disconnect();
+			if (socket!=null) {
+				socket.disconnect();
+				Log.d(Main.TAG,"Socket Disconnect");
+				
+
+				
+			}
 			
 			
 			Log.d(Main.TAG,"game Server Disconnect");
