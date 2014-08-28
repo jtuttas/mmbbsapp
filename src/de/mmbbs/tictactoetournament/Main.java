@@ -166,12 +166,13 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 		Log.d(TAG, "update Login Main");
 		Toast.makeText(getApplicationContext(),obj.optString("message"), Toast.LENGTH_LONG).show();			
 		if (obj.optBoolean("success")) {
-			String user = StringHelper.convertFromUTF8(obj.optString("user"));
-			String pw = StringHelper.convertFromUTF8(obj.optString("password"));
+			String user = obj.optString("user");
+			String pw = obj.optString("password");
 			Editor e = pref.edit();
 			e.putString("user", user);
 			e.putString("password", pw);
 			e.commit();
+			Log.d(TAG, "update Login Main PUT user="+user);
 			
 	    	Intent i = new Intent(this, TabActivity.class);
 	    	startActivityForResult(i, 100);

@@ -233,5 +233,10 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		Log.d(Main.TAG," Text Changed cras="+arg0);
 		adapter.getFilter().filter(arg0);		
 	}
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

@@ -316,5 +316,9 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 		return ghandler;
 				
 	}
-	
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		
+	}
 }

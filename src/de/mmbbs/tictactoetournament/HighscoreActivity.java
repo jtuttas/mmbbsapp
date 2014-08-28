@@ -49,19 +49,26 @@ public class HighscoreActivity extends GameManagementActivity implements GameHig
 	
 
 	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		Log.d(Main.TAG,"onStart() Highscore Activity");
+		gc.setHighscoreCallbacks(this, handler);
+		super.onStart();
+		if (pd!=null && pd.isShowing()) pd.dismiss();
+		
+	}
+
+	
+	
+	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"onResume() Highscore Activity");
-		gc.setHighscoreCallbacks(this, handler);
 		super.onResume();
-		if (pd!=null && pd.isShowing()) pd.dismiss();
-		pd = new ProgressDialog(this,de.mmbbs.R.style.MyTheme);
-		pd.setCancelable(false);
-		pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-		pd.show();
-		gc.highscores(20);
+
 	}
-	
+
+
 	@Override
 	protected void onStop() {
 		// TODO Auto-generated method stub
@@ -74,7 +81,7 @@ public class HighscoreActivity extends GameManagementActivity implements GameHig
 	@Override
 	public void updateHighscores(JSONObject obj) {
 		// TODO Auto-generated method stub
-		Log.d(Main.TAG,"update Highscores");
+		Log.d(Main.TAG,"=========== update Highscores");
 		if (pd!=null && pd.isShowing()) pd.dismiss();
 		JSONArray rows = obj.optJSONArray("rows");
 		TableLayout layout = (TableLayout) findViewById(R.id.tablellayout_highscore);
@@ -206,6 +213,18 @@ public class HighscoreActivity extends GameManagementActivity implements GameHig
 		super.connectionError();
 		if (pd!=null && pd.isShowing()) pd.dismiss();
 
+	}
+
+
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		Log.d(Main.TAG,"--- onLogin()");
+		pd = new ProgressDialog(this,de.mmbbs.R.style.MyTheme);
+		pd.setCancelable(false);
+		pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+		pd.show();
+		gc.highscores(20);
 	}
 	
 }

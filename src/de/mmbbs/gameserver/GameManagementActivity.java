@@ -20,7 +20,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
-public class GameManagementActivity extends Activity implements GameServerListener{
+public abstract class GameManagementActivity extends Activity implements GameServerListener{
 
 	protected Handler handler;
 	protected static GameServer	gc;
@@ -54,6 +54,9 @@ public class GameManagementActivity extends Activity implements GameServerListen
 				String user = pref.getString("user", null);
 			    String pw = pref.getString("password", null);
 			    gc.login(user, pw, Main.GAME);
+			}
+			if (gc.getState()==GameStates.LOGGED_IN) {
+				onLogin();
 			}
 		}
 		if (cdd != null && cdd.isShowing()) cdd.dismiss();
@@ -111,6 +114,7 @@ public class GameManagementActivity extends Activity implements GameServerListen
 			e.putString("user", user);
 			e.putString("password", pw);
 			e.commit();
+			onLogin();
 			
 		}	
 
@@ -233,4 +237,8 @@ public class GameManagementActivity extends Activity implements GameServerListen
 		startActivity(new Intent(this, Main.class));
 		this.finish();
 	}
+	
+	public abstract void onLogin();
+		
+	
 }

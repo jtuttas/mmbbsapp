@@ -91,4 +91,10 @@ public class ChatActivity extends GameManagementActivity implements OnEditorActi
 		return false;
 	}
 
+	@Override
+	public void onLogin() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

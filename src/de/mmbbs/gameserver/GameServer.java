@@ -256,7 +256,8 @@ public class GameServer extends Application implements IOCallback{
 					if (socket!=null) socket.emit("adduser", data);	
 					state=GameStates.LOGGED_IN;
 				}
-				if (handler!=null) handler.post(new Runnable() {	
+				obj.put("user", StringHelper.convertFromUTF8(obj.optString("user")));
+				if (handler!=null) handler.post(new Runnable() {
 					@Override
 					public void run() {
 						// TODO Auto-generated method stub
