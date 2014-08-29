@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 public abstract class GameManagementActivity extends Activity implements GameServerListener{
@@ -37,6 +38,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
 		handler = new Handler();
 		gc = (GameServer) getApplication();
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 	}
 	@Override
