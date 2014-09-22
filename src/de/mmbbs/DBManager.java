@@ -18,7 +18,7 @@ import android.widget.Toast;
 public class DBManager extends SQLiteOpenHelper {
 
 	public static final String DBNAME = "lehrer";
-	private static int VERSION = 0;
+	private static int VERSION = 1;
 	public static String CREATE = "CREATE TABLE lehrer(ID INTEGER PRIMARY KEY NOT NULL, SHORT TEXT, NNAME TEXT, VNAME TEXT, GENDER TEXT, EMAIL TEXT,STUNDENPLAN TEXT, VERTRETUNGSPLAN TEXT);";
 	public static String CREATE_KLASSEN = "CREATE TABLE klassen(ID INTEGER PRIMARY KEY NOT NULL, KLASSE TEXT, ID_LEHRER TEXT, STUNDENPLAN TEXT, VERTRETUNGSPLAN TEXT);";
 	//public static String CREATE_KLASSENLEHRER = "CREATE TABLE klassenlehrer(ID INTEGER PRIMARY KEY NOT NULL, KLASSE_ID INTEGER, LEHRER_ID INTEGER);";
