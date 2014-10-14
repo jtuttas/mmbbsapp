@@ -398,6 +398,9 @@ public class GameServer extends Application implements IOCallback{
 				else if (obj.optString("command").compareTo("request_acknowledged")==0) {
 					state=GameStates.PLAY;
 				}
+				else if (obj.optString("command").compareTo("request_finished")==0) {
+					state=GameStates.PLAY;
+				}
 				
 				if (handler!=null) handler.post(new Runnable() {	
 					@Override
@@ -689,11 +692,11 @@ public class GameServer extends Application implements IOCallback{
 	public void request(String to_player,String command) {
 		Log.d(Main.TAG,"GameServer request to_player="+to_player+" command="+command);
 		if (command.compareTo("request_acknowledged")==0) {
-			state=GameStates.PLAY;
-			this.pendingRequest=false;
+			//state=GameStates.PLAY;
+			//this.pendingRequest=false;
 		}
 		else {
-			state=GameStates.REQUEST_PENDING;
+			//state=GameStates.REQUEST_PENDING;
 		}
 		if (socket!=null && socket.isConnected()) {
 			JSONObject data = new JSONObject();

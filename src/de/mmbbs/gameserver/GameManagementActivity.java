@@ -26,7 +26,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 	protected Handler handler;
 	protected static GameServer	gc;
 	protected CustomDialogClass cdd;
-	
+	public GameManagementActivity instance;
 	
 	
 	@Override
@@ -39,6 +39,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		handler = new Handler();
 		gc = (GameServer) getApplication();
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		instance=this;
 
 	}
 	@Override
@@ -134,7 +135,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 	@Override
 	public void updateRequest(final JSONObject obj) {
 		// TODO Auto-generated method stub
-		Log.d(Main.TAG,"update request in GameManagement Activity");
+		Log.d(Main.TAG,"!!update request in GameManagement Activity command="+obj.optString("command"));
 		if (obj.optString("command").compareTo("request")==0) {
 			
 			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+obj.optString("from_player")+"'",
@@ -144,15 +145,21 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 				@Override
 				public void onNegativeButton() {
-					gc.request(obj.optString("from_player"), "request_rejected");
+					gc.request(StringHelper.convertFromUTF8(obj.optString("from_player")), "request_rejected");
+					Log.d(Main.TAG,"Request rejected!");
 					gc.setPendingrequest(null, null);
 
 				}
 
 				@Override
 				public void onPositiveButton() {
-					gc.request(obj.optString("from_player"), "request_acknowledged");
-			    	startGame(true,obj.optString("from_player"));									
+					if (cdd!=null) cdd.dismiss();
+					cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
+					cdd.setCancelable(false);
+					cdd.show();
+
+					gc.request(StringHelper.convertFromUTF8(obj.optString("from_player")), "request_acknowledged");
+//			    	startGame(true,obj.optString("from_player"));									
 				}
 				
 			});
@@ -162,10 +169,17 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			
 		}
 		else if (obj.optString("command").compareTo("request_acknowledged")==0) {
-			Log.d(Main.TAG," request acknowladged in GameManagement Activity");
+			Log.d(Main.TAG,"---> request acknowladged in GameManagement Activity");
 			if (cdd!=null) cdd.dismiss();
 			gc.setPendingrequest(null, null);
-	    	startGame(false,obj.optString("from_player"));				
+	    	startGame(false,obj.optString("from_player"));							
+			
+		}
+		else if (obj.optString("command").compareTo("request_finished")==0) {
+			Log.d(Main.TAG,"-----> request finished in GameManagement Activity");
+			if (cdd!=null) cdd.dismiss();
+			gc.setPendingrequest(null, null);
+	    	startGame(true,obj.optString("from_player"));										
 		}
 		else if (obj.optString("command").compareTo("request_rejected")==0) {
 			if (cdd!=null) cdd.dismiss();
