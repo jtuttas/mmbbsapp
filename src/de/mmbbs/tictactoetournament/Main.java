@@ -16,7 +16,7 @@ import de.mmbbs.R;
 import de.mmbbs.gameserver.GameServer;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameUserListener;
-import de.mmbbs.gameserver.StringHelper;
+
 import de.mmbbs.gameserver.User;
 import de.mmbbs.io.socket.IOAcknowledge;
 import de.mmbbs.io.socket.IOCallback;

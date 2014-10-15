@@ -145,7 +145,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 				@Override
 				public void onNegativeButton() {
-					gc.request(StringHelper.convertFromUTF8(obj.optString("from_player")), "request_rejected");
+					gc.request(obj.optString("from_player"), "request_rejected");
 					Log.d(Main.TAG,"Request rejected!");
 					gc.setPendingrequest(null, null);
 
@@ -158,7 +158,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 					cdd.setCancelable(false);
 					cdd.show();
 
-					gc.request(StringHelper.convertFromUTF8(obj.optString("from_player")), "request_acknowledged");
+					gc.request(obj.optString("from_player"), "request_acknowledged");
 //			    	startGame(true,obj.optString("from_player"));									
 				}
 				

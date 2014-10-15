@@ -246,7 +246,7 @@ public class GameServer extends Application implements IOCallback{
 					JSONObject data = new JSONObject();
 					try {
 						data.put("game", game);
-						data.put("player", StringHelper.convertToUTF8(user));
+						data.put("player", user);
 						data.put("score", 1234);
 
 					} catch (JSONException e) {
@@ -256,7 +256,7 @@ public class GameServer extends Application implements IOCallback{
 					if (socket!=null) socket.emit("adduser", data);	
 					state=GameStates.LOGGED_IN;
 				}
-				obj.put("user", StringHelper.convertFromUTF8(obj.optString("user")));
+				obj.put("user", obj.optString("user"));
 				if (handler!=null) handler.post(new Runnable() {
 					@Override
 					public void run() {
@@ -293,7 +293,7 @@ public class GameServer extends Application implements IOCallback{
 				JSONArray rows = obj.optJSONArray("rows");
 				for (int i=0;i<rows.length();i++) {
 					
-					rows.optJSONObject(i).put("Name", StringHelper.convertFromUTF8(rows.optJSONObject(i).optString("Name")));
+					rows.optJSONObject(i).put("Name", rows.optJSONObject(i).optString("Name"));
 					
 				}
 				if (gamehighscorehandler!=null) gamehighscorehandler.post(new Runnable() {	
@@ -312,8 +312,8 @@ public class GameServer extends Application implements IOCallback{
 			String json = args[0].toString();
 			try {
 				final JSONObject obj = new JSONObject(json);
-				obj.put("user", StringHelper.convertFromUTF8(obj.optString("user")));
-				obj.put("password", StringHelper.convertFromUTF8(obj.optString("password")));
+				obj.put("user", obj.optString("user"));
+				obj.put("password", obj.optString("password"));
 				if (handler!=null) handler.post(new Runnable() {	
 					@Override
 					public void run() {
@@ -331,8 +331,8 @@ public class GameServer extends Application implements IOCallback{
 			String json = args[0].toString();
 			try {
 				final JSONObject obj = new JSONObject(json);
-				obj.put("content", StringHelper.convertFromUTF8(obj.optString("content")));
-				obj.put("from_player", StringHelper.convertFromUTF8(obj.optString("from_player")));
+				obj.put("content", obj.optString("content"));
+				obj.put("from_player", obj.optString("from_player"));
 				
 				if (gamechathandler!=null) { 
 					gamechathandler.post(new Runnable() {	
@@ -357,7 +357,7 @@ public class GameServer extends Application implements IOCallback{
 			try {
 				
 				final JSONObject obj = new JSONObject(json);
-				obj.put("content", StringHelper.convertFromUTF8(obj.optString("content")));
+				obj.put("content", obj.optString("content"));
 				
 				if (gamehandler!=null) gamehandler.post(new Runnable() {	
 					@Override
@@ -470,7 +470,7 @@ public class GameServer extends Application implements IOCallback{
 		            try {
 						if( obj.get(key) instanceof JSONObject ){
 							JSONObject o = (JSONObject) obj.get(key);
-							User u = new User(StringHelper.convertFromUTF8(o.optString("name")));
+							User u = new User(o.optString("name"));
 							Log.d(Main.TAG,"GameServer updateusers name="+u.getName());
 							if (o.optString("ingame").compareTo("freeplayer")==0) {
 								u.setState(UserState.FREE);
@@ -530,8 +530,8 @@ public class GameServer extends Application implements IOCallback{
 			this.pendingRequest=false;
 			JSONObject data = new JSONObject();
 			try {
-				data.put("user", StringHelper.convertToUTF8(user));
-				data.put("password", StringHelper.convertToUTF8(pw));
+				data.put("user", user);
+				data.put("password", pw);
 				data.put("game", game);
 	
 			} catch (JSONException e) {
@@ -547,9 +547,9 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
+				data.put("from_player", user);
 				data.put("content_class", "usrmsg");
-				data.put("content", StringHelper.convertToUTF8(msg));
+				data.put("content", msg);
 
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -564,9 +564,9 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
+				data.put("from_player", user);
 				data.put("content_class", "usrmsg");
-				data.put("content", StringHelper.convertToUTF8(msg));
+				data.put("content", msg);
 
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -581,7 +581,7 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("player", StringHelper.convertToUTF8(user));
+				data.put("player", user);
 				data.put("max", max);
 
 			} catch (JSONException e) {
@@ -596,7 +596,7 @@ public class GameServer extends Application implements IOCallback{
 		if (socket!=null && socket.isConnected()) {
 			JSONObject data = new JSONObject();
 			try {
-				data.put("email", StringHelper.convertToUTF8(email));
+				data.put("email", email);
 
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -611,7 +611,7 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game",game);
-				data.put("user",StringHelper.convertToUTF8(user));
+				data.put("user",user);
 				data.put("games_total", games_total);
 				data.put("games_won", games_won);
 				data.put("games_lost", games_lost);
@@ -629,10 +629,10 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("user", StringHelper.convertToUTF8(user));
-				data.put("password", StringHelper.convertToUTF8(password));
-				data.put("email", StringHelper.convertToUTF8(email));
-				data.put("location", StringHelper.convertToUTF8(location));
+				data.put("user", user);
+				data.put("password", password);
+				data.put("email", email);
+				data.put("location", location);
 
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -647,7 +647,7 @@ public class GameServer extends Application implements IOCallback{
 		if (socket!=null && socket.isConnected()) {
 			try {
 				jo.put("game", game);
-				jo.put("from_player", StringHelper.convertToUTF8(user));
+				jo.put("from_player", user);
 				jo.put("command", command);
 
 			} catch (JSONException e) {
@@ -662,7 +662,7 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
+				data.put("from_player", user);
 
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -677,7 +677,7 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
+				data.put("from_player", user);
 				data.put("score", score);
 				
 
@@ -702,8 +702,8 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
-				data.put("to_player", StringHelper.convertToUTF8(to_player));
+				data.put("from_player", user);
+				data.put("to_player", to_player);
 				data.put("command", command);	
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
@@ -720,7 +720,7 @@ public class GameServer extends Application implements IOCallback{
 			JSONObject data = new JSONObject();
 			try {
 				data.put("game", game);
-				data.put("from_player", StringHelper.convertToUTF8(user));
+				data.put("from_player", user);
 			} catch (JSONException e) {
 			    // TODO Auto-generated catch block
 			    e.printStackTrace();

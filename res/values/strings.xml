@@ -311,7 +311,8 @@
       <string name="menu_register">Register</string>
       <string name="resend_login">Resend Login</string>
       <string name="chat">Chat</string>
-      <string name="request_player">"Request from"</string>
+      <string name="request_player">"Request from "</string>
+      <string name="request_to_player">"Request to "</string>
       <string name="request">"Request"</string>
       <string name="cancel">"Cancel"</string>
       <string name="ok">"OK"</string>

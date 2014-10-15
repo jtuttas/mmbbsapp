@@ -188,7 +188,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 	private void requestPlayer(final User u) {
 		// TODO Auto-generated method stub
 		if (u.getState()==UserState.FREE) {
-			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,getResources().getString(R.string.request_player)+"'"+u.getName()+"'",
+			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
 					null,this.getResources().getString(R.string.cancel));
 			cdd.setOnCustomDialog(new CustomDialogListener() {
 
