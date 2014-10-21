@@ -153,11 +153,11 @@
 	         android:id="@+id/editText_email"
 	         android:layout_width="200dp"
 	         android:layout_height="wrap_content"
-	 		 android:textSize="24dp"
-	 		 android:layout_marginLeft="15dp"
-	 		 android:layout_marginRight="10dp"
+	         android:layout_marginLeft="15dp"
+	         android:layout_marginRight="10dp"
 	         android:hint="@string/email_adress"
-	         android:inputType="textPassword" >
+	         android:inputType="textPassword|textEmailAddress"
+	         android:textSize="24dp" >
 
 	         <requestFocus />
 	     </EditText>
