@@ -24,7 +24,7 @@ import android.widget.Toast;
 public abstract class GameManagementActivity extends Activity implements GameServerListener{
 
 	protected Handler handler;
-	protected static GameServer	gc;
+	protected static GameServerApplication	gc;
 	protected CustomDialogClass cdd;
 	public GameManagementActivity instance;
 	
@@ -37,7 +37,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		FontOverride.setDefaultFont(this, "MONOSPACE", "fonts/Isserley-Bold.otf");
 		FontOverride.setDefaultFont(this, "SANS_SERIF", "fonts/Isserley-Bold.otf");
 		handler = new Handler();
-		gc = (GameServer) getApplication();
+		gc = (GameServerApplication) getApplication();
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		instance=this;
 
@@ -65,6 +65,9 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		if (cdd != null && cdd.isShowing()) cdd.dismiss();
 
 	}
+	
+	
+	
 	@Override
 	protected void onStart() {
 		// TODO Auto-generated method stub
@@ -96,7 +99,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 	}
 	
-	public static GameServer getGameServer() {
+	public static GameServerApplication getGameServer() {
 		return gc;
 	}
 	
@@ -137,35 +140,8 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"!!update request in GameManagement Activity command="+obj.optString("command"));
 		if (obj.optString("command").compareTo("request")==0) {
+			this.showRequestDialog(obj.optString("from_player"));
 			
-			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+obj.optString("from_player")+"'",
-					this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
-			cdd.setOnCustomDialog(new CustomDialogListener() {
-
-
-				@Override
-				public void onNegativeButton() {
-					gc.request(obj.optString("from_player"), "request_rejected");
-					Log.d(Main.TAG,"Request rejected!");
-					gc.setPendingrequest(null, null);
-
-				}
-
-				@Override
-				public void onPositiveButton() {
-					if (cdd!=null) cdd.dismiss();
-					cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
-					cdd.setCancelable(false);
-					cdd.show();
-
-					gc.request(obj.optString("from_player"), "request_acknowledged");
-//			    	startGame(true,obj.optString("from_player"));									
-				}
-				
-			});
-			cdd.setCancelable(false);
-			gc.setPendingrequest(obj.optString("from_player"), gc.getUser());
-			cdd.show();
 			
 		}
 		else if (obj.optString("command").compareTo("request_acknowledged")==0) {
@@ -195,7 +171,37 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		
 	}
 
+	
+	public void showRequestDialog(final String from) {
+		cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
+				this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
+		cdd.setOnCustomDialog(new CustomDialogListener() {
 
+
+			@Override
+			public void onNegativeButton() {
+				gc.request(from, "request_rejected");
+				Log.d(Main.TAG,"Request rejected!");
+				gc.setPendingrequest(null, null);
+
+			}
+
+			@Override
+			public void onPositiveButton() {
+				if (cdd!=null) cdd.dismiss();
+				cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
+				cdd.setCancelable(false);
+				cdd.show();
+				gc.request(from, "request_acknowledged");
+//		    	startGame(true,obj.optString("from_player"));									
+			}
+			
+		});
+		cdd.setCancelable(false);
+		gc.setPendingrequest(from, gc.getUser());
+		cdd.show();
+	}
+	
 	private void startGame(boolean turn,String gegner) {
 		Intent i = new Intent(this,Game.class);
 		i.putExtra("start",turn);

@@ -6,6 +6,7 @@ import com.google.android.gms.ads.*;
 
 
 import de.mmbbs.gameserver.GameManagementActivity;
+import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.gameserver.GameStates;
 import de.mmbbs.gameserver.PlayGameListener;
 import de.mmbbs.tictactoetournament.CustomDialogClass;
@@ -145,11 +146,11 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 		gegner=null;
 	}
 
-	 @Override
+	@Override
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
+		gc.disconnect();
 		super.onDestroy();
-		Log.d(Main.TAG,"Game Activity onDestoy()");
 	}
 
 

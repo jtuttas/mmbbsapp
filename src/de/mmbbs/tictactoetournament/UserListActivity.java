@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import de.mmbbs.R;
 import de.mmbbs.gameserver.GameManagementActivity;
-import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameStates;
 import de.mmbbs.gameserver.GameUserListener;
@@ -54,6 +54,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		super.onCreate(savedInstanceState);
 		Log.d(Main.TAG,"onCreate() UserList Activity");
 
+		
 		//Toast.makeText(getApplicationContext(),"onCretae()", Toast.LENGTH_LONG).show();
 		setContentView(R.layout.user_list_layout);
 		
@@ -77,7 +78,17 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		Log.d(Main.TAG,"onResume() UserList Activity conected="+gc.isConnected());
 		gc.setUserCallbacks(this, handler);
 		if (cdd != null && cdd.isShowing()) cdd.dismiss();
-
+		Bundle extras = getIntent().getExtras();
+		if(extras == null) {
+		        
+		} else {
+			if (extras.getString("command").compareTo("request")==0) {
+				super.showRequestDialog(extras.getString("from_player"));
+				getIntent().removeExtra("command");
+				getIntent().removeExtra("from_player");
+		    }
+		}
+		
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 package de.mmbbs.tictactoetournament.game;
-import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.tictactoetournament.CustomDialogClass;
 import de.mmbbs.tictactoetournament.CustomDialogListener;
 import de.mmbbs.tictactoetournament.CustomDialogType;

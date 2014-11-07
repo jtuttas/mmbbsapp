@@ -13,7 +13,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.mmbbs.R;
-import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameUserListener;
 
@@ -60,7 +60,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	
 	public static final String TAG=Main.GAME;
 	public static final String GAME="tttmmbbs";
-	private GameServer gs;
+	private GameServerApplication gs;
 	private SharedPreferences pref;
 	private Handler handler;
 	private ProgressDialog dialog;
@@ -91,7 +91,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"**Main on resume()");
-		gs = (GameServer) getApplication();
+		gs = (GameServerApplication) getApplication();
 		gs.setUserCallbacks(this, handler);
 		gs.connect("http://service.joerg-tuttas.de:8080",this,handler);
 		dialog= new ProgressDialog(this);
@@ -138,7 +138,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 		dialog.setTitle(this.getResources().getString(R.string.connecting));
 		dialog.setMessage(this.getResources().getString(R.string.connect_to_gameserver));
 		dialog.show(); 
-	    gs = (GameServer) getApplication();
+	    gs = (GameServerApplication) getApplication();
 		gs.connect("http://service.joerg-tuttas.de:8080", this,handler);
     }
 	

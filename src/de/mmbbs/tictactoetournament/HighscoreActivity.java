@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import de.mmbbs.R;
 import de.mmbbs.gameserver.GameHighscoreListener;
 import de.mmbbs.gameserver.GameManagementActivity;
-import de.mmbbs.gameserver.GameServer;
+import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameStates;
 import de.mmbbs.gameserver.User;

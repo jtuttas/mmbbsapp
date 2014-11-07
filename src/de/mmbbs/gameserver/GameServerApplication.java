@@ -23,16 +23,21 @@ import de.mmbbs.io.socket.IOCallback;
 import de.mmbbs.io.socket.SocketIO;
 import de.mmbbs.io.socket.SocketIOException;
 import de.mmbbs.tictactoetournament.Main;
+import de.mmbbs.tictactoetournament.TabActivity;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.backup.BackupManager;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
 
-public class GameServer extends Application implements IOCallback{
+public class GameServerApplication extends Application implements IOCallback{
 
 	private String url;
 	private GameServerListener listener;
@@ -41,7 +46,7 @@ public class GameServer extends Application implements IOCallback{
 	private String user;
 	public static  String game;
 	private GameStates state=GameStates.DISCONNECTED;
-	private GameServer instance;
+	private GameServerApplication instance;
 	private ArrayList<User> userlist = new ArrayList<User>();
 	private GameChatListener chatlistener;
 	private Handler gamechathandler; 
@@ -68,10 +73,12 @@ public class GameServer extends Application implements IOCallback{
 	   }
 
 	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
+	private boolean activityVisible;
 	//private boolean disconnect=true;
+
 	
 	  
-	  public GameServer() {
+	  public GameServerApplication() {
 		super();
 		Log.d(Main.TAG, "-------------- Game Server Konstruktor");
 		instance=this;
@@ -373,15 +380,50 @@ public class GameServer extends Application implements IOCallback{
 			
 		}
 		else if (event.compareTo("updaterequest")==0) {
-			Log.d(Main.TAG,"on() updaterequest");
+			Log.d(Main.TAG,"on() updaterequest activityVisible="+activityVisible);
 			String json = args[0].toString();
 			try {
 				final JSONObject obj = new JSONObject(json);
-				if (obj.optString("command").compareTo("requested")==0) {
+				Log.d(Main.TAG,"on() updaterequest command="+obj.optString("command"));
+				if (obj.optString("command").compareTo("request")==0) {
 					state=GameStates.REQUEST_PENDING;
+					if (!activityVisible) {
+						
+						// prepare intent which is triggered if the
+						// notification is selected
+						Log.d(Main.TAG,"************ Build Notification");
+						Intent intent = new Intent(getApplicationContext(), TabActivity.class);
+						
+						//intent.setAction("android.intent.action.MAIN");
+						//intent.addCategory("android.intent.category.LAUNCHER");  
+						//intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+						intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						intent.putExtra("command","request");
+						intent.putExtra("from_player", obj.optString("from_player", "unknown"));
+						PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+						
+						// build notification
+						// the addAction re-use the same intent to keep the example short
+						Notification n  = new Notification.Builder(this)
+						        .setContentTitle("TicTacToe@MMBBS")
+						        //.setVibrate(new long[] { 1000, 1000 })
+						        .setContentText("Request from "+obj.optString("from_player", "unknown"))
+						        .setSmallIcon(R.drawable.icon)
+						        .setContentIntent(pIntent)
+						        .setAutoCancel(true).build();
+						
+						  
+						NotificationManager notificationManager = 
+						  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+
+						notificationManager.notify(0, n); 
+					}
 				}
 				else if (obj.optString("command").compareTo("cancelrequest")==0) {
 					state=GameStates.CONNECTED;
+					NotificationManager notificationManager = 
+							  (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+				    notificationManager.cancel(0);
 				}
 				else if (obj.optString("command").compareTo("request_rejected")==0) {
 					state=GameStates.CONNECTED;
@@ -401,6 +443,7 @@ public class GameServer extends Application implements IOCallback{
 				else if (obj.optString("command").compareTo("request_finished")==0) {
 					state=GameStates.PLAY;
 				}
+				
 				
 				if (handler!=null) handler.post(new Runnable() {	
 					@Override
@@ -767,6 +810,13 @@ public class GameServer extends Application implements IOCallback{
 	public ArrayList<User> getUserList() {
 		// TODO Auto-generated method stub
 		return userlist;
+	}
+
+
+
+	public void setActivityVisible(boolean b) {
+		// TODO Auto-generated method stub
+		activityVisible=b;
 	}
 	
 	
