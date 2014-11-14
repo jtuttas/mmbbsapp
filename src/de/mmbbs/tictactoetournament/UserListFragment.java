@@ -47,43 +47,133 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class UserListFragment extends Fragment implements OnItemClickListener,  TextWatcher, GameUserListener{
+public class UserListFragment extends Fragment implements OnItemClickListener, TextWatcher{
+
+	private GameServerApplication gc;
 	private UserListArrayAdapter adapter;
 	private DBManager dbm;
-	
+	private Handler handler;
+	private View rootView;
+	private CustomDialogClass cdd;
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.user_list_layout, container, false);
+		ListView lv = (ListView) rootView.findViewById(R.id.listView_users);
+		gc = (GameServerApplication) getActivity().getApplication();
+		adapter = new UserListArrayAdapter(getActivity().getApplicationContext(), R.layout.user_line,gc.getUserList());
+		lv.setAdapter(adapter);
+		lv.setOnItemClickListener(this);
+		lv.setTextFilterEnabled(true);
+
+		this.registerForContextMenu(lv);
+		dbm = new DBManager(getActivity(), "friends.db", null, 1);
+		Log.d(Main.TAG," onCreate() userlist size="+gc.getUserList().size());
+		TextView tv = (TextView) rootView.findViewById(R.id.textView_number_of_users);
+		tv.setText(Integer.toString(gc.getUserList().size()));
+		EditText et = (EditText) rootView.findViewById(R.id.editText_user_filter);
+		et.addTextChangedListener(this);
+		
+		handler = new Handler();
+		
+		this.rootView=rootView;
         return rootView;
     }
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
+		Log.d(Main.TAG," Context Selected userlist size="+gc.getUserList().size());
+		ListView lv = (ListView) rootView.findViewById(R.id.listView_users);
+		User user = (User) adapter.getItem((int) info.id);
+		TextView playerfriend; 
+		 switch (item.getItemId()) {
+	        case R.id.item_add_friend:
+	        	dbm.addFriend(user.getName());
+	        	user.setFriend(true);
+	        	gc.getUserList().set((int) info.id, user);
+	        	adapter.notifyDataSetChanged();
+	        	return true;
+	        case R.id.item_remove_friend:
+	        	dbm.removeFriend(user.getName());
+	        	user.setFriend(false);
+	        	gc.getUserList().set((int) info.id, user);
+				adapter.getFilter().filter(((EditText) rootView.findViewById(R.id.editText_user_filter)).getText());
+	        	break;
+	        case R.id.item_play_with:
+	        	requestPlayer(info.id);
+	        return true;
+	    }
+		return super.onContextItemSelected(item);
+	}
+
 	
-	@Override
-	public void updateUsers(List<User> userlist) {
+	private void requestPlayer(long index) {
 		// TODO Auto-generated method stub
+		Log.d(Main.TAG," Request Position="+index);
+		requestPlayer(adapter.getItem((int) index));
 		
 	}
-	@Override
-	public void afterTextChanged(Editable arg0) {
+	private void requestPlayer(final User u) {
 		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-			int arg3) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-		// TODO Auto-generated method stub
-		
+		if (u.getState()==UserState.FREE) {
+			cdd = new CustomDialogClass(getActivity(),CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
+					null,this.getResources().getString(R.string.cancel));
+			cdd.setOnCustomDialog(new CustomDialogListener() {
+
+
+				@Override
+				public void onNegativeButton() {
+			    	gc.request(u.getName(), "cancelrequest");
+					gc.setPendingrequest(null, null);
+
+				}
+
+				@Override
+				public void onPositiveButton() {
+					
+				}
+				
+			});
+			cdd.setCancelable(false);
+			cdd.show();
+			gc.setPendingrequest(gc.getUser(), u.getName());
+	    	gc.request(u.getName(), "request");
+		}
+		else {
+			Toast.makeText(getActivity(),getResources().getString(R.string.not_a_free_player), Toast.LENGTH_LONG).show();				
+		}
+
 	}
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void afterTextChanged(Editable arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+			int arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+		Log.d(Main.TAG," Text Changed cras="+arg0);
+		adapter.getFilter().filter(arg0);		
+
+		
+	}
+	
+	
 	
 	/*
 	@Override
