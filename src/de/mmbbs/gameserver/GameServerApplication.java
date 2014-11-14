@@ -22,6 +22,7 @@ import de.mmbbs.io.socket.IOAcknowledge;
 import de.mmbbs.io.socket.IOCallback;
 import de.mmbbs.io.socket.SocketIO;
 import de.mmbbs.io.socket.SocketIOException;
+import de.mmbbs.tictactoetournament.FragmentActivity;
 import de.mmbbs.tictactoetournament.Main;
 import de.mmbbs.tictactoetournament.TabActivity;
 
@@ -392,7 +393,7 @@ public class GameServerApplication extends Application implements IOCallback{
 						// prepare intent which is triggered if the
 						// notification is selected
 						Log.d(Main.TAG,"************ Build Notification");
-						Intent intent = new Intent(getApplicationContext(), TabActivity.class);
+						Intent intent = new Intent(getApplicationContext(), FragmentActivity.class);
 						
 						//intent.setAction("android.intent.action.MAIN");
 						//intent.addCategory("android.intent.category.LAUNCHER");  

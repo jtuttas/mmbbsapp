@@ -174,7 +174,7 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 			e.commit();
 			Log.d(TAG, "update Login Main PUT user="+user);
 			
-	    	Intent i = new Intent(this, TabActivity.class);
+	    	Intent i = new Intent(this, FragmentActivity.class);
 	    	startActivityForResult(i, 100);
 		}
 		else {
