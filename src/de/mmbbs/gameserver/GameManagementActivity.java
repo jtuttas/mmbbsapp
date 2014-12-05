@@ -164,6 +164,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		}
 		else if (obj.optString("command").compareTo("cancelrequest")==0) {
 			if (cdd!= null) cdd.dismiss();
+			//else Log.d(Main.TAG,"!! Kein Dilog gefunden!");
 			gc.setPendingrequest(null, null);
 
 			Toast.makeText(getApplicationContext(),"Request canceled from player '"+obj.optString("from_player")+"'", Toast.LENGTH_LONG).show();				

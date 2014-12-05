@@ -47,7 +47,7 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class UserListFragment extends Fragment implements OnItemClickListener, TextWatcher{
+public class UserListFragment extends Fragment implements OnItemClickListener, TextWatcher,GameUserListener{
 
 	private GameServerApplication gc;
 	private UserListArrayAdapter adapter;
@@ -147,8 +147,10 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 
 	}
 	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
+	public void onItemClick(AdapterView<?> arg0, View arg1, int pos, long arg3) {
+		final User u = adapter.getItem(pos);
+		Log.d(Main.TAG,"Geklick auf "+u.getName());
+		requestPlayer(u);
 		
 	}
 
@@ -172,6 +174,27 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 
 		
 	}
+
+	@Override
+	public void updateUsers(List<User> userlist) {
+		Log.d(Main.TAG,"updateUser in UserList Activity");
+		for (int i=0;i<userlist.size();i++) {
+			User user = userlist.get(i);
+			if (dbm.isFriend(user.getName())) {
+				user.setFriend(true);
+			}
+			else {
+				user.setFriend(false);
+			}
+		}
+		adapter.clear();
+		adapter.setUserList(gc.getUserList());
+		adapter.getFilter().filter(((EditText) rootView.findViewById(R.id.editText_user_filter)).getText());
+		TextView tv = (TextView) rootView.findViewById(R.id.textView_number_of_users);
+		tv.setText(Integer.toString(gc.getUserList().size()));
+		Log.d(Main.TAG,"updateUser in UserList Activity userlist size="+gc.getUserList().size());
+	}
+
 	
 	
 	

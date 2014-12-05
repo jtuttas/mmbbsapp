@@ -398,9 +398,11 @@ public class GameServerApplication extends Application implements IOCallback{
 						//intent.setAction("android.intent.action.MAIN");
 						//intent.addCategory("android.intent.category.LAUNCHER");  
 						//intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+						intent.setAction("foo2");
 						intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						intent.putExtra("command","request");
 						intent.putExtra("from_player", obj.optString("from_player", "unknown"));
+						
 						PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 						
 						// build notification
@@ -446,10 +448,10 @@ public class GameServerApplication extends Application implements IOCallback{
 				}
 				
 				
-				if (handler!=null) handler.post(new Runnable() {	
+				if (handler!=null && activityVisible) handler.post(new Runnable() {	
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
+						Log.d(Main.TAG,"fire update request!");
 						listener.updateRequest(obj);
 					}
 				}); 

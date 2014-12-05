@@ -5,6 +5,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import de.mmbbs.R;
+import de.mmbbs.gameserver.GameManagementActivity;
 import de.mmbbs.gameserver.GameServerApplication;
 import de.mmbbs.gameserver.GameServerListener;
 import de.mmbbs.gameserver.GameStates;
@@ -35,7 +36,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-public class FragmentActivity extends Activity implements  GameUserListener, GameServerListener {
+public class FragmentActivity extends GameManagementActivity {
 	// Declaring our tabs and the corresponding fragments.
 		ActionBar.Tab userTab, chatTab,highscoreTab;
 		Fragment userListFragment = new UserListFragment();
@@ -53,6 +54,7 @@ public class FragmentActivity extends Activity implements  GameUserListener, Gam
 			
 			
 			super.onCreate(savedInstanceState);
+			//Log.d(Main.TAG," Fragment Activity on Create() "+savedInstanceState.getString("command"));
 			Log.d(Main.TAG,"FragmentActivity onCreate()");
 			requestWindowFeature(Window.FEATURE_ACTION_BAR);
 			setContentView(R.layout.activity_main);
@@ -87,20 +89,22 @@ public class FragmentActivity extends Activity implements  GameUserListener, Gam
 	        
 			gc=(GameServerApplication) this.getApplication();
 			handler = new Handler();
-			gc.setUserCallbacks(this, handler);
+			
 
 		}
 
 		@Override
-		protected void onResume() {
+		protected void onStart() {
 			// TODO Auto-generated method stub
 			super.onResume();
 			gc.setActivityVisible(true);
-			Log.d(Main.TAG,"onResume() FragmentActivity conected="+gc.isConnected());
-			gc.setUserCallbacks(this, handler);
+			Log.d(Main.TAG,"onStart() FragmentActivity conected="+gc.isConnected());
+			
 			if (cdd != null && cdd.isShowing()) cdd.dismiss();
+			
 			Bundle extras = getIntent().getExtras();
 			if(extras == null) {
+			        Log.d(Main.TAG,":-( kein Extra ");
 			        
 			} else {
 				if (extras.getString("command").compareTo("request")==0) {
@@ -108,6 +112,9 @@ public class FragmentActivity extends Activity implements  GameUserListener, Gam
 					getIntent().removeExtra("command");
 					getIntent().removeExtra("from_player");
 			    }
+				else {
+					Log.d(Main.TAG,"keine richtigen extras ->"+extras.getString("command"));
+				}
 			}
 			
 		}
@@ -115,9 +122,39 @@ public class FragmentActivity extends Activity implements  GameUserListener, Gam
 		
 		
 		@Override
+		protected void onNewIntent(Intent intent) {
+			// TODO Auto-generated method stub
+			super.onNewIntent(intent);
+			Bundle extras = intent.getExtras();
+			if(extras == null) {
+			        Log.d(Main.TAG,":-( onNewIntent kein Extra "+intent.getStringExtra("command"));
+			        
+			} else {
+				if (extras.getString("command").compareTo("request")==0) {
+					showRequestDialog(extras.getString("from_player"));
+					getIntent().removeExtra("command");
+					getIntent().removeExtra("from_player");
+			    }
+				else {
+					Log.d(Main.TAG,"keine richtigen extras ->"+extras.getString("command"));
+				}
+			}
+		}
+
+		@Override
 		protected void onStop() {
-			gc.setActivityVisible(false);
+			
 			super.onStop();
+			gc.setActivityVisible(false);
+		}
+
+		
+		
+		@Override
+		protected void onDestroy() {
+			// TODO Auto-generated method stub
+			super.onDestroy();
+			
 		}
 
 		@Override
@@ -178,145 +215,16 @@ public class FragmentActivity extends Activity implements  GameUserListener, Gam
 			gc.setPendingrequest(from, gc.getUser());
 			cdd.show();
 		}
+
+		@Override
+		public void onLogin() {
+			// TODO Auto-generated method stub
+			
+		}
 		
 
 
-		@Override
-		public void updateUsers(List<User> userlist) {
-			
-			
-		}
-
-		@Override
-		public void updateLogin(JSONObject obj) {
-			Log.d(Main.TAG, "update Login Game Management Activity");
-			
-			if (obj.optBoolean("success")) {
-				String user = obj.optString("user");
-				String pw = obj.optString("password");
-				 SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-				Editor e = pref.edit();
-				e.putString("user", user);
-				e.putString("password", pw);
-				e.commit();
-				onLogin();
-				
-			}	
-			
-		}
-
-		private void onLogin() {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void updateResendLogin(JSONObject obj) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void updateRegister(JSONObject obj) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void updateRequest(JSONObject obj) {
-			// TODO Auto-generated method stub
-			Log.d(Main.TAG,"!!update request in GameManagement Activity command="+obj.optString("command"));
-			if (obj.optString("command").compareTo("request")==0) {
-				this.showRequestDialog(obj.optString("from_player"));
-				
-				
-			}
-			else if (obj.optString("command").compareTo("request_acknowledged")==0) {
-				Log.d(Main.TAG,"---> request acknowladged in GameManagement Activity");
-				if (cdd!=null) cdd.dismiss();
-				gc.setPendingrequest(null, null);
-		    	startGame(false,obj.optString("from_player"));							
-				
-			}
-			else if (obj.optString("command").compareTo("request_finished")==0) {
-				Log.d(Main.TAG,"-----> request finished in GameManagement Activity");
-				if (cdd!=null) cdd.dismiss();
-				gc.setPendingrequest(null, null);
-		    	startGame(true,obj.optString("from_player"));										
-			}
-			else if (obj.optString("command").compareTo("request_rejected")==0) {
-				if (cdd!=null) cdd.dismiss();
-				gc.setPendingrequest(null, null);
-				Toast.makeText(getApplicationContext(),"Request rejected from player '"+obj.optString("from_player")+"'!", Toast.LENGTH_LONG).show();				
-			}
-			else if (obj.optString("command").compareTo("cancelrequest")==0) {
-				if (cdd!= null) cdd.dismiss();
-				gc.setPendingrequest(null, null);
-
-				Toast.makeText(getApplicationContext(),"Request canceled from player '"+obj.optString("from_player")+"'", Toast.LENGTH_LONG).show();				
-			}
-			
-		}
-
-		private void startGame(boolean turn,String gegner) {
-			Intent i = new Intent(this,Game.class);
-			i.putExtra("start",turn);
-			
-			i.putExtra("gegner", gegner);
-	    	startActivity(i);
-	    	
-		}
-		@Override
-		public void updateDisconnect() {
-			Toast.makeText(getApplicationContext(),"updateDisconnect()", Toast.LENGTH_LONG).show();	
-			this.finish();//try activityname.finish instead of this
-			setResult(100);
-
-			
-		}
-
-		@Override
-		public void connected() {
-			if (gc.getState()!=GameStates.LOGGED_IN) {
-				SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
-				String user = pref.getString("user", null);
-			    String pw = pref.getString("password", null);
-				gc.login(user, pw, Main.GAME);
-			}
-			
-		}
-
-		@Override
-		public void connectionError() {
-			// TODO Auto-generated method stub
-			Toast.makeText(getApplicationContext(),"ConnectionError()", Toast.LENGTH_LONG).show();	
-			// TODO Auto-generated method stub
-			cdd = new CustomDialogClass(this,CustomDialogType.ERROR , this.getResources().getString(R.string.failed_connect),
-					null,this.getResources().getString(R.string.retry));
-			cdd.setOnCustomDialog(new CustomDialogListener() {
-
-
-				@Override
-				public void onNegativeButton() {
-			    	reconnect();
-					
-				}
-
-				@Override
-				public void onPositiveButton() {
-					
-				}
-				
-			});
-			cdd.setCancelable(false);
-			cdd.show();
-			
-		}
 		
-		public void reconnect() {
-			Log.d(Main.TAG,"**** GameManegementActivity reconnect!");
-			startActivity(new Intent(this, Main.class));
-			this.finish();
-		}
+
 		
 }
