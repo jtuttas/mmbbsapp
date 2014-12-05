@@ -448,7 +448,7 @@ public class GameServerApplication extends Application implements IOCallback{
 				}
 				
 				
-				if (handler!=null && activityVisible) handler.post(new Runnable() {	
+				if (handler!=null ) handler.post(new Runnable() {	
 					@Override
 					public void run() {
 						Log.d(Main.TAG,"fire update request!");

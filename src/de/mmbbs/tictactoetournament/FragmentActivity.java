@@ -154,6 +154,7 @@ public class FragmentActivity extends GameManagementActivity {
 		protected void onDestroy() {
 			// TODO Auto-generated method stub
 			super.onDestroy();
+			gc.setServerCallbacks(null, null);
 			
 		}
 
