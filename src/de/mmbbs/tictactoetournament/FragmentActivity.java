@@ -45,9 +45,9 @@ public class FragmentActivity extends GameManagementActivity {
 		private GameServerApplication gc;
 		private UserListArrayAdapter adapter;
 
-		protected CustomDialogClass cdd;
+		//protected CustomDialogClass cdd;
 		private FragmentActivity instance;
-		private Handler handler;
+		//private Handler handler;
 		
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -96,31 +96,24 @@ public class FragmentActivity extends GameManagementActivity {
 		@Override
 		protected void onStart() {
 			// TODO Auto-generated method stub
-			super.onResume();
+			super.onStart();
 			gc.setActivityVisible(true);
 			Log.d(Main.TAG,"onStart() FragmentActivity conected="+gc.isConnected());
 			
-			if (cdd != null && cdd.isShowing()) cdd.dismiss();
+			//if (cdd != null && cdd.isShowing()) cdd.dismiss();
 			
-			Bundle extras = getIntent().getExtras();
-			if(extras == null) {
-			        Log.d(Main.TAG,":-( kein Extra ");
-			        
-			} else {
-				if (extras.getString("command").compareTo("request")==0) {
-					showRequestDialog(extras.getString("from_player"));
-					getIntent().removeExtra("command");
-					getIntent().removeExtra("from_player");
-			    }
-				else {
-					Log.d(Main.TAG,"keine richtigen extras ->"+extras.getString("command"));
-				}
-			}
 			
+				
 		}
 		
 		
 		
+		@Override
+		protected void onResume() {
+			// TODO Auto-generated method stub
+			super.onResume();
+		}
+
 		@Override
 		protected void onNewIntent(Intent intent) {
 			// TODO Auto-generated method stub
@@ -187,6 +180,7 @@ public class FragmentActivity extends GameManagementActivity {
 			return super.onOptionsItemSelected(item);
 		}
 
+		/**
 		public void showRequestDialog(final String from) {
 			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
 					this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
@@ -216,10 +210,29 @@ public class FragmentActivity extends GameManagementActivity {
 			gc.setPendingrequest(from, gc.getUser());
 			cdd.show();
 		}
+	*/
 
 		@Override
 		public void onLogin() {
-			// TODO Auto-generated method stub
+			Log.d(Main.TAG," --------> Fragment Activity onLogin()");
+			Bundle extras = getIntent().getExtras();
+			if(extras == null) {
+			        Log.d(Main.TAG,":-( kein Extra ");
+			        
+			} else {
+				if (extras.getString("command").compareTo("request")==0) {
+					GameManagementActivity.cdd=null;
+					super.getCustomDialog();
+					showRequestDialog(extras.getString("from_player"));
+					getIntent().removeExtra("command");
+					getIntent().removeExtra("from_player");
+			    }
+				else {
+					Log.d(Main.TAG,"keine richtigen extras ->"+extras.getString("command"));
+				}
+			}
+					
+
 			
 		}
 		

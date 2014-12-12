@@ -25,9 +25,17 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 	protected Handler handler;
 	protected static GameServerApplication	gc;
-	protected CustomDialogClass cdd;
+	public static CustomDialogClass cdd;
 	public GameManagementActivity instance;
+	private int idDialog;
 	
+	
+	public CustomDialogClass getCustomDialog() {
+		if (cdd==null) {
+			cdd = new CustomDialogClass(this);
+		}
+		return cdd;
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,11 +66,11 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			    String pw = pref.getString("password", null);
 			    gc.login(user, pw, Main.GAME);
 			}
-			if (gc.getState()==GameStates.LOGGED_IN) {
+			if (gc.getState()==GameStates.LOGGED_IN || gc.getState()==GameStates.REQUEST_PENDING) {
 				onLogin();
 			}
 		}
-		if (cdd != null && cdd.isShowing()) cdd.dismiss();
+		//if (cdd != null && cdd.isShowing()) cdd.dismiss();
 
 	}
 	
@@ -83,7 +91,8 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		Log.d(Main.TAG,"GameManagementActivity onStop()");
 		// TODO Auto-generated method stub
 		super.onStop();
-		if (cdd!=null && cdd.isShowing()) {
+		/**
+		if (this.getCustomDialog().isShowing()) {
 			// Dieser Client wurde angefragt
 			if (gc.getPendingRequestToPlayer().compareTo(gc.getUser())==0) {
 				gc.request(gc.getPendingRequestFromPlayer(),"request_rejected");
@@ -91,9 +100,10 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			else {
 				gc.request(gc.getPendingRequestToPlayer(), "cancelrequest");
 			}
-			cdd.dismiss();
+			this.getCustomDialog().dismiss();
 			gc.setPendingrequest(null, null);
 		}
+		*/
 		//Toast.makeText(getApplicationContext(),"onStop()", Toast.LENGTH_LONG).show();			
 		//if (gc.getDisconnectOnStop()) gc.disconnect();
 
@@ -146,25 +156,25 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		}
 		else if (obj.optString("command").compareTo("request_acknowledged")==0) {
 			Log.d(Main.TAG,"---> request acknowladged in GameManagement Activity");
-			if (cdd!=null) cdd.dismiss();
+			this.getCustomDialog().dismiss();
 			gc.setPendingrequest(null, null);
 	    	startGame(false,obj.optString("from_player"));							
 			
 		}
 		else if (obj.optString("command").compareTo("request_finished")==0) {
 			Log.d(Main.TAG,"-----> request finished in GameManagement Activity");
-			if (cdd!=null) cdd.dismiss();
+			this.getCustomDialog().dismiss();
 			gc.setPendingrequest(null, null);
 	    	startGame(true,obj.optString("from_player"));										
 		}
 		else if (obj.optString("command").compareTo("request_rejected")==0) {
-			if (cdd!=null) cdd.dismiss();
+			this.getCustomDialog().dismiss();
 			gc.setPendingrequest(null, null);
 			Toast.makeText(getApplicationContext(),"Request rejected from player '"+obj.optString("from_player")+"'!", Toast.LENGTH_LONG).show();				
 		}
 		else if (obj.optString("command").compareTo("cancelrequest")==0) {
-			if (cdd!= null) cdd.dismiss();
-			//else Log.d(Main.TAG,"!! Kein Dilog gefunden!");
+			this.getCustomDialog().dismiss();
+			Log.d(Main.TAG,"!!  Dialog ausgeschaltet!");
 			gc.setPendingrequest(null, null);
 
 			Toast.makeText(getApplicationContext(),"Request canceled from player '"+obj.optString("from_player")+"'", Toast.LENGTH_LONG).show();				
@@ -174,9 +184,14 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 	
 	public void showRequestDialog(final String from) {
-		cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
-				this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
-		cdd.setOnCustomDialog(new CustomDialogListener() {
+		
+		this.getCustomDialog().setType(CustomDialogType.INFO);
+		this.getCustomDialog().setContent("Request from player '"+from+"'");
+		this.getCustomDialog().setPositiveMsg(this.getResources().getString(R.string.ok));
+		this.getCustomDialog().setNegativeMsg(this.getResources().getString(R.string.reject));
+		//cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
+		//		this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
+		this.getCustomDialog().setOnCustomDialog(new CustomDialogListener() {
 
 
 			@Override
@@ -189,18 +204,22 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 			@Override
 			public void onPositiveButton() {
-				if (cdd!=null) cdd.dismiss();
-				cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
-				cdd.setCancelable(false);
-				cdd.show();
+				getCustomDialog().dismiss();
+				//cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
+				getCustomDialog().setType(CustomDialogType.INFO);
+				getCustomDialog().setContent("Wait for partner ");
+				getCustomDialog().setPositiveMsg(null);
+				getCustomDialog().setNegativeMsg(null);
+				getCustomDialog().setCancelable(false);
+				getCustomDialog().show();
 				gc.request(from, "request_acknowledged");
 //		    	startGame(true,obj.optString("from_player"));									
 			}
 			
 		});
-		cdd.setCancelable(false);
+		getCustomDialog().setCancelable(false);
 		gc.setPendingrequest(from, gc.getUser());
-		cdd.show();
+		getCustomDialog().show();
 	}
 	
 	private void startGame(boolean turn,String gegner) {
@@ -235,9 +254,13 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		// TODO Auto-generated method stub
 		Toast.makeText(getApplicationContext(),"ConnectionError()", Toast.LENGTH_LONG).show();	
 		// TODO Auto-generated method stub
-		cdd = new CustomDialogClass(this,CustomDialogType.ERROR , this.getResources().getString(R.string.failed_connect),
-				null,this.getResources().getString(R.string.retry));
-		cdd.setOnCustomDialog(new CustomDialogListener() {
+		//cdd = new CustomDialogClass(this,CustomDialogType.ERROR , this.getResources().getString(R.string.failed_connect),
+		//		null,this.getResources().getString(R.string.retry));
+		getCustomDialog().setType(CustomDialogType.ERROR);
+		getCustomDialog().setContent(this.getResources().getString(R.string.failed_connect));
+		getCustomDialog().setPositiveMsg(null);
+		getCustomDialog().setNegativeMsg(this.getResources().getString(R.string.retry));
+		getCustomDialog().setOnCustomDialog(new CustomDialogListener() {
 
 
 			@Override
@@ -252,8 +275,8 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			}
 			
 		});
-		cdd.setCancelable(false);
-		cdd.show();
+		getCustomDialog().setCancelable(false);
+		getCustomDialog().show();
 	}
 	public void reconnect() {
 		Log.d(Main.TAG,"**** GameManegementActivity reconnect!");

@@ -77,7 +77,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		super.onResume();
 		Log.d(Main.TAG,"onResume() UserList Activity conected="+gc.isConnected());
 		gc.setUserCallbacks(this, handler);
-		if (cdd != null && cdd.isShowing()) cdd.dismiss();
+		//if (cdd != null && cdd.isShowing()) cdd.dismiss();
 		Bundle extras = getIntent().getExtras();
 		if(extras == null) {
 		        
@@ -199,6 +199,8 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 	private void requestPlayer(final User u) {
 		// TODO Auto-generated method stub
 		if (u.getState()==UserState.FREE) {
+			Log.d(Main.TAG,"request Player!! in UserListActivity");
+			/*
 			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
 					null,this.getResources().getString(R.string.cancel));
 			cdd.setOnCustomDialog(new CustomDialogListener() {
@@ -221,6 +223,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 			cdd.show();
 			gc.setPendingrequest(gc.getUser(), u.getName());
 	    	gc.request(u.getName(), "request");
+	    	*/
 		}
 		else {
 			Toast.makeText(getApplicationContext(),getResources().getString(R.string.not_a_free_player), Toast.LENGTH_LONG).show();				

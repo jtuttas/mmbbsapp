@@ -54,7 +54,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	private DBManager dbm;
 	private Handler handler;
 	private View rootView;
-	private CustomDialogClass cdd;
+	private CustomDialogClass customDialog;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,7 +76,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 		et.addTextChangedListener(this);
 		
 		handler = new Handler();
-		
+		gc.setUserCallbacks(this, handler);
 		this.rootView=rootView;
         return rootView;
     }
@@ -118,9 +118,9 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	private void requestPlayer(final User u) {
 		// TODO Auto-generated method stub
 		if (u.getState()==UserState.FREE) {
-			cdd = new CustomDialogClass(getActivity(),CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
+			customDialog = new CustomDialogClass(getActivity(),CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
 					null,this.getResources().getString(R.string.cancel));
-			cdd.setOnCustomDialog(new CustomDialogListener() {
+			customDialog.setOnCustomDialog(new CustomDialogListener() {
 
 
 				@Override
@@ -136,8 +136,8 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 				}
 				
 			});
-			cdd.setCancelable(false);
-			cdd.show();
+			customDialog.setCancelable(false);
+			customDialog.show();
 			gc.setPendingrequest(gc.getUser(), u.getName());
 	    	gc.request(u.getName(), "request");
 		}
@@ -177,7 +177,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 
 	@Override
 	public void updateUsers(List<User> userlist) {
-		Log.d(Main.TAG,"updateUser in UserList Activity");
+		Log.d(Main.TAG,"updateUser in UserList Fragment");
 		for (int i=0;i<userlist.size();i++) {
 			User user = userlist.get(i);
 			if (dbm.isFriend(user.getName())) {
