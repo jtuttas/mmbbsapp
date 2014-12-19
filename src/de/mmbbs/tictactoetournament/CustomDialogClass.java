@@ -21,6 +21,7 @@ public class CustomDialogClass extends Dialog  implements android.view.View.OnCl
 	  private CustomDialogType type;
 	private boolean showing;
 	  
+		
 	  public CustomDialogClass(Activity a,CustomDialogType type,String msg,String pos_button_text,String neg_button_text) {
 	    super(a);
 	    // TODO Auto-generated constructor stub
@@ -34,49 +35,27 @@ public class CustomDialogClass extends Dialog  implements android.view.View.OnCl
 	  public CustomDialogClass(Activity a) {
 		  super(a);
 		  this.c=a;
+		  requestWindowFeature(Window.FEATURE_NO_TITLE);
 	  }
 
+	  public void update() {
+		 //this.findViewById(R.id.my_dialog).invalidate();
+	  }
 
 	@Override
 	  protected void onCreate(Bundle savedInstanceState) {
+		Log.d(Main.TAG,"!! Custom Dialog onCreate()");
 	    super.onCreate(savedInstanceState);
-	    requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 	    setContentView(R.layout.my_dialog);
 	    yes = (Button) findViewById(R.id.button_positive);
-	    no = (Button) findViewById(R.id.button_negative);
-	    TextView tv = (TextView) findViewById(R.id.textView_msg_dialog);
-	    tv.setText(msg);
 	    yes.setOnClickListener(this);
+	    no = (Button) findViewById(R.id.button_negative);
 	    no.setOnClickListener(this);
-		if (this.pos_txt==null) {
-			yes.setVisibility(View.INVISIBLE);
-		}
-		else {
-			yes.setText(pos_txt);
-		}
-		
-		if (neg_txt==null) {
-			no.setVisibility(View.INVISIBLE);
-		}
-		else {
-			no.setText(neg_txt);
-		}
-		
-		ImageView iv =(ImageView) this.findViewById(R.id.imageView_dialog);
-		switch (type) {
-		case WARNING:
-			iv.setImageResource(R.drawable.warning);
-			break;
-		case ERROR:
-			iv.setImageResource(R.drawable.error);
-			break;
-		case INFO:
-			iv.setImageResource(R.drawable.info);
-			break;
-		case SUCCESS:
-			iv.setImageResource(R.drawable.success);
-			break;
-		}
+	    this.setContent(msg);
+	    this.setPositiveMsg(pos_txt);
+	    this.setNegativeMsg(neg_txt);
+		this.setType(type);
 		getWindow().setBackgroundDrawable(new ColorDrawable(0));
 
 	  }
@@ -126,22 +105,62 @@ public class CustomDialogClass extends Dialog  implements android.view.View.OnCl
 
 	public void setType(CustomDialogType type) {
 		this.type=type;
+		ImageView iv =(ImageView) this.findViewById(R.id.imageView_dialog);
+		if (iv!=null) {
+			switch (type) {
+			case WARNING:
+				iv.setImageResource(R.drawable.warning);
+				break;
+			case ERROR:
+				iv.setImageResource(R.drawable.error);
+				break;
+			case INFO:
+				iv.setImageResource(R.drawable.info);
+				break;
+			case SUCCESS:
+				iv.setImageResource(R.drawable.success);
+				break;
+			}
+		}
 		
 	}
 
 	public void setContent(String string) {
 		this.msg=string;
+		 TextView tv = (TextView) findViewById(R.id.textView_msg_dialog);
+		 if (tv!=null) tv.setText(msg);
 		
 	}
 
 	public void setPositiveMsg(String string) {
 		this.pos_txt=string;
+	    yes = (Button) findViewById(R.id.button_positive);
+		if (yes!=null) {
+		    if (this.pos_txt==null) {
+				yes.setVisibility(View.INVISIBLE);
+			}
+			else {
+				yes.setText(pos_txt);
+				yes.setVisibility(View.VISIBLE);
+			}
+		}
+
+
 		
 	}
 
 	public void setNegativeMsg(String string) {
 		this.neg_txt=string;
-		
+		no = (Button) findViewById(R.id.button_negative);
+		if (no!=null) {
+			if (neg_txt==null) {
+				no.setVisibility(View.INVISIBLE);
+			}
+			else {
+				no.setText(neg_txt);
+				no.setVisibility(View.VISIBLE);
+			}
+		}
 	}
 
 	public void setActivity(Activity activity) {

@@ -50,12 +50,14 @@ import android.widget.Toast;
 public class UserListFragment extends Fragment implements OnItemClickListener, TextWatcher,GameUserListener{
 
 	private GameServerApplication gc;
-	private UserListArrayAdapter adapter;
+	public UserListArrayAdapter adapter;
 	private DBManager dbm;
 	private Handler handler;
 	private View rootView;
 	private CustomDialogClass customDialog;
 
+	
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -80,6 +82,27 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 		this.rootView=rootView;
         return rootView;
     }
+	
+	
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+	    getActivity().getMenuInflater().inflate(R.menu.player_context, menu);
+		AdapterView.AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
+		ListView lv = (ListView) getActivity().findViewById(R.id.listView_users);
+		if (acmi.position!=0) {
+			User user = (User) adapter.getItem(acmi.position);
+		
+			Log.d(Main.TAG,"Create Context Menu for user "+user.getName()+ "user list size="+gc.getUserList().size());
+			if (user.isFriend()) {
+				menu.findItem(R.id.item_add_friend).setVisible(false);
+			}
+			else {
+				menu.findItem(R.id.item_remove_friend).setVisible(false);
+			}
+		}
+		
+		super.onCreateContextMenu(menu, v, menuInfo);
+	}
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
@@ -100,7 +123,8 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	        	user.setFriend(false);
 	        	gc.getUserList().set((int) info.id, user);
 				adapter.getFilter().filter(((EditText) rootView.findViewById(R.id.editText_user_filter)).getText());
-	        	break;
+				adapter.notifyDataSetChanged();
+				break;
 	        case R.id.item_play_with:
 	        	requestPlayer(info.id);
 	        return true;
@@ -109,7 +133,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	}
 
 	
-	private void requestPlayer(long index) {
+	public void requestPlayer(long index) {
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG," Request Position="+index);
 		requestPlayer(adapter.getItem((int) index));
@@ -118,15 +142,21 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	private void requestPlayer(final User u) {
 		// TODO Auto-generated method stub
 		if (u.getState()==UserState.FREE) {
-			customDialog = new CustomDialogClass(getActivity(),CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
-					null,this.getResources().getString(R.string.cancel));
+			
+			customDialog = ((GameManagementActivity)this.getActivity()).getCustomDialog();
+			customDialog.setType(CustomDialogType.INFO);
+			customDialog.setContent(getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'");
+			customDialog.setPositiveMsg(null);
+			customDialog.setNegativeMsg(this.getResources().getString(R.string.cancel));
+			//customDialog = new CustomDialogClass(getActivity(),CustomDialogType.INFO ,getResources().getString(R.string.request_to_player)+"'"+u.getName()+"'",
+			//		null,this.getResources().getString(R.string.cancel));
 			customDialog.setOnCustomDialog(new CustomDialogListener() {
 
 
 				@Override
 				public void onNegativeButton() {
 			    	gc.request(u.getName(), "cancelrequest");
-					gc.setPendingrequest(null, null);
+					gc.setPendingrequest(null, null,0);
 
 				}
 
@@ -137,8 +167,9 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 				
 			});
 			customDialog.setCancelable(false);
+			customDialog.update();
 			customDialog.show();
-			gc.setPendingrequest(gc.getUser(), u.getName());
+			gc.setPendingrequest(gc.getUser(), u.getName(),GameServerApplication.REQUEST);
 	    	gc.request(u.getName(), "request");
 		}
 		else {
@@ -241,78 +272,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 		
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.user_menu, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		switch (item.getItemId()) {
-		case R.id.item_friends_only:
-			if (item.isChecked()) {
-				Log.d(Main.TAG," Friends olny is checked ");
-				item.setChecked(false);
-				adapter.setFriendsOnly(false);
-				
-				adapter.getFilter().filter(((EditText) findViewById(R.id.editText_user_filter)).getText());
-			}
-			else {
-				Log.d(Main.TAG," Friends olny is unchecked ");
-				item.setChecked(true);
-				adapter.setFriendsOnly(true);
-				adapter.getFilter().filter(((EditText) findViewById(R.id.editText_user_filter)).getText());
-				
-			}
-			break;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-		Log.d(Main.TAG," Context Selected userlist size="+gc.getUserList().size());
-		ListView lv = (ListView) findViewById(R.id.listView_users);
-		User user = (User) adapter.getItem((int) info.id);
-		TextView playerfriend; 
-		 switch (item.getItemId()) {
-	        case R.id.item_add_friend:
-	        	dbm.addFriend(user.getName());
-	        	user.setFriend(true);
-	        	gc.getUserList().set((int) info.id, user);
-	        	adapter.notifyDataSetChanged();
-	        	return true;
-	        case R.id.item_remove_friend:
-	        	dbm.removeFriend(user.getName());
-	        	user.setFriend(false);
-	        	gc.getUserList().set((int) info.id, user);
-				adapter.getFilter().filter(((EditText) findViewById(R.id.editText_user_filter)).getText());
-	        	break;
-	        case R.id.item_play_with:
-	        	requestPlayer(info.id);
-	        return true;
-	    }
-		return super.onContextItemSelected(item);
-	}
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
-		getMenuInflater().inflate(R.menu.player_context, menu);
-		AdapterView.AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
-		ListView lv = (ListView) findViewById(R.id.listView_users);
-		User user = (User) adapter.getItem(acmi.position);
-		Log.d(Main.TAG,"Create Context Menu for user "+user.getName()+ "user list size="+gc.getUserList().size());
-		if (user.isFriend()) {
-			menu.findItem(R.id.item_add_friend).setVisible(false);
-		}
-		else {
-			menu.findItem(R.id.item_remove_friend).setVisible(false);
-		}
 		
-		super.onCreateContextMenu(menu, v, menuInfo);
-	}
-
-	
 	private void requestPlayer(long index) {
 		// TODO Auto-generated method stub
 		Log.d(Main.TAG," Request Position="+index);

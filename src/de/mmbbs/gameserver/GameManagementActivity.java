@@ -25,7 +25,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 
 	protected Handler handler;
 	protected static GameServerApplication	gc;
-	public static CustomDialogClass cdd;
+	private static CustomDialogClass cdd;
 	public GameManagementActivity instance;
 	private int idDialog;
 	
@@ -91,7 +91,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		Log.d(Main.TAG,"GameManagementActivity onStop()");
 		// TODO Auto-generated method stub
 		super.onStop();
-		/**
+		
 		if (this.getCustomDialog().isShowing()) {
 			// Dieser Client wurde angefragt
 			if (gc.getPendingRequestToPlayer().compareTo(gc.getUser())==0) {
@@ -101,9 +101,9 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 				gc.request(gc.getPendingRequestToPlayer(), "cancelrequest");
 			}
 			this.getCustomDialog().dismiss();
-			gc.setPendingrequest(null, null);
+			gc.setPendingrequest(null, null,0);
 		}
-		*/
+		
 		//Toast.makeText(getApplicationContext(),"onStop()", Toast.LENGTH_LONG).show();			
 		//if (gc.getDisconnectOnStop()) gc.disconnect();
 
@@ -157,25 +157,25 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 		else if (obj.optString("command").compareTo("request_acknowledged")==0) {
 			Log.d(Main.TAG,"---> request acknowladged in GameManagement Activity");
 			this.getCustomDialog().dismiss();
-			gc.setPendingrequest(null, null);
+			gc.setPendingrequest(null, null,0);
 	    	startGame(false,obj.optString("from_player"));							
 			
 		}
 		else if (obj.optString("command").compareTo("request_finished")==0) {
 			Log.d(Main.TAG,"-----> request finished in GameManagement Activity");
 			this.getCustomDialog().dismiss();
-			gc.setPendingrequest(null, null);
+			gc.setPendingrequest(null, null,0);
 	    	startGame(true,obj.optString("from_player"));										
 		}
 		else if (obj.optString("command").compareTo("request_rejected")==0) {
 			this.getCustomDialog().dismiss();
-			gc.setPendingrequest(null, null);
+			gc.setPendingrequest(null, null,0);
 			Toast.makeText(getApplicationContext(),"Request rejected from player '"+obj.optString("from_player")+"'!", Toast.LENGTH_LONG).show();				
 		}
 		else if (obj.optString("command").compareTo("cancelrequest")==0) {
 			this.getCustomDialog().dismiss();
 			Log.d(Main.TAG,"!!  Dialog ausgeschaltet!");
-			gc.setPendingrequest(null, null);
+			gc.setPendingrequest(null, null,0);
 
 			Toast.makeText(getApplicationContext(),"Request canceled from player '"+obj.optString("from_player")+"'", Toast.LENGTH_LONG).show();				
 		}
@@ -198,7 +198,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			public void onNegativeButton() {
 				gc.request(from, "request_rejected");
 				Log.d(Main.TAG,"Request rejected!");
-				gc.setPendingrequest(null, null);
+				gc.setPendingrequest(null, null,0);
 
 			}
 
@@ -218,7 +218,7 @@ public abstract class GameManagementActivity extends Activity implements GameSer
 			
 		});
 		getCustomDialog().setCancelable(false);
-		gc.setPendingrequest(from, gc.getUser());
+		gc.setPendingrequest(from, gc.getUser(),GameServerApplication.REQUESTED);
 		getCustomDialog().show();
 	}
 	

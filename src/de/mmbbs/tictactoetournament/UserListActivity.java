@@ -54,7 +54,7 @@ public class UserListActivity extends GameManagementActivity implements OnItemCl
 		super.onCreate(savedInstanceState);
 		Log.d(Main.TAG,"onCreate() UserList Activity");
 
-		
+		dbm = new DBManager(this, "friends.db", null, 1);
 		//Toast.makeText(getApplicationContext(),"onCretae()", Toast.LENGTH_LONG).show();
 		setContentView(R.layout.user_list_layout);
 		

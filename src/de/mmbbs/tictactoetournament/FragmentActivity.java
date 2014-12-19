@@ -25,6 +25,8 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,12 +45,11 @@ public class FragmentActivity extends GameManagementActivity {
 		Fragment chatFragment = new ChatFragment();
 		Fragment highscoreFragment = new HighscoreFragment();
 		private GameServerApplication gc;
-		private UserListArrayAdapter adapter;
 
 		//protected CustomDialogClass cdd;
 		private FragmentActivity instance;
 		//private Handler handler;
-		
+		private DBManager dbm;
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
 			
@@ -73,8 +74,8 @@ public class FragmentActivity extends GameManagementActivity {
 	 
 	        // Setting custom tab icons.
 	        userTab = actionBar.newTab().setIcon(R.drawable.add_friend);
-	        chatTab = actionBar.newTab().setIcon(R.drawable.add_friend);
-	        highscoreTab = actionBar.newTab().setIcon(R.drawable.add_friend);
+	        chatTab = actionBar.newTab().setIcon(R.drawable.chat);
+	        highscoreTab = actionBar.newTab().setIcon(R.drawable.highscorelist);
 
 	        
 	        // Setting tab listeners.
@@ -90,7 +91,7 @@ public class FragmentActivity extends GameManagementActivity {
 			gc=(GameServerApplication) this.getApplication();
 			handler = new Handler();
 			
-
+			dbm = new DBManager(this, "friends.db", null, 1);
 		}
 
 		@Override
@@ -164,22 +165,24 @@ public class FragmentActivity extends GameManagementActivity {
 				if (item.isChecked()) {
 					Log.d(Main.TAG," Friends olny is checked ");
 					item.setChecked(false);
-					adapter.setFriendsOnly(false);
 					
-					adapter.getFilter().filter(((EditText) userListFragment.getView().findViewById(R.id.editText_user_filter)).getText());
+					((UserListFragment) userListFragment).adapter.setFriendsOnly(false);
+					
+					((UserListFragment) userListFragment).adapter.getFilter().filter(((EditText) userListFragment.getView().findViewById(R.id.editText_user_filter)).getText());
 				}
 				else {
 					Log.d(Main.TAG," Friends olny is unchecked ");
 					item.setChecked(true);
-					adapter.setFriendsOnly(true);
-					adapter.getFilter().filter(((EditText) userListFragment.getView().findViewById(R.id.editText_user_filter)).getText());
+					((UserListFragment) userListFragment).adapter.setFriendsOnly(true);
+					((UserListFragment) userListFragment).adapter.getFilter().filter(((EditText) userListFragment.getView().findViewById(R.id.editText_user_filter)).getText());
 					
 				}
 				break;
 			}
 			return super.onOptionsItemSelected(item);
 		}
-
+		
+		
 		/**
 		public void showRequestDialog(final String from) {
 			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
@@ -221,8 +224,7 @@ public class FragmentActivity extends GameManagementActivity {
 			        
 			} else {
 				if (extras.getString("command").compareTo("request")==0) {
-					GameManagementActivity.cdd=null;
-					super.getCustomDialog();
+					
 					showRequestDialog(extras.getString("from_player"));
 					getIntent().removeExtra("command");
 					getIntent().removeExtra("from_player");

@@ -40,6 +40,8 @@ import android.util.Log;
 
 public class GameServerApplication extends Application implements IOCallback{
 
+	public static final int REQUESTED=1;
+	public static final int REQUEST=2;
 	private String url;
 	private GameServerListener listener;
 	private Handler handler;
@@ -76,6 +78,7 @@ public class GameServerApplication extends Application implements IOCallback{
 	  HashMap<TrackerName, Tracker> mTrackers = new HashMap<TrackerName, Tracker>();
 	private boolean activityVisible;
 	//private boolean disconnect=true;
+	private int requestType;
 
 	
 	  
@@ -119,7 +122,7 @@ public class GameServerApplication extends Application implements IOCallback{
 		    return mTrackers.get(trackerId);
 		  }
 	
-	public void setPendingrequest(String from,String to) {
+	public void setPendingrequest(String from,String to, int requestType) {
 		if (from==null) {
 			pendingRequest=false;
 		}
@@ -128,6 +131,7 @@ public class GameServerApplication extends Application implements IOCallback{
 		}
 		from_player=from;
 		to_player=to;
+		this.requestType=requestType;
 	}
 	
 	public String getPendingRequestFromPlayer() {
