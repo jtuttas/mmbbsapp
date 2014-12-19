@@ -89,7 +89,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 	    getActivity().getMenuInflater().inflate(R.menu.player_context, menu);
 		AdapterView.AdapterContextMenuInfo acmi = (AdapterContextMenuInfo) menuInfo;
 		ListView lv = (ListView) getActivity().findViewById(R.id.listView_users);
-		if (acmi.position!=0) {
+		
 			User user = (User) adapter.getItem(acmi.position);
 		
 			Log.d(Main.TAG,"Create Context Menu for user "+user.getName()+ "user list size="+gc.getUserList().size());
@@ -99,7 +99,7 @@ public class UserListFragment extends Fragment implements OnItemClickListener, T
 			else {
 				menu.findItem(R.id.item_remove_friend).setVisible(false);
 			}
-		}
+		
 		
 		super.onCreateContextMenu(menu, v, menuInfo);
 	}
