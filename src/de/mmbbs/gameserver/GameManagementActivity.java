@@ -139,7 +139,7 @@ public abstract class GameManagementActivity extends Activity implements
 
 	@Override
 	public void updateRequest(final JSONObject obj) {
-		// TODO Auto-generated method stub
+	
 		Log.d(Main.TAG, "!!update request in GameManagement Activity command="
 				+ obj.optString("command"));
 		if (obj.optString("command").compareTo("request") == 0) {

@@ -145,11 +145,9 @@ public class UmsatzActivity extends Activity {
 				eventType = xpp.next();
 			}
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		
 		catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (NullPointerException nux) {

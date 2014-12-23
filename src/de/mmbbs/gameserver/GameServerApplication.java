@@ -492,7 +492,6 @@ public class GameServerApplication extends Application implements IOCallback {
 								this.add(u);
 						}
 					} catch (JSONException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

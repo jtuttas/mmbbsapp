@@ -48,12 +48,10 @@ public class Pause extends Activity implements Runnable{
 	
 	
 	public void run() {
-		// TODO Auto-generated method stub
 		try {
 			Thread.sleep(1000*60);
 			this.finish();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}	

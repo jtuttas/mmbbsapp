@@ -28,6 +28,7 @@ public class User {
 	}
 	
 	public void setState(UserState s) {
+		
 		state=s;
 	}
 	
