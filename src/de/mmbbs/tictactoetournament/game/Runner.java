@@ -26,7 +26,6 @@ public class Runner implements Runnable {
 	
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
 		Canvas c = null;
 		while (running) {
 			c=null;
@@ -41,7 +40,6 @@ public class Runner implements Runnable {
 					}
 					stop = System.currentTimeMillis();
 					diff=stop-start;
-					//Log.d(Main.TAG, "diff="+diff);
 				}
 			}
 			finally {
@@ -53,7 +51,6 @@ public class Runner implements Runnable {
 				if ((20-diff)>0)
 				Thread.sleep(20-diff);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

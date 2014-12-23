@@ -89,7 +89,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"**Main on resume()");
 		gs = (GameServerApplication) getApplication();
 		gs.setUserCallbacks(this, handler);
@@ -110,7 +109,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	}
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 		case R.id.menu_login:
 			ld = new LoginDialog(this, R.layout.login_dialog,LoginDialogType.LOGIN);
@@ -162,7 +160,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateLogin(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "update Login Main");
 		Toast.makeText(getApplicationContext(),obj.optString("message"), Toast.LENGTH_LONG).show();			
 		if (obj.optBoolean("success")) {
@@ -188,7 +185,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateUsers(List<User> userlist) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "update Users in Main Activity");
 		for (int i=0;i<userlist.size();i++) {
 			User user = userlist.get(i);
@@ -207,7 +203,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateResendLogin(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Toast.makeText(getApplicationContext(),obj.optString("message"), Toast.LENGTH_LONG).show();			
 		if (obj.optBoolean("success")==false) {
 			ld = new LoginDialog(this, R.layout.resend_dialog,LoginDialogType.RESEND);
@@ -227,7 +222,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateRegister(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "update Register");
 		if (obj.optBoolean("success")==false) {
 			Toast.makeText(getApplicationContext(),obj.optString("message"), Toast.LENGTH_LONG).show();			
@@ -250,7 +244,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateRequest(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "update Request");
 
 	}
@@ -260,7 +253,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void updateDisconnect() {
-		// TODO Auto-generated method stub
 		Log.d(TAG, "update Disconnect");
 
 	}
@@ -268,7 +260,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void connected() {
-		// TODO Auto-generated method stub
 		dialog.dismiss();
 	    
 		String user = pref.getString("user", null);
@@ -287,7 +278,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		
 	}
@@ -297,7 +287,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 	@Override
 	public void connectionError() {
 		dialog.dismiss();
-		// TODO Auto-generated method stub
 		cdd = new CustomDialogClass(this,CustomDialogType.ERROR , this.getResources().getString(R.string.failed_connect),
 				null,this.getResources().getString(R.string.retry));
 		cdd.setOnCustomDialog(new CustomDialogListener() {
@@ -372,7 +361,6 @@ public class Main extends Activity implements GameServerListener,GameUserListene
 
 	@Override
 	public void onClick(View v,LoginDialogType type,LinearLayout l) {
-		// TODO Auto-generated method stub
 		switch (type) {
 		case LOGIN:
 			switch (v.getId()) {

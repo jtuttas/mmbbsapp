@@ -41,10 +41,8 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	
 	 @Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		 Log.d(Main.TAG,"GAME on create()");
 		super.onCreate(savedInstanceState);
-        //setContentView(R.layout.main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -61,7 +59,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
         Log.d(Main.TAG,"game onCreate() start="+firstTurn+" gegner="+gegner);
         interstitial = new InterstitialAd(this);
 	    interstitial.setAdUnitId("ca-app-pub-5414170988828485/9840893458");
-	 // Set the AdListener.
 	    interstitial.setAdListener(new AdListener() {
 	      @Override
 	      public void onAdLoaded() {
@@ -93,7 +90,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	@Override
 	protected void onResume() {
         Log.d(Main.TAG,"game onResume()");
-		// TODO Auto-generated method stub
 		gc.setGameCallbacks(this, ghandler);
 		super.onResume();
         l=(Leinwand) this.findViewById(de.mmbbs.R.id.gui);
@@ -103,18 +99,14 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
         l.setListener(this,ghandler);
         l.init(firstTurn,gegner);
         l.reset(width,height);
-        //gc.setDisconnectOnStop(true);
 	}
 
 
 	@Override
 	protected void onStart() {
         Log.d(Main.TAG,"game onStart()");
-		// TODO Auto-generated method stub
-        //disconnectOnStop(true);
 		super.onStart();
 		if (gegner==null) {
-			//gc.setDisconnectOnStop(false);
 			abnormalStop=false;
 			this.finish();
 		}
@@ -126,7 +118,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void updateLogin(JSONObject obj) {
-		// TODO Auto-generated method stub
 		super.updateLogin(obj);
 	}
 
@@ -135,11 +126,7 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"GAME onStop()");
-		if (abnormalStop) {
-			gc.disconnect();
-		}
 		super.onStop();
 		l.exit();
 		gc.quitPaaring();
@@ -148,8 +135,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
-		gc.disconnect();
 		super.onDestroy();
 	}
 
@@ -165,27 +150,17 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		 //getMenuInflater().inflate(R.menu.gamemenu, menu);
 		 return super.onCreateOptionsMenu(menu);
 	}
 
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		/*
-		switch (item.getItemId()) {
-		case R.id.help:
-			Log.d(Main.TAG,"Help!!");
-			return true;
-		case R.id.back:
-			finish();
-			return true;
-		}
-		*/
-		// TODO Auto-generated method stub
 		return super.onOptionsItemSelected(item);
 	}
-	 // Invoke displayInterstitial() when you are ready to display an interstitial.
+	 
+	
+	// Invoke displayInterstitial() when you are ready to display an interstitial.
 	  public void displayInterstitial() {
 		gc.quitPaaring();				
 		//onBackPressed();
@@ -196,7 +171,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void showDialog(String msg) {
-		// TODO Auto-generated method stub
 		cd = new CustomDialogClass(this,CustomDialogType.INFO ,msg,
 				this.getResources().getString(de.mmbbs.R.string.ok),null);
 		cd.setOnCustomDialog(new CustomDialogListener() {
@@ -226,14 +200,12 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	
 	@Override
 	public void updateChat(JSONObject obj) {
-		// TODO Auto-generated method stub
 		
 	}
 
 
 	@Override
 	public void updateDisconnect() {
-		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"updateDiscopnnect() Game state="+gc.getState());
 		this.showDialog(getResources().getString(de.mmbbs.R.string.player_disconnected));
 		gc.stats(1, 1, 0);
@@ -246,7 +218,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void updatePlay(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"updatePlay GameActivity");
 		if (obj.optString("command").compareTo("timeout")==0) {
 			this.showDialog(getResources().getString(de.mmbbs.R.string.player_timedout));			
@@ -275,7 +246,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void setLeftPlayer(Player p) {
-		// TODO Auto-generated method stub
 		TextView tv = (TextView) this.findViewById(de.mmbbs.R.id.textViewplayerLeft);
 		ImageView iv = (ImageView) this.findViewById(de.mmbbs.R.id.imageViewplayerLeft);
 		tv.setText(p.getName());
@@ -298,7 +268,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void setScore(int score) {
-		// TODO Auto-generated method stub
 		((TextView) this.findViewById(de.mmbbs.R.id.textView_score)).setText(Integer.toString(score));
 		
 	}
@@ -306,7 +275,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 
 	@Override
 	public void setProgessBar(int left, int right) {
-		// TODO Auto-generated method stub
 		ProgressBar pbl = (ProgressBar) this.findViewById(de.mmbbs.R.id.progressBarleft);
 		ProgressBar pbr = (ProgressBar) this.findViewById(de.mmbbs.R.id.ProgressBarright);
 		pbl.setProgress(left);
@@ -319,7 +287,6 @@ public class Game extends GameManagementActivity implements PlayGameListener,Gam
 	}
 	@Override
 	public void onLogin() {
-		// TODO Auto-generated method stub
 		
 	}
 }

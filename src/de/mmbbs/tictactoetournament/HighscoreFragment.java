@@ -28,6 +28,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -40,64 +41,51 @@ import android.widget.Toast;
 public class HighscoreFragment extends Fragment implements GameHighscoreListener {
 
 	ProgressDialog pd;
+	private View rootView;
+	private Handler handler;
+	private GameServerApplication gc;
 
 	@Override
-	public void updateHighscores(JSONObject obj) {
-		// TODO Auto-generated method stub
-		
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		rootView = inflater.inflate(R.layout.highscore_layout, container, false);
+		handler = new Handler();
+		gc = (GameServerApplication) getActivity().getApplication();
+		return rootView;
 	}
-	
-	/*
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		Log.d(Main.TAG,"onCreate() Highscore Activity");
-		//Toast.makeText(getApplicationContext(),"onCretae()", Toast.LENGTH_LONG).show();
-		setContentView(R.layout.highscore_layout);
-	}
-	
 
 	@Override
-	protected void onStart() {
-		// TODO Auto-generated method stub
+	public void onStart() {
 		Log.d(Main.TAG,"onStart() Highscore Activity");
 		gc.setHighscoreCallbacks(this, handler);
 		super.onStart();
 		if (pd!=null && pd.isShowing()) pd.dismiss();
-		
+		pd = new ProgressDialog(getActivity(),de.mmbbs.R.style.MyTheme);
+		pd.setCancelable(false);
+		pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
+		pd.show();
+		gc.highscores(20);
 	}
 
-	
-	
 	@Override
-	protected void onResume() {
-		// TODO Auto-generated method stub
-		Log.d(Main.TAG,"onResume() Highscore Activity");
-		super.onResume();
-
-	}
-
-
-	@Override
-	protected void onStop() {
-		// TODO Auto-generated method stub
+	public void onStop() {
 		super.onStop();
 		if (pd!=null && pd.isShowing()) pd.dismiss();
 		Log.d(Main.TAG,"onStop() Highscore Activity");
 	}
-
+	
 
 	@Override
 	public void updateHighscores(JSONObject obj) {
-		// TODO Auto-generated method stub
 		Log.d(Main.TAG,"=========== update Highscores");
 		if (pd!=null && pd.isShowing()) pd.dismiss();
 		JSONArray rows = obj.optJSONArray("rows");
-		TableLayout layout = (TableLayout) findViewById(R.id.tablellayout_highscore);
+		TableLayout layout = (TableLayout) rootView.findViewById(R.id.tablellayout_highscore);
 		layout.removeViews(1, layout.getChildCount()-1);
 		boolean foundme=false;
 		for (int i=0;i<rows.length();i++) {
 			Log.d(Main.TAG,"update Highscores:"+i);
-			TableRow tableRow = new TableRow(this);
+			TableRow tableRow = new TableRow(getActivity());
 			tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 			if (rows.optJSONObject(i).optString("Name").compareTo(gc.getUser())==0) {
 				tableRow.setBackgroundColor(getResources().getColor(R.color.lineme));
@@ -120,11 +108,11 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
              layout.addView(tableRow);
 		}
 		if (!foundme) {
-			TableRow tableRow = new TableRow(this);
+			TableRow tableRow = new TableRow(getActivity());
 			tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 			this.addRow(tableRow, ":", ":", ":", ":", ":", ":", ":");
             layout.addView(tableRow);
-			tableRow = new TableRow(this);
+			tableRow = new TableRow(getActivity());
 			tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 			this.addRow(tableRow, Integer.toString(obj.optInt("ranking")), 
 					Integer.toString(obj.optInt("score")),
@@ -140,8 +128,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
 
 	private void addRow(TableRow tableRow,String rank,String score, String name,String games,String won,String lost, String location) {
         // Rank
-		 TextView tv = new TextView(this);
-		 //Typeface tf = Typeface.createFromAsset(this.getAssets(), "fonts/TipoPRESS.otf");
+		 TextView tv = new TextView(getActivity());
         tv.setText(rank);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -150,7 +137,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
 
         // Score
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(score);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -159,7 +146,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
 
         // Name
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(name);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -168,7 +155,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
 
         // Games
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(games);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -177,7 +164,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
         
         // Games won
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(won);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -186,7 +173,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
         
         // Games lost
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(lost);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -195,7 +182,7 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
         tableRow.addView(tv);
         
         // Name
-		 tv = new TextView(this);
+		 tv = new TextView(getActivity());
         tv.setText(location);
         tv.setTextColor(Color.BLACK);
         tv.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -205,34 +192,4 @@ public class HighscoreFragment extends Fragment implements GameHighscoreListener
 
 	}
 
-
-	@Override
-	public void updateDisconnect() {
-		// TODO Auto-generated method stub
-		super.updateDisconnect();
-		if (pd!=null && pd.isShowing()) pd.dismiss();
-
-	}
-
-
-	@Override
-	public void connectionError() {
-		// TODO Auto-generated method stub
-		super.connectionError();
-		if (pd!=null && pd.isShowing()) pd.dismiss();
-
-	}
-
-
-	@Override
-	public void onLogin() {
-		// TODO Auto-generated method stub
-		Log.d(Main.TAG,"--- onLogin()");
-		pd = new ProgressDialog(this,de.mmbbs.R.style.MyTheme);
-		pd.setCancelable(false);
-		pd.setProgressStyle(android.R.style.Widget_ProgressBar_Small);
-		pd.show();
-		gc.highscores(20);
-	}
-	*/
 }

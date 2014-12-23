@@ -112,7 +112,6 @@ public class UserListArrayAdapter extends ArrayAdapter<User>  implements Filtera
 
 
 	public void setUserList(ArrayList<User> userList) {
-		// TODO Auto-generated method stub
 		userlines=(ArrayList<User>) userList.clone();
 		filteredData=(ArrayList<User>) userList.clone();
 	}
@@ -120,7 +119,6 @@ public class UserListArrayAdapter extends ArrayAdapter<User>  implements Filtera
 
 
 	public void setFriendsOnly(boolean b) {
-		// TODO Auto-generated method stub
 		friendsonly=b;
 	}
 

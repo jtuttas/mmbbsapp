@@ -72,11 +72,6 @@ public class GameBoard {
 				if (data[y][x].compareTo(markfree)==0) {
 					c.drawBitmap(freebitmap,xp,yp,p);
 				}
-				/*
-				if (data[y][x].compareTo(markselected)==0) {
-					c.drawBitmap(selectedbitmap,xp,yp,p);
-				}
-				*/
 				yp+=height/3;
 			}
 			yp=0;
@@ -128,7 +123,6 @@ public class GameBoard {
 		data[current_turny][current_turnx]=s;
 	}
 	public int getStoneX(float mTouchX) {
-		// TODO Auto-generated method stub
 		float x = mTouchX;
 		int xi=(int) ((mTouchX)/(width/3));
 		if (xi==3) xi=2;
@@ -136,7 +130,6 @@ public class GameBoard {
 	} 
 
 	public int getStoneY(float mTouchY) {
-		// TODO Auto-generated method stub
 		float y = mTouchY;
 		int yi=(int) ((mTouchY)/(height/3));
 		if (yi==3) yi=2;
@@ -144,7 +137,6 @@ public class GameBoard {
 	}
 
 	public JSONObject getBoard() {
-		// TODO Auto-generated method stub
 		JSONObject jo = new JSONObject();
 		JSONArray ja = new JSONArray();
 		for (int y=0;y<3;y++) {
@@ -160,19 +152,16 @@ public class GameBoard {
 			jo.put("current_turnx",current_turnx);
 			jo.put("current_turny",current_turny);
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jo;
 	}
 
 	public int getStoneXbyIndex(int turnx) {
-		// TODO Auto-generated method stub
 		return turnx*width/3;
 	}
 
 	public int getStoneYbyIndex(int turny) {
-		// TODO Auto-generated method stub
 		return turny*height/3;
 	}
 
@@ -182,7 +171,6 @@ public class GameBoard {
 	}
 
 	public void init() {
-		// TODO Auto-generated method stub
 		for (int x=0;x<3;x++) {
 			for (int y=0;y<3;y++) {
 				data[x][y]=markfree;

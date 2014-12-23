@@ -55,7 +55,6 @@ public class Player {
 	}
 
 	public void setPosition(int i, int j) {
-		// TODO Auto-generated method stub
 		object2d.setPosition(i, j);
 		startX=i;
 		startY=j;
@@ -67,13 +66,11 @@ public class Player {
 	}
 
 	public String getSymbol() {
-		// TODO Auto-generated method stub
 		return this.symbol;
 	}
 
 
 	public int getIcon() {
-		// TODO Auto-generated method stub
 		return ressourceSymbol;
 	}
 	

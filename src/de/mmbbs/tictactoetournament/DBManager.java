@@ -19,12 +19,10 @@ public class DBManager extends SQLiteOpenHelper {
 			int version) {
 		super(context, name, factory, version);
 		Log.d("SQlite", "DBM-Manager initdb="+name+ " Version="+version);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
 		Log.d("SQlite", "DBM-Manager create Database");
 		for (int i=0;i<SQL.length;i++) {
 			Log.d("SQlite", "Exec SQL Command:"+SQL[i]);
@@ -69,7 +67,6 @@ public class DBManager extends SQLiteOpenHelper {
 	}
 	
 	public String execute(String text) throws  Exception {
-		// TODO Auto-generated method stub
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor c = db.rawQuery(text, null);
 		String out="";

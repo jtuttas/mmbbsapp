@@ -58,7 +58,6 @@ public class Object2D {
 	}
 
 	public Rect getRect() {
-		// TODO Auto-generated method stub
 		return rect;
 	}
 
@@ -71,31 +70,25 @@ public class Object2D {
 	}
 	
 	public void left(int i) {
-		// TODO Auto-generated method stub
 		this.setPosition(x-i, y);
 	}
 
 	public void right(int i) {
-		// TODO Auto-generated method stub
 		this.setPosition(x+i, y);
 	}
 
 	public void up(int i) {
-		// TODO Auto-generated method stub
 		this.setPosition(x, y-i);
 	}
 	public void down(int i) {
-		// TODO Auto-generated method stub
 		this.setPosition(x, y+i);
 	}
 
 	public float getX() {
-		// TODO Auto-generated method stub
 		return x;
 	}
 
 	public float getY() {
-		// TODO Auto-generated method stub
 		return y;
 	}
 }

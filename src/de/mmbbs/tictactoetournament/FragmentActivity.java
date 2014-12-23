@@ -55,35 +55,21 @@ public class FragmentActivity extends GameManagementActivity {
 			
 			
 			super.onCreate(savedInstanceState);
-			//Log.d(Main.TAG," Fragment Activity on Create() "+savedInstanceState.getString("command"));
 			Log.d(Main.TAG,"FragmentActivity onCreate()");
 			requestWindowFeature(Window.FEATURE_ACTION_BAR);
 			setContentView(R.layout.activity_main);
 			
-			// Asking for the default ActionBar element that our platform supports.
 			ActionBar actionBar = this.getActionBar();
 			Log.d(Main.TAG,"FragmentActivity onCreate() actionBar="+actionBar);
-	        // Screen handling while hiding ActionBar icon.
 	        actionBar.setDisplayShowHomeEnabled(false);
-	 
-	        // Screen handling while hiding Actionbar title.
 	        actionBar.setDisplayShowTitleEnabled(false);
-	 
-	        // Creating ActionBar tabs.
 	        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-	 
-	        // Setting custom tab icons.
 	        userTab = actionBar.newTab().setIcon(R.drawable.add_friend);
 	        chatTab = actionBar.newTab().setIcon(R.drawable.chat);
 	        highscoreTab = actionBar.newTab().setIcon(R.drawable.highscorelist);
-
-	        
-	        // Setting tab listeners.
 	        userTab.setTabListener(new TabListener(userListFragment));
 	        chatTab.setTabListener(new TabListener(chatFragment));
 	        highscoreTab.setTabListener(new TabListener(highscoreFragment));
-	        
-	        // Adding tabs to the ActionBar.
 	        actionBar.addTab(userTab);
 	        actionBar.addTab(chatTab);
 	        actionBar.addTab(highscoreTab);
@@ -96,28 +82,20 @@ public class FragmentActivity extends GameManagementActivity {
 
 		@Override
 		protected void onStart() {
-			// TODO Auto-generated method stub
 			super.onStart();
 			gc.setActivityVisible(true);
 			Log.d(Main.TAG,"onStart() FragmentActivity conected="+gc.isConnected());
-			
-			//if (cdd != null && cdd.isShowing()) cdd.dismiss();
-			
-			
-				
 		}
 		
 		
 		
 		@Override
 		protected void onResume() {
-			// TODO Auto-generated method stub
 			super.onResume();
 		}
 
 		@Override
 		protected void onNewIntent(Intent intent) {
-			// TODO Auto-generated method stub
 			super.onNewIntent(intent);
 			Bundle extras = intent.getExtras();
 			if(extras == null) {
@@ -146,7 +124,6 @@ public class FragmentActivity extends GameManagementActivity {
 		
 		@Override
 		protected void onDestroy() {
-			// TODO Auto-generated method stub
 			super.onDestroy();
 			gc.setServerCallbacks(null, null);
 			
@@ -159,7 +136,6 @@ public class FragmentActivity extends GameManagementActivity {
 		}
 		@Override
 		public boolean onOptionsItemSelected(MenuItem item) {
-			// TODO Auto-generated method stub
 			switch (item.getItemId()) {
 			case R.id.item_friends_only:
 				if (item.isChecked()) {
@@ -183,38 +159,6 @@ public class FragmentActivity extends GameManagementActivity {
 		}
 		
 		
-		/**
-		public void showRequestDialog(final String from) {
-			cdd = new CustomDialogClass(this,CustomDialogType.INFO ,"Request from player '"+from+"'",
-					this.getResources().getString(R.string.ok),this.getResources().getString(R.string.reject));
-			cdd.setOnCustomDialog(new CustomDialogListener() {
-
-
-				@Override
-				public void onNegativeButton() {
-					gc.request(from, "request_rejected");
-					Log.d(Main.TAG,"Request rejected!");
-					gc.setPendingrequest(null, null);
-
-				}
-
-				@Override
-				public void onPositiveButton() {
-					if (cdd!=null) cdd.dismiss();
-					cdd = new CustomDialogClass(instance,CustomDialogType.INFO ,"Wait for partner ",null,null);
-					cdd.setCancelable(false);
-					cdd.show();
-					gc.request(from, "request_acknowledged");
-//			    	startGame(true,obj.optString("from_player"));									
-				}
-				
-			});
-			cdd.setCancelable(false);
-			gc.setPendingrequest(from, gc.getUser());
-			cdd.show();
-		}
-	*/
-
 		@Override
 		public void onLogin() {
 			Log.d(Main.TAG," --------> Fragment Activity onLogin()");

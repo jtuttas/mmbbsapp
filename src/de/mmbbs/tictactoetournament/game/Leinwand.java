@@ -128,7 +128,6 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 				Game.getHandler().post(new Runnable() {	
 					@Override
 					public void run() {
-						// TODO Auto-generated method stub
 						listener.setScore(score);
 					}
 				}); 
@@ -194,24 +193,8 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 				me.setState(PlayerState.TURN);
 				timeout=500;
 				listener.setProgessBar(500, 500);
-				//Game.getGameServer().play("play", board.getBoard());
 			}
 		}
-		//ac.tick();
-		//ball.setPosition((int)ball.getX(), (int) (ac.getS()));
-		/*
-		if (this.getHeight()!=0 && ball.getY()>(this.getHeight()-3*ball.getHeight())) {
-			
-			ac.bounce();
-		}
-
-		//Log.d("Ttest"," Ball Pos="+ball.getY());
-		apfel.left(1);
-		
-		if (apfel.getX() <=0) {
-			apfel.setPosition(this.getWidth(), (int) apfel.getY());
-		}
-		*/
 		
 		
 	}
@@ -223,7 +206,6 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 		handler.post(new Runnable() {	
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
 				listener.showDialog(string);					}
 		}); 
 		
@@ -295,7 +277,6 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 
 
 	public void init(boolean firstTurn, String gegner) {
-		// TODO Auto-generated method stub
 		if (!isInEditMode()) {
 			Log.d(Main.TAG,"Init players");
 			if (firstTurn) {
@@ -326,7 +307,6 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 		destY=board.getStoneYbyIndex(turny);
 		Log.d(Main.TAG," moreto() "+turnx+"/"+turny+ " DestXY="+destX+"/"+destY);
 		Log.d(Main.TAG,"Destination= "+destX+"/"+destY);
-		//board.setStoneByIndex(turnx,turny, GameBoard.markselected);
 
 		if (oposite.getState()==PlayerState.TURN) {
 			int vx=5*(int)(-oposite.getObject2d().getX()+destX);
@@ -339,18 +319,15 @@ public class Leinwand extends SurfaceView implements OnTouchListener  {
 	}
 
 	public Player getMe() {
-		// TODO Auto-generated method stub
 		return me;
 	}
 
 	public int getScore() {
-		// TODO Auto-generated method stub
 		return score;
 	}
 
 
 	public void setPlayerState(PlayerState meState, PlayerState opositeState) {
-		// TODO Auto-generated method stub
 		me.setState(meState);
 		oposite.setState(opositeState);
 	}
